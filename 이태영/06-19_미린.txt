@@ -1,0 +1,380 @@
+--adminImemInfoProjHis (관리자 "투자자 회원정보" 페이지 프로젝트 참가 기록)    [페이징 처리 추가해야 됨]
+
+  --자바에서 처리, [목표 달성률% = (A.PNFUNDS / A.PTFUNDS)*100 ]
+  --투자자 상세페이지 넘어오면서, 투자자 회원의 IDX 파라미터값 넘겨 받고 WHERE IDX에 대입
+  --페이징 처리 필요
+
+SELECT A.PNAME, B.INFUNDS, B.INSDATE, A.PNFUNDS, A.PTFUNDS
+FROM TF_PROJECT_LIST A, TF_FUND_HIS B
+WHERE A.PIDX = B.PIDX 
+AND B.IDX=1
+ORDER BY B.FIDX DESC;
+
+
+
+
+--adminImemInfoQnaHis (관리자 "투자자 회원정보" 페이지 QNA 참가기록)     [페이징 처리 추가해야 됨]
+
+  --(답변 체크 유무 컬럼) BDEPTH 값 가져와서 처리하기로함.
+  --페이징 처리 필요
+
+
+SELECT A.CONTENTS, A.BDEPTH, B.INSDATE
+FROM TF_BOARD_QNA A, TF_MEMBER B
+WHERE A.IDX = B.IDX 
+AND B.IDX = 3
+ORDER BY A.BIDX DESC;
+
+
+
+
+--adminMoneyList (관리자 머니 충전 기록 리스트)    [페이징 처리 추가해야 됨]
+  --IF (STATUS = 0) -> 승인 대기
+  --IF (STATUS = 1) -> 충전 완료
+  --IF (STATUS = 2) -> 승인 거부
+
+
+SELECT B.NAME,B.NICK, A.CHGMONEY, A.INSDATE, A.STATUS
+FROM TF_MONEY_HIS A, TF_MEMBER B
+WHERE A.IDX = B.IDX
+ORDER BY A.MIDX DESC;
+
+
+
+
+
+--adminMoneyModOk (관리자 머니 충전 승인) XX 
+-- * 권석이형 헬프 요청
+
+
+UPDATE TF_MONEY_HIS 
+SET STATUS = '1' ,CHKADMIN = '승인', MODDATE = SYSDATE
+WHERE IDX = 1;
+
+
+UPDATE TF_IMEMBER_EXT
+SET MONEY = (SELELCT CHGMONEY 
+	     FROM TH_MONEY_HIS 
+             WHERE IDX=1)
+WHERE IDX = 1;
+
+
+
+
+
+
+
+
+
+--adminMoneyModNOk (관리자 머니 충전 거부) OK
+
+UPDATE TF_MONEY_HIS 
+SET STATUS = '2' 
+WHERE MIDX = '1';
+
+--Pstmt 쿼리
+--UPDATE TF_MONEY_HIS SET STATUS = '2' WHERE MIDX = '?'
+
+
+
+
+
+--adminCmemInfoList (관리자 "사업자 회원정보" 페이지 회원리스트)  [검사대기]
+
+SELECT A.ID, A.NAME, B.STATUS, B.PNFUNDS
+FROM TF_MEMBER A, TF_PROJECT_LIST B
+WHERE A.IDX = B.IDX
+AND A.TYPE = 'C'
+ORDER BY A.IDX DESC;
+
+
+
+
+
+
+
+
+--adminCmemInfoCon (관리자 사업자 회원정보 페이지 회원별 상세정보) OK
+
+SELECT A.ID, A.PW, A.NAME, A.PHONE, A.ADDR, B.CNUMBER, B.CADDR 
+FROM TF_MEMBER A, TF_CMEMBER_EXT B
+WHERE A.IDX = B.IDX
+AND A.TYPE ='C'
+AND A.IDX = 1;
+
+
+
+
+
+
+
+--adminCmemInfoProj(관리자 사업자 회원정보 페이지 "진행중" 프로젝트)
+  --사업자 상세페이지 넘어오면서 IDX 파라미터값 넘겨 받고 WHERE IDX에 대입
+  --A.STATUS = 1 [진행중]
+
+
+SELECT A.PNFUNDS, A.PTFUNDS, A.PNAME, B.COMPANY, C.INSDATE, 
+FROM TF_PROJECT_LIST A, TF_CMEMBER_EXT B, TF_FUND_HIS C
+WHERE A.IDX = B.IDX
+AND A.STATUS = '1'
+AND A.IDX = '1';
+
+
+--인포그래프 출력에 필요한 FUND_테이블 정보 필요
+
+SELECT SUM(INFUNDS)
+FROM TF_FUND_HIS
+WHERE STATUS=0
+AND IDX=1
+GROUP BY TO_CHAR(INSDATE, 'YYMMDD');
+
+--또는
+SELECT *
+FROM TF_FUND_HIS
+WHERE STATUS=0
+AND IDX=1;
+
+
+--adminCmemInfoProjHis(관리자 사업자 회원정보 페이지 "지난" 프로젝트 리스트) OK
+
+  --(PNFUNDS / PTFUNDS)*100 = 목표 달성률%
+  --사업자 상세페이지 넘어오면서, IDX 파라미터값 넘겨 받고 WHERE IDX에 대입
+  --A.STATUS = 0 [대기중], 1 [진행중](대기중, 진행중 아닌 상태값 찾기)
+
+SELECT PIDX, PNAME, PSDATE, PNFUNDS, PTFUNDS, STATUS
+FROM TF_PROJECT_LIST
+WHERE STATUS > 3
+AND IDX = '1'
+ORDER BY PIDX DESC;
+
+--Pstmt 쿼리
+SELECT PIDX, PNAME, PSDATE, PNFUNDS, PTFUNDS, STATUS FROM TF_PROJECT_LIST WHERE STATUS != '0' AND STATUS != '1' AND IDX = '?' ORDER BY PIDX DESC
+
+
+
+
+--adminCmemInfoProjFundHis (관리자 사업자 회원정보 페이지 "진행중" 프로젝트 투자 회원리스트 ) OK [페이징 처리 추가해야 됨]
+
+
+
+SELECT * FROM TF_FUND_HIS A, TF_MEMBER B
+WHERE A.IDX = B.IDX
+AND A.PIDX = (SELECT PIDX 
+	      FROM TF_PROJECT_LIST 
+              WHERE IDX = 2 
+              AND STATUS = 1)
+ORDER BY A.IDX DESC;
+
+
+SELECT *
+FROM TF_FUND_HIS A, TF_PROJECT_LIST B, TF_MEMBER C
+WHERE A.PIDX = B.PIDX
+AND A.IDX = C.IDX
+AND A.STATUS = 1 AND B.IDX = 2 AND B.STATUS = 1;
+ORDER BY A.IDX DESC; 
+
+
+SELECT * FROM TF_FUND_HIS A, TF_MEMBER B
+WHERE A.IDX = B.IDX
+AND A.PIDX = (SELECT PIDX FROM TF_PROJECT_LIST WHERE IDX = 1 AND STATUS = 1)
+ORDER BY A.IDX DESC;
+
+
+
+--adminCmemInfoProjNewsHis test 중 (관리자 사업자 회원정보 페이지 "뉴스" 리스트) OK [페이징 처리 추가해야 됨]
+--[잘 모르겠습니다]
+
+SELECT BIDX,TITLE,INSDATE
+FROM TF_BOARD_NEWS
+WHERE VIEWSTAT = 1
+ORDER BY BIDX DESC;
+
+
+
+
+
+--adminCmemInfoProjQna (관리자 사업자 회원정보 페이지 "Qna" 리스트) [페이징 처리 추가해야 됨]
+--[EXTCOLUMN] = [PIDX]
+
+SELECT BIDX, TITLE, INSDATE, BDEPTH
+FROM TF_BOARD_QNA
+WHERE VIEWSTAT = 1 
+AND PIDX = 1
+ORDER BY BIDX DESC;
+
+
+
+
+--adminCmemChkOk (관리자 "사업자 등록" 승인 리스트) OK [페이징 처리 추가해야 됨]
+
+SELECT B.CIDX, A.NAME, A.INSDATE, A.STATUS
+FROM TF_MEMBER A, TF_CMEMBER_EXT B
+WHERE A.IDX = B.IDX
+AND A.TYPE ='C' 
+ORDER BY B.CIDX DESC;
+
+--Pstmt 쿼리
+--SELECT B.CIDX, A.NAME, A.INSDATE, A.STATUS FROM TF_MEMBER A,TF_CMEMBER_EXT B WHERE A.TYPE ='C' ORDER BY B.CIDX DESC
+
+
+
+
+-- adminProjChkList 
+
+--Pstmt 쿼리
+--SELECT PIDX, PNAME, INSDATE, STATUS FROM TF_PROJECT_LIST ORDER BY PIDX DESC
+
+
+
+
+--adminProJChkCon (관리자 "프로젝트 등록" 승인 내용) OK
+
+SELECT PIDX, PNAME, INSDATE, STATUS 
+FROM TF_PROJECT_LIST
+WHERE PIDX = ?;
+
+
+
+--adminProJChkOk (관리자 프로젝트 등록 "승인") OK
+
+UPDATE TF_PROJECT_LIST 
+SET STATUS='1' 
+WHERE PIDX='1';
+
+--Pstmt 쿼리
+--UPDATE TF_PROJECT_LIST SET STATUS='1' WHERE PIDX='?'
+
+
+
+
+--adminProJChkNOk (관리자 프로젝트 등록 "반려") OK
+
+UPDATE TF_PROJECT_LIST 
+SET STATUS='2' 
+WHERE PIDX='1';
+
+--Pstmt 쿼리
+--UPDATE TF_PROJECT_LIST SET STATUS='2' WHERE PIDX='?'
+
+
+
+
+--adminBoardQnaList (관리자 고객센터 페이지 "QNA"리스트) [페이징 처리 추가해야 됨] OK
+
+SELECT TITLE,INSDATE, BDEPTH
+FROM TF_BOARD_QNA
+WHERE VIEWSTAT = '1'
+ORDER BY BIDX DESC;
+
+
+
+
+
+--adminBoardQnaCon (관리자 고객센터 페이지 "QNA" 상세내용) OK
+
+SELECT *
+FROM TF_BOARD_QNA
+WHERE BIDX = '1';
+
+
+
+
+
+--adminBoardQnaWrite (관리자 고객센터 페이지 "QNA" 답변 작성) 
+
+INSERT INTO TF_BOARD_QNA (BIDX, IDX, CATE, TITLE, CONTENTS, HIT, GOOD, BAD, OBIDX, RBIDX, BDEPTH, COMMCNT, VIEWSTAT, INSDATE, MODDATE, EXTCOLUMN)
+VALUES (SEQ_TF_BIDX_QNA.NEXTVAL, 1, '프로젝트', '관리자 답변입니다', '투자에는 항상 위험이 따릅니다', 0, 0, 0, SEQ_TF_BIDX_QNA.CURRVAL, 1, 1, 0, 1, SYSDATE, SYSDATE, 1);
+
+
+
+
+
+
+
+
+--adminBoardQnaMod (관리자 고객센터 페이지 "QNA" 답변 및 내용 수정) [검증NO]
+--삽입할 칼럼 내용 회의가 필요합니다.
+
+--UPDATE TF_BOARD_QNA() 
+--SET ()
+--WHERE BIDX=1;
+
+
+
+
+--adminBoardQnaDel (관리자 고객센터 페이지 "QNA" 삭제) [검증NO]
+
+UPDATE TF_BOARD_QNA 
+SET VIEWSTAT='0' 
+WHERE BIDX='1';
+
+--Pstmt 쿼리
+UPDATE TF_BOARD_QNA SET VIEWSTAT='0' WHERE BIDX='?'
+
+
+
+
+
+
+--
+--adminBoardFaqList (관리자 고객센터 페이지 "FAQ" 리스트)
+--출력값 공란 
+--SELECT BIDX,TITLE,INSDATE
+--FROM TF_BOARD_FAQ;
+
+--adminBoardFaqDel (관리자 고객센터 페이지 "FAQ" 삭제)
+
+--UPDATE TF_BOARD_FAQ SET VIEW='0' WHERE BIDX='?';
+
+--
+
+--adminBoardNoticeList (관리자 고객센터 페이지 전체"공지사항" 리스트)
+--출력값 공란 
+--SELECT BIDX,TITLE,INSDATE
+--FROM TF_BOARD_NOTICE;
+
+--adminBoardNoticeQnaDel (관리자 고객센터 페이지 전체"공지사항" 삭제) 
+
+--UPDATE TF_BOARD_NOTICE SET VIEW='0' WHERE BIDX='?';
+
+--
+
+
+
+
+
+
+--adminBoardNewsList (관리자 뉴스관리 페이지 "뉴스" 리스트) 
+--관련 프로젝트 칼럼 표시 실패
+
+SELECT BIDX, TITLE, VIEWSTAT
+FROM TF_BOARD_NEWS 
+ORDER BY BIDX DESC;
+
+
+
+
+--
+
+
+--adminBoardMemoSend (관리자 메모페이지 메모 작성) 
+--sendidx 보내는사람(관리자,사업자 구분 필요함!) 
+
+--INSERT INTO TF_MEMO_LIST(MEMOIDX,SENDIDX,RECVIDX,CONTENTS,STATUS,INSDATE,MODDATE) VALUES(?,?,?,'',?,sysdate,sysdate);
+
+
+
+
+--메모리스트 확인 
+
+SELECT MEMOIDX,SENDIDX,RECVIDX,CONTENTS,STATUS,INSDATE,MODDATE
+FROM TF_MEMO_LIST
+WHERE IDX='1';
+
+
+
+
+
+
+
+
