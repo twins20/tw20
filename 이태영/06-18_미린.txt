@@ -1,0 +1,385 @@
+--adminImemInfoProjHis (관리자 "투자자 회원정보" 페이지 프로젝트 참가 기록) XX
+
+  --(A.PNFUNDS / A.PTFUNDS)*100 = 목표 달성률%
+  --투자자 상세페이지 넘어오면서 IDX 파라미터값 넘겨 받고 WHERE IDX에 대입
+
+프로젝트 이름, 투자자가 그 프로젝트에 추가한 투자금액, 투자일, 목표달성율
+
+
+SELECT A.PIDX, A.PNAME, B.INFUNDS, B.INSDATE, A.PNFUNDS, A.PTFUNDS
+FROM TF_PROJECT_LIST A , TF_FUND_HIS B
+WHERE A.IDX = B.IDX
+AND A.IDX = 2;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--adminImemInfoQnaHis (관리자 "투자자 회원정보" 페이지 QNA 참가기록) XX
+
+  --(답변 체크 컬럼)이 없어서 쿼리 한번에 답변 체크가 불가능
+  --[예상 솔루션] BDEPTH 값을 가져와서 IF문 돌려야됨.
+  --팀 회의가 필요.
+
+
+SELECT A.BIDX, A.CONTENTS, B.INSDATE 
+FROM TF_BOARD_QNA A, TF_MEMBER B
+WHERE A.IDX = B.IDX 
+AND B.IDX = 3;
+
+
+SELECT * FROM TF_BOARD_QNA A, TF_MEMBER B
+WHERE A.IDX = B.IDX
+AND B.IDX = 1
+
+--Pstmt 쿼리
+--SELECT A.BIDX, A.CONTENTS, B.INSDATE FROM TF_BOARD_QNA A, TF_MEMBER B WHERE A.IDX = B.IDX AND B.IDX = '?'
+
+
+
+
+--adminMoneyList (관리자 머니 충전 기록 리스트) OK
+  --IF (STATUS = 0) -> 승인 대기
+  --IF (STATUS = 1) -> 충전 완료
+  --IF (STATUS = 2) -> 승인 거부
+
+
+SELECT A.*, B.NICK, B.NAME
+FROM TF_MONEY_HIS A, TF_MEMBER B,
+WHERE A.IDX = B.IDX
+ORDER BY A.MIDX DESC;
+
+--Pstmt 쿼리
+--SELECT B.MIDX, A.NAME, B.CHGMONEY, B.INSDATE, B.STATUS FROM TF_MEMBER A, TF_MONEY_HIS B WHERE A.IDX = B.IDX ORDER BY B.MIDX DESC
+
+
+
+
+--adminMoneyModOk (관리자 머니 충전 승인) -- chkadmin 추가 수정, imem_ext 테이블 money 값 반영
+
+
+UPDATE TF_MONEY_HIS 
+SET STATUS = '1' 
+WHERE MIDX = '1';
+
+--Pstmt 쿼리
+--UPDATE TF_MONEY_HIS SET STATUS = 1 WHERE MIDX = '?'
+
+
+
+
+--adminMoneyModNOk (관리자 머니 충전 거부) OK
+
+UPDATE TF_MONEY_HIS 
+SET STATUS = '2' 
+WHERE MIDX = '1';
+
+--Pstmt 쿼리
+--UPDATE TF_MONEY_HIS SET STATUS = '2' WHERE MIDX = '?'
+
+
+
+
+--adminCmemInfoList (관리자 "사업자 회원정보" 페이지 회원리스트) XX
+
+SELECT A.IDX, A.ID, A.NAME, A.STATUS, B.PNFUNDS
+FROM TF_MEMBER A, TF_PROJECT_LIST B
+WHERE A.IDX = B.IDX
+AND A.TYPE = 'C'
+ORDER BY A.IDX DESC;
+
+--Pstmt 쿼리
+--SELECT A.IDX, A.ID, A.NAME, A.STATUS, B.PNFUNDS FROM TF_MEMBER A, TF_PROJECT_LIST B WHERE A.IDX = B.IDX AND A.TYPE = 'C' ORDER BY A.IDX DESC
+
+
+
+
+--adminCmemInfoCon (관리자 사업자 회원정보 페이지 회원별 상세정보)
+
+SELECT A.ID, A.PW, A.NAME, A.PHONE, A.ADDR, B.CNUMBER, B.CADDR 
+FROM TF_MEMBER A, TF_CMEMBER_EXT B
+WHERE A.IDX = B.IDX
+AND A.TYPE ='C'
+AND A.IDX = 1;
+
+--Pstmt 쿼리
+--SELECT A.ID, A.PW, A.NAME, A.PHONE, A.ADDR, B.CNUMBER, B.CADDR FROM TF_MEMBER A, TF_CMEMBER_EXT B WHERE A.TYPE ='C' AND A.IDX = B.IDX
+
+
+
+--adminCmemInfoProj(관리자 사업자 회원정보 페이지 "진행중" 프로젝트) 
+-- 인포그래프 출력에 필요한 FUND_테이블 정보 필요
+
+  --(PNFUNDS / PTFUNDS)*100 = 목표 달성률%
+  --사업자 상세페이지 넘어오면서 IDX 파라미터값 넘겨 받고 WHERE IDX에 대입
+  --A.STATUS = 1 [진행중]
+
+SELECT A.PNFUNDS, A.PTFUNDS, A.PNAME, B.COMPANY
+FROM TF_PROJECT_LIST A, TF_CMEMBER_EXT B
+WHERE A.IDX = B.IDX
+AND A.STATUS = '1'
+AND A.IDX = '1';
+
+--Pstmt 쿼리
+SELECT A.PNFUNDS, A.PTFUNDS, A.PNAME, B.COMPANY FROM TF_PROJECT_LIST A, TF_CMEMBER_EXT B WHERE A.STATUS = '1' AND A.IDX = '?' AND B.IDX = '?'
+
+
+
+
+--adminCmemInfoProjHis(관리자 사업자 회원정보 페이지 "지난" 프로젝트 리스트) OK
+
+  --(PNFUNDS / PTFUNDS)*100 = 목표 달성률%
+  --사업자 상세페이지 넘어오면서, IDX 파라미터값 넘겨 받고 WHERE IDX에 대입
+  --A.STATUS = 0 [대기중], 1 [진행중](대기중, 진행중 아닌 상태값 찾기)
+
+SELECT PIDX, PNAME, PSDATE, PNFUNDS, PTFUNDS, STATUS
+FROM TF_PROJECT_LIST
+WHERE STATUS > 3
+AND IDX = '1'
+ORDER BY PIDX DESC;
+
+--Pstmt 쿼리
+SELECT PIDX, PNAME, PSDATE, PNFUNDS, PTFUNDS, STATUS FROM TF_PROJECT_LIST WHERE STATUS != '0' AND STATUS != '1' AND IDX = '?' ORDER BY PIDX DESC
+
+
+
+
+--adminCmemInfoProjFundHis (관리자 사업자 회원정보 페이지 "진행중" 프로젝트 투자 회원리스트 ) OK
+SELECT * FROM TF_FUND_HIS A, TF_MEMBER B
+WHERE A.IDX = B.IDX
+AND A.PIDX = (SELECT PIDX FROM TF_PROJECT_LIST WHERE IDX = 2 AND STATUS = 1)
+ORDER BY A.IDX DESC;
+
+SELECT *
+FROM TF_FUND_HIS A, TF_PROJECT_LIST B, TF_MEMBER C
+WHERE A.PIDX = B.PIDX
+AND A.IDX = C.IDX
+AND A.STATUS = 1 AND B.IDX = 2 AND B.STATUS = 1;
+ORDER BY A.IDX DESC; 
+
+SELECT * FROM TF_FUND_HIS A, TF_MEMBER B
+WHERE A.IDX = B.IDX
+AND A.PIDX = (SELECT PIDX FROM TF_PROJECT_LIST WHERE IDX = 1 AND STATUS = 1)
+ORDER BY A.IDX DESC;
+
+--Pstmt 쿼리
+--SELECT A.IDX, A.NICK, B.INFUNDS, B.INSDATE, B.STATUS FROM TF_MEMBER A, TF_FUND_HIS B, TF_PROJECT_LIST C WHERE C.STATUS = '1' AND B.PIDX = C.PIDX AND B.IDX = A.IDX ORDER BY A.IDX DESC
+
+
+
+
+--adminCmemInfoProjNewsHis test 중 (관리자 사업자 회원정보 페이지 "뉴스" 리스트) OK
+--[잘 모르겠습니다]
+
+SELECT BIDX,TITLE,INSDATE
+FROM TF_BOARD_NEWS
+WHERE VIEWSTAT = 1
+ORDER BY BIDX DESC;
+
+
+
+
+
+--adminCmemInfoProjQna (관리자 사업자 회원정보 페이지 "Qna" 리스트) [검증NO]
+--[잘 모르겠습니다]
+--QNASTATUS 칼럼 추가 했을 경우 쿼리입니다. [읽지 않음 / 답변완료]
+
+SELECT BIDX, TITLE, INSDATE, QNASTATUS
+FROM TF_BOARD_QNA
+WHERE VIEWSTAT = '1' 
+ORDER BY BIDX DESC;
+
+
+
+
+--adminCmemChkOk (관리자 "사업자 등록" 승인 리스트) OK
+
+SELECT B.CIDX, A.NAME, A.INSDATE, A.STATUS
+FROM TF_MEMBER A, TF_CMEMBER_EXT B
+WHERE A.IDX = B.IDX
+AND A.TYPE ='C' 
+ORDER BY B.CIDX DESC;
+
+--Pstmt 쿼리
+--SELECT B.CIDX, A.NAME, A.INSDATE, A.STATUS FROM TF_MEMBER A,TF_CMEMBER_EXT B WHERE A.TYPE ='C' ORDER BY B.CIDX DESC
+
+
+
+
+-- adminProjChkList 
+
+--Pstmt 쿼리
+--SELECT PIDX, PNAME, INSDATE, STATUS FROM TF_PROJECT_LIST ORDER BY PIDX DESC
+
+
+
+
+--adminProJChkCon (관리자 "프로젝트 등록" 승인 내용) OK
+
+SELECT PIDX, PNAME, INSDATE, STATUS 
+FROM TF_PROJECT_LIST
+WHERE PIDX = ?;
+
+
+
+--adminProJChkOk (관리자 프로젝트 등록 "승인") OK
+
+UPDATE TF_PROJECT_LIST 
+SET STATUS='1' 
+WHERE PIDX='1';
+
+--Pstmt 쿼리
+--UPDATE TF_PROJECT_LIST SET STATUS='1' WHERE PIDX='?'
+
+
+
+
+--adminProJChkNOk (관리자 프로젝트 등록 "반려") OK
+
+UPDATE TF_PROJECT_LIST 
+SET STATUS='2' 
+WHERE PIDX='1';
+
+--Pstmt 쿼리
+--UPDATE TF_PROJECT_LIST SET STATUS='2' WHERE PIDX='?'
+
+
+
+
+--adminBoardQnaList (관리자 고객센터 페이지 "QNA"리스트) [검증NO]
+
+SELECT BIDX,TITLE,INSDATE
+FROM TF_BOARD_QNA
+WHERE VIEWSTAT = '1'
+ORDER BY BIDX DESC;
+
+--Pstmt 쿼리
+--SELECT BIDX,TITLE,INSDATE FROM TF_BOARD_QNA WHERE VIEWSTAT = '1' ORDER BY BIDX DESC
+
+
+
+
+--adminBoardQnaCon (관리자 고객센터 페이지 "QNA" 상세내용) [검증NO]
+
+SELECT *
+FROM TF_BOARD_QNA
+WHERE BIDX = '1';
+
+--Pstmt 쿼리
+--SELECT * FROM TF_BOARD_QNA WHERE BIDX = '?'
+
+
+
+
+--adminBoardQnaWrite (관리자 고객센터 페이지 "QNA" 답변 작성) [검증NO]
+--삽입할 칼럼 내용 회의가 필요합니다.
+
+--INSERT INTO TF_BOARD_QNA()
+--VALUES();
+
+
+
+
+--adminBoardQnaMod (관리자 고객센터 페이지 "QNA" 답변 및 내용 수정) [검증NO]
+--삽입할 칼럼 내용 회의가 필요합니다.
+
+--UPDATE TF_BOARD_QNA() 
+--SET ()
+--WHERE BIDX=1;
+
+
+
+
+--adminBoardQnaDel (관리자 고객센터 페이지 "QNA" 삭제) [검증NO]
+
+UPDATE TF_BOARD_QNA 
+SET VIEWSTAT='0' 
+WHERE BIDX='1';
+
+--Pstmt 쿼리
+UPDATE TF_BOARD_QNA SET VIEWSTAT='0' WHERE BIDX='?'
+
+
+
+
+
+
+--
+--adminBoardFaqList (관리자 고객센터 페이지 "FAQ" 리스트)
+--출력값 공란 
+--SELECT BIDX,TITLE,INSDATE
+--FROM TF_BOARD_FAQ;
+
+--adminBoardFaqDel (관리자 고객센터 페이지 "FAQ" 삭제)
+
+--UPDATE TF_BOARD_FAQ SET VIEW='0' WHERE BIDX='?';
+
+--
+
+--adminBoardNoticeList (관리자 고객센터 페이지 전체"공지사항" 리스트)
+--출력값 공란 
+--SELECT BIDX,TITLE,INSDATE
+--FROM TF_BOARD_NOTICE;
+
+--adminBoardNoticeQnaDel (관리자 고객센터 페이지 전체"공지사항" 삭제) 
+
+--UPDATE TF_BOARD_NOTICE SET VIEW='0' WHERE BIDX='?';
+
+--
+
+
+
+
+
+
+--adminBoardNewsList (관리자 뉴스관리 페이지 "뉴스" 리스트) 
+--관련 프로젝트 칼럼 표시 실패
+
+SELECT BIDX, TITLE, VIEWSTAT
+FROM TF_BOARD_NEWS 
+ORDER BY BIDX DESC;
+
+
+
+
+--
+
+
+--adminBoardMemoSend (관리자 메모페이지 메모 작성) 
+--sendidx 보내는사람(관리자,사업자 구분 필요함!) 
+
+--INSERT INTO TF_MEMO_LIST(MEMOIDX,SENDIDX,RECVIDX,CONTENTS,STATUS,INSDATE,MODDATE) VALUES(?,?,?,'',?,sysdate,sysdate);
+
+
+
+
+--메모리스트 확인 
+
+SELECT MEMOIDX,SENDIDX,RECVIDX,CONTENTS,STATUS,INSDATE,MODDATE
+FROM TF_MEMO_LIST
+WHERE IDX='1';
+
+
+
+
+
+
+
+
