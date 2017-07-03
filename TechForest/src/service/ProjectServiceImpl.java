@@ -24,8 +24,9 @@ public class ProjectServiceImpl {
 		try { 
 			
 			this.sql = "SELECT * "
-					+	"FROM TF_PROJECT_LIST " 
-					+	"WHERE STATUS = 1 AND PCATE = ? ORDER BY PIDX DESC";
+				+	"FROM TF_PROJECT_LIST " 
+				+	"WHERE STATUS = 1 "
+				+ 		"AND PCATE = ? ORDER BY PIDX DESC";
 		
 			this.sql = new PagingQ().pagingStr(sql, listCnt, pageCnt);
 			
@@ -68,8 +69,8 @@ public class ProjectServiceImpl {
 		try { 
 			
 			this.sql = "SELECT * "
-					+	"FROM TF_PROJECT_LIST " 
-					+	"WHERE STATUS = 1 ORDER BY PNFUNDS DESC";
+				+	"FROM TF_PROJECT_LIST " 
+				+	"WHERE STATUS = 1 ORDER BY PNFUNDS DESC";
 		
 			this.sql = new PagingQ().pagingStr(this.sql, listCnt, pageCnt);
 			
@@ -111,8 +112,8 @@ public class ProjectServiceImpl {
 		try { 
 			
 			this.sql = "SELECT * "
-					+	"FROM TF_PROJECT_LIST " 
-					+	"WHERE STATUS = 1 ORDER BY PGRADE DESC";
+				+	"FROM TF_PROJECT_LIST " 
+				+	"WHERE STATUS = 1 ORDER BY PGRADE DESC";
 		
 			this.sql = new PagingQ().pagingStr(sql, listCnt, pageCnt);
 			
@@ -154,8 +155,8 @@ public class ProjectServiceImpl {
 		try { 
 			
 			this.sql = "SELECT * "
-					+	"FROM TF_PROJECT_LIST " 
-					+	"WHERE PIDX = ?";
+				+	"FROM TF_PROJECT_LIST " 
+				+	"WHERE PIDX = ?";
 		
 			//this.sql = new PagingQ().pagingStr(sql, listCnt, pageCnt);
 			
@@ -197,9 +198,9 @@ public class ProjectServiceImpl {
 		try { 
 			
 			this.sql = "SELECT MONEY "
-					+	"FROM TF_MEMBER A, TF_IMEMBER_EXT B " 
-					+	"WHERE A.IDX = B.IDX "
-					+	"AND A.IDX = ?";
+				+	"FROM TF_MEMBER A, TF_IMEMBER_EXT B " 
+				+	"WHERE A.IDX = B.IDX "
+				+		"AND A.IDX = ?";
 		
 			//this.sql = new PagingQ().pagingStr(sql, listCnt, pageCnt);
 			
@@ -232,10 +233,10 @@ public class ProjectServiceImpl {
 		try { 
 			
 			this.sql = "SELECT * "
-					+	"FROM TF_PROJECT_COMM "
-					+	"WHERE VIEWSTAT = 1 "
-					+	"AND PIDX = ? "
-					+	"ORDER BY OPCOMMIDX DESC, RPCOMMIDX ASC";
+				+	"FROM TF_PROJECT_COMM "
+				+	"WHERE VIEWSTAT = 1 "
+				+		"AND PIDX = ? "
+				+	"ORDER BY OPCOMMIDX DESC, RPCOMMIDX ASC";
 					
 			this.sql = new PagingQ().pagingStr(sql, listCnt, pageCnt);
 			
@@ -244,8 +245,8 @@ public class ProjectServiceImpl {
 			rs = pstmt.executeQuery();
 
 			while(rs.next()) { 
-				ProjectCommVo vo = new ProjectCommVo(); 
 				
+				ProjectCommVo vo = new ProjectCommVo(); 
 				vo.setpCommIdx(rs.getInt("pcommidx"));
 				vo.setComments(rs.getString("comments"));
 				vo.setGood(rs.getInt("good"));
@@ -279,10 +280,10 @@ public class ProjectServiceImpl {
 		try { 
 						
 			this.sql = "SELECT A.* " 
-					+	"FROM TF_BOARD_NEWS A, TF_PROJECT_LIST B " 
-					+	"WHERE A.PIDX = B.PIDX AND VIEWSTAT = 1 " 
-					+	"AND B.PIDX = ? " 
-					+	"ORDER BY OBIDX DESC, RBIDX ASC";	
+				+	"FROM TF_BOARD_NEWS A, TF_PROJECT_LIST B " 
+				+	"WHERE A.PIDX = B.PIDX AND VIEWSTAT = 1 " 
+				+		"AND B.PIDX = ? " 
+				+	"ORDER BY OBIDX DESC, RBIDX ASC";	
 			
 			this.sql = new PagingQ().pagingStr(sql, listCnt, pageCnt);
 			
@@ -291,8 +292,8 @@ public class ProjectServiceImpl {
 			rs = pstmt.executeQuery();
 
 			while(rs.next()) { 
-				BoardVo vo = new BoardVo(); 
 				
+				BoardVo vo = new BoardVo(); 
 				vo.setbIdx(rs.getInt("bidx"));
 				vo.setIdx(rs.getInt("idx"));
 				vo.setpIdx(rs.getInt("pidx"));
@@ -331,8 +332,8 @@ public class ProjectServiceImpl {
 		try { 
 			
 			this.sql = "SELECT * "
-					+	"FROM TF_CMEMBER_EXT " 
-					+	"WHERE IDX = (SELECT IDX FROM TF_PROJECT_LIST WHERE PIDX = ?)";
+				+	"FROM TF_CMEMBER_EXT " 
+				+	"WHERE IDX = (SELECT IDX FROM TF_PROJECT_LIST WHERE PIDX = ?)";
 		
 			//this.sql = new PagingQ().pagingStr(sql, listCnt, pageCnt);
 			
@@ -341,6 +342,7 @@ public class ProjectServiceImpl {
 			rs = pstmt.executeQuery();
 
 			while(rs.next()) { 
+				
 				vo.setCompany(rs.getString("company"));
 				vo.setcNumber(rs.getString("cnumber"));
 				vo.setcAddr(rs.getString("caddr"));
@@ -365,7 +367,7 @@ public class ProjectServiceImpl {
 		try { 
 			
 			this.sql = "INSERT INTO TF_PROJECT_COMM (PCOMMIDX, PIDX, IDX, COMMENTS, GOOD, BAD, OPCOMMIDX, RPCOMMIDX, PCOMMDEPTH, VIEWSTAT, INSDATE, MODDATE) "
-					+	"VALUES (SEQ_TF_PCOMMIDX.NEXTVAL, ?, ?, ?, 0, 0, SEQ_TF_PCOMMIDX.CURRVAL, 1, 1, 1, SYSDATE, SYSDATE)";
+				+	"VALUES (SEQ_TF_PCOMMIDX.NEXTVAL, ?, ?, ?, 0, 0, SEQ_TF_PCOMMIDX.CURRVAL, 1, 1, 1, SYSDATE, SYSDATE)";
 		
 			pstmt = con.prepareStatement(this.sql); 
 			pstmt.setInt(1, vo.getpIdx());
@@ -395,9 +397,9 @@ public class ProjectServiceImpl {
 			con.setAutoCommit(false);
 			
 			this.sql = "UPDATE TF_PROJECT_COMM "
-					+	"SET RPCOMMIDX = RPCOMMIDX + 1 "
-					+	"WHERE OPCOMMIDX = (SELECT OPCOMMIDX FROM TF_PROJECT_COMM WHERE PCOMMIDX = ?) "
-					+	"AND RPCOMMIDX > (SELECT RPCOMMIDX FROM TF_PROJECT_COMM WHERE PCOMMIDX = ?)";
+				+	"SET RPCOMMIDX = RPCOMMIDX + 1 "
+				+	"WHERE OPCOMMIDX = (SELECT OPCOMMIDX FROM TF_PROJECT_COMM WHERE PCOMMIDX = ?) "
+				+		"AND RPCOMMIDX > (SELECT RPCOMMIDX FROM TF_PROJECT_COMM WHERE PCOMMIDX = ?)";
 		
 			pstmt = con.prepareStatement(this.sql); 
 			pstmt.setInt(1, vo.getOpCommIdx());
@@ -406,7 +408,7 @@ public class ProjectServiceImpl {
 			row = pstmt.executeUpdate();
 			
 			this.sql = "INSERT INTO TF_PROJECT_COMM (PCOMMIDX, PIDX, IDX, COMMENTS, GOOD, BAD, OPCOMMIDX, RPCOMMIDX, PCOMMDEPTH, VIEWSTAT, INSDATE, MODDATE) "
-					+	"VALUES (SEQ_TF_PCOMMIDX.NEXTVAL, ?, ?, ?, 0, 0, (SELECT OPCOMMIDX FROM TF_PROJECT_COMM WHERE PCOMMIDX = ?), (SELECT RPCOMMIDX FROM TF_PROJECT_COMM WHERE PCOMMIDX = ?) + 1, (SELECT PCOMMDEPTH FROM TF_PROJECT_COMM WHERE PCOMMIDX = ?) + 1, 1, SYSDATE, SYSDATE)";
+				+	"VALUES (SEQ_TF_PCOMMIDX.NEXTVAL, ?, ?, ?, 0, 0, (SELECT OPCOMMIDX FROM TF_PROJECT_COMM WHERE PCOMMIDX = ?), (SELECT RPCOMMIDX FROM TF_PROJECT_COMM WHERE PCOMMIDX = ?) + 1, (SELECT PCOMMDEPTH FROM TF_PROJECT_COMM WHERE PCOMMIDX = ?) + 1, 1, SYSDATE, SYSDATE)";
 		
 			pstmt = con.prepareStatement(this.sql); 
 			pstmt.setInt(1, vo.getpIdx());
@@ -450,9 +452,9 @@ public class ProjectServiceImpl {
 		try { 
 			
 			this.sql = "UPDATE TF_PROJECT_COMM "
-					+	"SET RPCOMMIDX = RPCOMMIDX + 1 "
-					+	"WHERE OPCOMMIDX = (SELECT OPCOMMIDX FROM TF_PROJECT_COMM WHERE PCOMMIDX = ?) "
-					+	"AND RPCOMMIDX > (SELECT RPCOMMIDX FROM TF_PROJECT_COMM WHERE PCOMMIDX = ?)";
+				+	"SET RPCOMMIDX = RPCOMMIDX + 1 "
+				+	"WHERE OPCOMMIDX = (SELECT OPCOMMIDX FROM TF_PROJECT_COMM WHERE PCOMMIDX = ?) "
+				+		"AND RPCOMMIDX > (SELECT RPCOMMIDX FROM TF_PROJECT_COMM WHERE PCOMMIDX = ?)";
 		
 			pstmt = con.prepareStatement(this.sql); 
 			pstmt.setInt(1, vo.getOpCommIdx());
@@ -479,7 +481,7 @@ public class ProjectServiceImpl {
 		try { 
 			
 			this.sql = "INSERT INTO TF_PROJECT_COMM (PCOMMIDX, PIDX, IDX, COMMENTS, GOOD, BAD, OPCOMMIDX, RPCOMMIDX, PCOMMDEPTH, VIEWSTAT, INSDATE, MODDATE) "
-					+	"VALUES (SEQ_TF_PCOMMIDX.NEXTVAL, ?, ?, ?, 0, 0, (SELECT OPCOMMIDX FROM TF_PROJECT_COMM WHERE PCOMMIDX = ?), (SELECT RPCOMMIDX FROM TF_PROJECT_COMM WHERE PCOMMIDX = ?) + 1, (SELECT PCOMMDEPTH FROM TF_PROJECT_COMM WHERE PCOMMIDX = ?) + 1, 1, SYSDATE, SYSDATE)";
+				+	"VALUES (SEQ_TF_PCOMMIDX.NEXTVAL, ?, ?, ?, 0, 0, (SELECT OPCOMMIDX FROM TF_PROJECT_COMM WHERE PCOMMIDX = ?), (SELECT RPCOMMIDX FROM TF_PROJECT_COMM WHERE PCOMMIDX = ?) + 1, (SELECT PCOMMDEPTH FROM TF_PROJECT_COMM WHERE PCOMMIDX = ?) + 1, 1, SYSDATE, SYSDATE)";
 		
 			pstmt = con.prepareStatement(this.sql); 
 			pstmt.setInt(1, vo.getpIdx());
@@ -512,7 +514,7 @@ public class ProjectServiceImpl {
 			con.setAutoCommit(false);
 			
 			this.sql = "INSERT INTO TF_FUND_HIS (FIDX, PIDX, ITIDX, IDX, INFUNDS, BFUNDS, AFUNDS, STATUS, INSDATE) "
-					+	"VALUES (SEQ_TF_FIDX.NEXTVAL, ?, ?, ?, ?, (SELECT * FROM (SELECT AFUNDS FROM TF_FUND_HIS WHERE PIDX = ? ORDER BY FIDX DESC) WHERE ROWNUM = 1), (SELECT * FROM (SELECT AFUNDS FROM TF_FUND_HIS WHERE PIDX = ? ORDER BY FIDX DESC) WHERE ROWNUM = 1) + ?, 1, SYSDATE)";
+				+	"VALUES (SEQ_TF_FIDX.NEXTVAL, ?, ?, ?, ?, (SELECT * FROM (SELECT AFUNDS FROM TF_FUND_HIS WHERE PIDX = ? ORDER BY FIDX DESC) WHERE ROWNUM = 1), (SELECT * FROM (SELECT AFUNDS FROM TF_FUND_HIS WHERE PIDX = ? ORDER BY FIDX DESC) WHERE ROWNUM = 1) + ?, 1, SYSDATE)";
 		
 			pstmt = con.prepareStatement(this.sql); 
 			pstmt.setInt(1, vo.getpIdx());
@@ -526,10 +528,10 @@ public class ProjectServiceImpl {
 			row = pstmt.executeUpdate();
 			
 			this.sql = "UPDATE TF_WISH_LIST "
-					+	"SET VIEWSTAT = 0 "
-					+	"WHERE VIEWSTAT = 1 "
-					+	"AND IDX = ? "
-					+	"AND PIDX = ?";
+				+	"SET VIEWSTAT = 0 "
+				+	"WHERE VIEWSTAT = 1 "
+				+		"AND IDX = ? "
+				+		"AND PIDX = ?";
 		
 			pstmt = con.prepareStatement(this.sql); 
 			pstmt.setInt(1, vo.getIdx());
@@ -538,8 +540,8 @@ public class ProjectServiceImpl {
 			row += pstmt.executeUpdate();
 			
 			this.sql = "UPDATE TF_IMEMBER_EXT "
-					+	"SET MONEY = MONEY - ? "
-					+	"WHERE IDX = ? ";
+				+	"SET MONEY = MONEY - ? "
+				+	"WHERE IDX = ? ";
 		
 			pstmt = con.prepareStatement(this.sql); 
 			pstmt.setInt(1, vo.getInFunds());
@@ -548,8 +550,8 @@ public class ProjectServiceImpl {
 			row += pstmt.executeUpdate();
 			
 			this.sql = "UPDATE TF_PROJECT_LIST "
-					+	"SET PNFUNDS = PNFUNDS + ? "
-					+	"WHERE PIDX = ? ";
+				+	"SET PNFUNDS = PNFUNDS + ? "
+				+	"WHERE PIDX = ? ";
 		
 			pstmt = con.prepareStatement(this.sql);
 			pstmt.setInt(1, vo.getInFunds());
@@ -558,8 +560,8 @@ public class ProjectServiceImpl {
 			row += pstmt.executeUpdate();
 			
 			this.sql = "UPDATE TF_ITEM_LIST "
-					+	"SET ITSCNT = ITSCNT + 1 "
-					+	"WHERE ITIDX = ? ";
+				+	"SET ITSCNT = ITSCNT + 1 "
+				+	"WHERE ITIDX = ? ";
 		
 			pstmt = con.prepareStatement(this.sql);
 			pstmt.setInt(1, vo.getItIdx());
@@ -598,7 +600,7 @@ public class ProjectServiceImpl {
 		try { 
 			
 			this.sql = "INSERT INTO TF_FUND_HIS (FIDX, PIDX, ITIDX, IDX, INFUNDS, BFUNDS, AFUNDS, STATUS, INSDATE) "
-					+	"VALUES (SEQ_TF_FIDX.NEXTVAL, ?, ?, ?, ?, (SELECT * FROM (SELECT AFUNDS FROM TF_FUND_HIS WHERE PIDX = ? ORDER BY FIDX DESC) WHERE ROWNUM = 1), (SELECT * FROM (SELECT AFUNDS FROM TF_FUND_HIS WHERE PIDX = ? ORDER BY FIDX DESC) WHERE ROWNUM = 1) + ?, 1, SYSDATE)";
+				+	"VALUES (SEQ_TF_FIDX.NEXTVAL, ?, ?, ?, ?, (SELECT * FROM (SELECT AFUNDS FROM TF_FUND_HIS WHERE PIDX = ? ORDER BY FIDX DESC) WHERE ROWNUM = 1), (SELECT * FROM (SELECT AFUNDS FROM TF_FUND_HIS WHERE PIDX = ? ORDER BY FIDX DESC) WHERE ROWNUM = 1) + ?, 1, SYSDATE)";
 		
 			pstmt = con.prepareStatement(this.sql); 
 			pstmt.setInt(1, vo.getpIdx());
@@ -630,10 +632,10 @@ public class ProjectServiceImpl {
 		try { 
 			
 			this.sql = "UPDATE TF_WISH_LIST "
-					+	"SET VIEWSTAT = 0 "
-					+	"WHERE VIEWSTAT = 1 "
-					+	"AND IDX = ? "
-					+	"AND PIDX = ?";
+				+	"SET VIEWSTAT = 0 "
+				+	"WHERE VIEWSTAT = 1 "
+				+		"AND IDX = ? "
+				+		"AND PIDX = ?";
 		
 			pstmt = con.prepareStatement(this.sql); 
 			pstmt.setInt(1, vo.getIdx());
@@ -660,8 +662,8 @@ public class ProjectServiceImpl {
 		try { 
 			
 			this.sql = "UPDATE TF_IMEMBER_EXT "
-					+	"SET MONEY = MONEY - ? "
-					+	"WHERE IDX = ? ";
+				+	"SET MONEY = MONEY - ? "
+				+	"WHERE IDX = ? ";
 		
 			pstmt = con.prepareStatement(this.sql); 
 			pstmt.setInt(1, vo.getInFunds());
@@ -688,8 +690,8 @@ public class ProjectServiceImpl {
 		try { 
 			
 			this.sql = "UPDATE TF_PROJECT_LIST "
-					+	"SET PNFUNDS = PNFUNDS + ? "
-					+	"WHERE PIDX = ? ";
+				+	"SET PNFUNDS = PNFUNDS + ? "
+				+	"WHERE PIDX = ? ";
 		
 			pstmt = con.prepareStatement(this.sql);
 			pstmt.setInt(1, vo.getInFunds());
@@ -716,8 +718,8 @@ public class ProjectServiceImpl {
 		try { 
 			
 			this.sql = "UPDATE TF_ITEM_LIST "
-					+	"SET ITSCNT = ITSCNT + 1 "
-					+	"WHERE ITIDX = ? ";
+				+	"SET ITSCNT = ITSCNT + 1 "
+				+	"WHERE ITIDX = ? ";
 		
 			pstmt = con.prepareStatement(this.sql);
 			pstmt.setInt(1, vo.getItIdx());

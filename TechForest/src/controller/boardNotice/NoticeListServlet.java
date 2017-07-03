@@ -1,11 +1,18 @@
 package controller.boardNotice;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import common.PageRedirect;
+import service.BoardNoticeServiceImpl;
+import service.BoardVo;
 
 /**
  * Servlet implementation class NoticeListServlet
@@ -25,15 +32,58 @@ public class NoticeListServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+//    	HttpSession session = request.getSession();
+//    	int idx = (Integer) null;
+//    	if(session.getAttribute("idx") !=null) idx = (Integer) request.getAttribute("idx");
+
+		int bidx = 0;
+		if(request.getParameter("bidx") != null) bidx = Integer.parseInt(request.getParameter("bidx"));
+
+    	BoardNoticeServiceImpl bs = new BoardNoticeServiceImpl(); 
+    	ArrayList<BoardVo> list = new ArrayList<BoardVo>();
+
+    	list = bs.boardNoticeList(bidx, 1, 1);
+    	
+    	request.setAttribute("list", list);		
+		
+		ArrayList<BoardVo> list2 = (ArrayList<BoardVo>) request.getAttribute("list");		
+		for(BoardVo vo : list2){	
+			
+//			System.out.println(vo.getbIdx());
+//			System.out.println(vo.getTitle());
+//			System.out.println(vo.getInsDate());
+//			System.out.println(vo.getHit());
+		
+		}
+		
+		
+		String cate = "공지사항";
+		
+		ArrayList<BoardVo> blist = new ArrayList<BoardVo>();
+		
+		blist = bs.boardNoticeListCate(cate, 1, 1);		
+		request.setAttribute("blist", blist);
+		
+		ArrayList<BoardVo> list3 = (ArrayList<BoardVo>) request.getAttribute("blist");
+		for(BoardVo vo : list3){
+			
+//			System.out.println(vo.getbIdx());
+//			System.out.println(vo.getTitle());
+//			System.out.println(vo.getInsDate());
+//			System.out.println(vo.getHit());
+		
+		}
+
+		
+		PageRedirect pr = new PageRedirect(false, "/boardNotice/NoticeList.jsp", request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

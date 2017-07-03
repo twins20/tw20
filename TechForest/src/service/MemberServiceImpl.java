@@ -23,7 +23,7 @@ public class MemberServiceImpl {
 		try {
 			
 			this.sql = "INSERT INTO TF_MEMBER(IDX,ID,PW,NAME,NICK,PHONE,ADDR,STATUS,TYPE,INSDATE) "
-					+	"VALUES(SEQ_TF_IDX.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE) "; 
+				+	"VALUES(SEQ_TF_IDX.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE) "; 
 		
 			pstmt = con.prepareStatement(this.sql);
 			pstmt.setString(1, vo.getId());
@@ -58,8 +58,9 @@ public class MemberServiceImpl {
 		try {
 			
 			this.sql = "SELECT ROWNUM, IDX, ID, STATUS, TYPE "
-					+	"FROM TF_MEMBER "
-					+	"WHERE ID = ? AND PW = ?";
+				+	"FROM TF_MEMBER "
+				+	"WHERE ID = ? "
+				+ 		"AND PW = ?";
 		
 			pstmt = con.prepareStatement(this.sql);
 			pstmt.setString(1, inputMV.getId());
@@ -97,9 +98,9 @@ public class MemberServiceImpl {
 		try {
 			
 			this.sql = "SELECT ID "
-					+	"FROM TF_MEMBER "
-					+	"WHERE NAME = ? "
-					+	"AND PHONE = ?";
+				+	"FROM TF_MEMBER "
+				+	"WHERE NAME = ? "
+				+		"AND PHONE = ?";
 		
 			pstmt = con.prepareStatement(this.sql);
 			pstmt.setString(1, inputMV.getName());
@@ -131,10 +132,10 @@ public class MemberServiceImpl {
 		try {
 			
 			this.sql = "SELECT PW "
-					+	"FROM TF_MEMBER "
-					+	"WHERE ID = ? "
-					+	"AND NAME = ? "
-					+	"AND PHONE = ?";
+				+	"FROM TF_MEMBER "
+				+	"WHERE ID = ? "
+				+		"AND NAME = ? "
+				+		"AND PHONE = ?";
 		
 			pstmt = con.prepareStatement(this.sql);
 			pstmt.setString(1, inputMV.getId());
@@ -167,10 +168,10 @@ public class MemberServiceImpl {
 		try {
 			
 			this.sql = "SELECT * "
-					+	"FROM TF_MEMO_LIST "
-					+	"WHERE RECVIDX = ? "
-					+	"AND (STATUS = 0 OR STATUS = 1) "
-					+	"ORDER BY MEMOIDX DESC";
+				+	"FROM TF_MEMO_LIST "
+				+	"WHERE RECVIDX = ? "
+				+		"AND (STATUS = 0 OR STATUS = 1) "
+				+	"ORDER BY MEMOIDX DESC";
 			
 			this.sql = new PagingQ().pagingStr(sql, listCnt, pageCnt);
 		
@@ -179,8 +180,8 @@ public class MemberServiceImpl {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				MemoVo vo = new MemoVo();
 				
+				MemoVo vo = new MemoVo();
 				vo.setMemoIdx(rs.getInt("memoidx"));
 				vo.setSendIdx(rs.getInt("sendidx"));
 				vo.setRecvIdx(rs.getInt("recvidx"));
@@ -211,8 +212,8 @@ public class MemberServiceImpl {
 		try {
 			
 			this.sql = "SELECT * "
-					+	"FROM TF_MEMO_LIST "
-					+	"WHERE MEMOIDX = ?";
+				+	"FROM TF_MEMO_LIST "
+				+	"WHERE MEMOIDX = ?";
 		
 			pstmt = con.prepareStatement(this.sql);
 			pstmt.setInt(1, memoIdx);
@@ -247,9 +248,9 @@ public class MemberServiceImpl {
 		try {
 			
 			this.sql = "UPDATE TF_MEMO_LIST "
-					+	"SET STATUS = STATUS + 2 "
-					+	"WHERE (STATUS = 0 OR STATUS = 1) "
-					+	"AND MEMOIDX = ?";
+				+	"SET STATUS = STATUS + 2 "
+				+	"WHERE (STATUS = 0 OR STATUS = 1) "
+				+		"AND MEMOIDX = ?";
 		
 			pstmt = con.prepareStatement(this.sql);
 			pstmt.setInt(1, memoIdx);

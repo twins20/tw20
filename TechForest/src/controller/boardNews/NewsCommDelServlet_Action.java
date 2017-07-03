@@ -6,6 +6,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import common.PageRedirect;
+import service.BoardNewsServiceImpl;
 
 /**
  * Servlet implementation class NewsCommDelServlet_Action
@@ -27,7 +31,17 @@ public class NewsCommDelServlet_Action extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+//		HttpSession session =request.getSession();
+//		int idx = (Integer) null;
+//		if(session.getAttribute("idx") !=null) idx = (Integer) session.getAttribute("idx");
+		
+		int bidx = 0;
+		if(request.getParameter("bidx") != null) bidx = Integer.parseInt(request.getParameter("bidx"));
+		
+		BoardNewsServiceImpl bs = new BoardNewsServiceImpl();				
+		bs.boardNewsCommDel(bidx); 		
+		
+		PageRedirect pr = new PageRedirect(true,"/NewsListServlet.do",request, response);
 	}
 
 	/**

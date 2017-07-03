@@ -56,8 +56,7 @@ public class IMemberServiceImpl {
 				data.put("vo", pvo);
 				data.put("vo2", fvo);
 				
-				alist.add(data);
-				
+				alist.add(data);	
 			}
 			
 		}catch(Exception e) {
@@ -106,8 +105,7 @@ public class IMemberServiceImpl {
 				vo.setInsDate(rs.getString("insdate"));
 				vo.setModDate(rs.getString("moddate"));
 				
-				alist.add(vo);
-				
+				alist.add(vo);		
 			}
 			
 		}catch(Exception e) {
@@ -385,7 +383,6 @@ public class IMemberServiceImpl {
 				vo.setInsDate(rs.getString("insdate"));
 			
 				flist.add(vo);
-				
 			}
 			
 		}catch(Exception e) {

@@ -6,6 +6,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import common.PageRedirect;
+import service.BoardCommVo;
+import service.BoardNewsServiceImpl;
+import service.BoardQnaServiceImpl;
+import service.BoardVo;
 
 /**
  * Servlet implementation class NewsCommModServlet_Action
@@ -27,7 +34,32 @@ public class NewsCommModServlet_Action extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+//		HttpSession session = request.getSession();
+//		int idx = (Integer) null;
+//		if(session.getAttribute("idx") !=null ) idx = (Integer) session.getAttribute("idx");
+		
+		int bidx = 0;
+		if(request.getParameter("bidx") != null) bidx = Integer.parseInt(request.getParameter("bidx"));
+		
+		BoardNewsServiceImpl bs = new BoardNewsServiceImpl();
+		
+		
+		int commidx = 0;
+		String comments = null;
+		
+		if(request.getParameter("commidx") != null) commidx = Integer.parseInt(request.getParameter("commidx").trim());
+		if(request.getParameter("comments") != null) comments = request.getParameter("comments").trim();
+		
+		BoardCommVo vc = new BoardCommVo();		
+		vc.setCommIdx(commidx);
+		vc.setComments(comments);
+		
+		int row = 0;
+		
+		row = bs.boardNewsCommWriteCntMod(vc);
+				
+		PageRedirect pr = new PageRedirect(true,"/NewsListServlet.do", request, response);
+		
 	}
 
 	/**

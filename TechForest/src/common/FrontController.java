@@ -48,11 +48,11 @@ public class FrontController extends HttpServlet {
 
 //			this.isRedirect = false;
 //			this.view = "/project/ProjectListByCate.jsp";
-		
+//--------------------------------------------------인덱스---------------------------------------------------------//
 		if(command.equals("/index.do")){ 
 			
 			this.view = "/indexServlet";
-			
+//--------------------------------------------------프로젝트--------------------------------------------------------//
 		}else if(command.equals("/ProjListByCate.do")){ 
 			
 			this.view = "/ProjectListByCateServlet";
@@ -80,7 +80,7 @@ public class FrontController extends HttpServlet {
 		}else if(command.equals("/ProjectConSubCommWrite_Action.do")){
 			
 			this.view = "/ProjectConSubCommWriteServlet_Action";
-			
+//---------------------------------------------------멤버----------------------------------------------------------//	
 		}else if(command.equals("/MemberJoin.do")){
 			
 			this.view = "/MemberJoinServlet";
@@ -128,7 +128,7 @@ public class FrontController extends HttpServlet {
 		}else if(command.equals("/MemberMemoDel_Action.do")){
 			
 			this.view = "/MemberMemoDelServlet_Action";
-			
+//--------------------------------------------------사업자----------------------------------------------------------//			
 		}else if(command.equals("/CMemberIndex.do")){
 			
 			this.view = "/CMemberIndexServlet";
@@ -256,7 +256,7 @@ public class FrontController extends HttpServlet {
 		}else if(command.equals("/CMemberQnaReplyMod_Action.do")){
 			
 			this.view = "/CMemberQnaReplyModServlet_Action";
-			
+//--------------------------------------------------관리자----------------------------------------------------------//			
 		}else if(command.equals("/AdminCmemChkCon.do")){
 
 			this.view = "/AdminCmemChkConServlet";
@@ -440,7 +440,7 @@ public class FrontController extends HttpServlet {
 		}else if(command.equals("/AdminQnaWrite.do")){
 			
 			this.view = "/AdminQnaWriteServlet";
-		
+//--------------------------------------------------투자자----------------------------------------------------------//		
 		}else if(command.equals("/IMemberFundList.do")){
 			
 			this.view = "/IMemberFundListServlet";
@@ -480,7 +480,67 @@ public class FrontController extends HttpServlet {
 		}else if(command.equals("/IMemberWishListDel_Action.do")){
 			
 			this.view = "/IMemberWishListDelServlet_Action";
+//---------------------------------------------------뉴스----------------------------------------------------------//		
+		}else if(command.equals("/NewsListServlet.do")){ 
+				
+			this.view = "/NewsListServlet";
 		
+		}else if(command.equals("/NewsConServlet.do")){
+			
+			this.view = "/NewsConServlet";
+		
+		}else if(command.equals("/NewsCommWriteServlet_Action.do")){
+			
+			this.view = "/NewsCommWriteServlet_Action";
+		
+		}else if(command.equals("/NewsCommModServlet_Action.do")){
+			
+			this.view = "/NewsCommModServlet_Action";
+		
+		}else if(command.equals("/NewsCommDelServlet_Action.do")){
+			
+			this.view = "/NewsCommDelServlet_Action";
+		
+		}else if(command.equals("/NewsSubCommWriteServlet.do")){
+			
+			this.view = "/NewsSubCommWriteServlet_Action";
+//---------------------------------------------------QNA----------------------------------------------------------//		
+		}else if(command.equals("/QnaListServlet.do")){
+			
+			this.view = "/QnaListServlet";
+			
+		}else if(command.equals("/QnaConServlet.do")){
+			
+			this.view = "/QnaConServlet";
+			
+		}else if(command.equals("/QnaWriteServlet_Action.do")){
+			
+			this.view = "/QnaWriteServlet";
+			
+		}else if(command.equals("/QnaModServlet_Action.do")){
+			
+			this.view = "/QnaModServlet_Action";
+			
+		}else if(command.equals("/QnaDelServlet_Action.do")){
+			
+			this.view = "/QnaDelServlet_Action";
+//--------------------------------------------------공지사항--------------------------------------------------------//		
+		}else if(command.equals("/NoticeListServlet.do")){
+			
+			this.view = "/NoticeListServlet";
+		
+		}else if(command.equals("/NoticeConServlet.do")){
+			
+			this.view = "/NoticeConServlet";
+//---------------------------------------------------FAQ----------------------------------------------------------//			
+		}else if(command.equals("/FaqListServlet.do")){
+			
+			this.view = "/FaqListServlet";
+			
+		}else if(command.equals("/FaqConServlet.do")){
+			
+			this.view = "/FaqConServlet";
+			
 		}
 		
 		PageRedirect pr = new PageRedirect(false, view, request, response);
