@@ -59,7 +59,7 @@ public class MemberJoinServlet_Action extends HttpServlet {
 		
 //		System.out.println(row);
 		
-		PageRedirect pr = new PageRedirect(true, "/index.jsp", request, response);
+		PageRedirect pr = new PageRedirect(true, "/index.do", request, response);
 	}
 
 	/**

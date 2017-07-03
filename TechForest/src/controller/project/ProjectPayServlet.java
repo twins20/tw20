@@ -55,14 +55,14 @@ public class ProjectPayServlet extends HttpServlet {
 		request.setAttribute("fundInfo", vo);
 		request.setAttribute("iMemInfo", iMemInfo);
 		
-		vo = (FundVo) request.getAttribute("fundInfo");
-		iMemInfo = (MemberVo) request.getAttribute("iMemInfo");
-	
-		System.out.println(vo.getpIdx());
-		System.out.println(vo.getItIdx());
-		System.out.println(vo.getIdx());
-		System.out.println(vo.getInFunds());
-		System.out.println(iMemInfo.getMoney());
+//		vo = (FundVo) request.getAttribute("fundInfo");
+//		iMemInfo = (MemberVo) request.getAttribute("iMemInfo");
+//	
+//		System.out.println(vo.getpIdx());
+//		System.out.println(vo.getItIdx());
+//		System.out.println(vo.getIdx());
+//		System.out.println(vo.getInFunds());
+//		System.out.println(iMemInfo.getMoney());
 		
 		PageRedirect pr = new PageRedirect(false, "/project/ProjectPay.jsp", request, response);
 	}

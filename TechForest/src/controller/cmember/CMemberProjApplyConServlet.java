@@ -73,7 +73,7 @@ public class CMemberProjApplyConServlet extends HttpServlet {
 //			System.out.println(itVo.getItTCnt());
 //		}
 		
-		PageRedirect pr = new PageRedirect(false, "/cmember/CMemberProjApplyCon.jsp", request, response);
+		PageRedirect pr = new PageRedirect(false, "/CMemberProjApplyCon.do", request, response);
 	}
 
 	/**

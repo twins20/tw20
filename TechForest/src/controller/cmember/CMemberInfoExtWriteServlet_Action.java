@@ -59,11 +59,11 @@ public class CMemberInfoExtWriteServlet_Action extends HttpServlet {
 		if(row == 0){
 			row += cs.cMemInfoExtWrite(vo);
 			
-			System.out.println(row);
+//			System.out.println(row);
 			
-			PageRedirect pr = new PageRedirect(true, "/cmember/CMemberInfoCon.jsp", request, response);
+			PageRedirect pr = new PageRedirect(true, "/CMemberInfoCon.do", request, response);
 		}else{
-			PageRedirect pr = new PageRedirect(true, "/cmember/CMemberInfoCon.jsp", request, response);
+			PageRedirect pr = new PageRedirect(true, "/CMemberInfoCon.do", request, response);
 		}
 	}
 

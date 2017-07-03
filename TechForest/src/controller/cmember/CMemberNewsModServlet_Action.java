@@ -53,7 +53,7 @@ public class CMemberNewsModServlet_Action extends HttpServlet {
 		
 //		System.out.println(row);
 		
-		PageRedirect pr = new PageRedirect(true, "/cmember/CMemberNewsCon.jsp", request, response);
+		PageRedirect pr = new PageRedirect(true, "/CMemberNewsCon.do", request, response);
 	}
 
 	/**

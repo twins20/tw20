@@ -59,7 +59,7 @@ public class CMemberNewsModServlet extends HttpServlet {
 //		System.out.println(vo.getBad());
 //		System.out.println(vo.getObIdx());
 //		System.out.println(vo.getInsDate());
-//		System.out.println(vo.getExtColumn());
+//		System.out.println(vo.getpIdx());
 
 		PageRedirect pr = new PageRedirect(false, "/cmember/CMemberNewsMod.jsp", request, response);
 	}

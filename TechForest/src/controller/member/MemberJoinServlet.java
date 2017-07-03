@@ -29,7 +29,7 @@ public class MemberJoinServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		PageRedirect pr = new PageRedirect(true, "/member/MemberJoin.jsp", request, response);
+		PageRedirect pr = new PageRedirect(true, "/MemberJoin.do", request, response);
 	}
 
 	/**

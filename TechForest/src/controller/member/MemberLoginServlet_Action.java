@@ -60,10 +60,10 @@ public class MemberLoginServlet_Action extends HttpServlet {
 			session.setAttribute("status", data.get("status"));
 			session.setAttribute("type", data.get("type"));
 			
-			PageRedirect pr = new PageRedirect(true, "/index.jsp", request, response);
+			PageRedirect pr = new PageRedirect(true, "/index.do", request, response);
 			
 		}else{
-			PageRedirect pr = new PageRedirect(true, "/member/MemberLogIn.jsp", request, response);
+			PageRedirect pr = new PageRedirect(true, "/MemberLogIn.do", request, response);
 		}
 	}
 

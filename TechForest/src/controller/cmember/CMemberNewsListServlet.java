@@ -59,7 +59,7 @@ public class CMemberNewsListServlet extends HttpServlet {
 //			System.out.println(vo.getCommCnt());
 //			System.out.println(vo.getObIdx());		
 //			System.out.println(vo.getInsDate());
-//			System.out.println(vo.getExtColumn());
+//			System.out.println(vo.getpIdx());
 //		}
 		
 		PageRedirect pr = new PageRedirect(false, "/cmember/CMemberMemoSendList.jsp", request, response);

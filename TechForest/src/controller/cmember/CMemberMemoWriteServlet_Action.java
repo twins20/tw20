@@ -57,7 +57,7 @@ public class CMemberMemoWriteServlet_Action extends HttpServlet {
 		
 //		System.out.println(row);
 		
-		PageRedirect pr = new PageRedirect(true, "/cmember/CMemberMemoSendList.jsp", request, response);
+		PageRedirect pr = new PageRedirect(true, "/CMemberMemoSendList.do", request, response);
 	}
 
 	/**

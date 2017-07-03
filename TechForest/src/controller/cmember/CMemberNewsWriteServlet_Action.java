@@ -56,7 +56,7 @@ public class CMemberNewsWriteServlet_Action extends HttpServlet {
 		
 //		System.out.println(row);
 		
-		PageRedirect pr = new PageRedirect(true, "/cmember/CMemberNewsList.jsp", request, response);
+		PageRedirect pr = new PageRedirect(true, "/CMemberNewsList.do", request, response);
 	}
 
 	/**

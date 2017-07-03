@@ -58,7 +58,7 @@ public class CMemberInfoModServlet_Action extends HttpServlet {
 		
 //		System.out.println(row);
 		
-		PageRedirect pr = new PageRedirect(true, "/cmember/CMemberInfoCon.do", request, response);
+		PageRedirect pr = new PageRedirect(true, "/CMemberInfoCon.do", request, response);
 	}
 
 	/**

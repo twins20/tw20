@@ -29,7 +29,7 @@ public class MemberFindMailServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		PageRedirect pr = new PageRedirect(true, "/member/MemberFindMail.jsp", request, response);
+		PageRedirect pr = new PageRedirect(true, "/MemberFindMail.do", request, response);
 	}
 
 	/**

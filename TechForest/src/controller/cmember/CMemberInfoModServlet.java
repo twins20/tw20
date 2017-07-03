@@ -54,7 +54,7 @@ public class CMemberInfoModServlet extends HttpServlet {
 		
 		if(row == 0){ 
 			
-			PageRedirect pr = new PageRedirect(true, "/cmember/CMemberInfoCon.jsp", request, response);	
+			PageRedirect pr = new PageRedirect(true, "/CMemberInfoCon.do", request, response);	
 			
 		}else{
 			

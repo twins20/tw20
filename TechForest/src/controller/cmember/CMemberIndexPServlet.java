@@ -63,7 +63,7 @@ public class CMemberIndexPServlet extends HttpServlet {
 		
 //		commList = (ArrayList<ProjectCommVo>) request.getAttribute("commList");
 //		
-//		for(ProjectVo commVo : commList){
+//		for(ProjectCommVo commVo : commList){
 //			System.out.println(commVo.getpCommIdx());
 //			System.out.println(commVo.getComments());
 //			System.out.println(commVo.getGood());

@@ -1,4 +1,4 @@
-package controller.member;
+package common;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,19 +7,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import common.PageRedirect;
-
 /**
- * Servlet implementation class MemberLoginServlet
+ * Servlet implementation class indexServlet
  */
-@WebServlet("/MemberLoginServlet")
-public class MemberLoginServlet extends HttpServlet {
+@WebServlet("/indexServlet")
+public class indexServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberLoginServlet() {
+    public indexServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,7 +27,7 @@ public class MemberLoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		PageRedirect pr = new PageRedirect(true, "/MemberLogin.do", request, response);
+		PageRedirect pr = new PageRedirect(false, "/index.jsp", request, response);
 	}
 
 	/**

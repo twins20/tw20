@@ -29,7 +29,7 @@ public class MemberLogOutServlet_Action extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		PageRedirect pr = new PageRedirect(true, "/index.jsp", request, response);
+		PageRedirect pr = new PageRedirect(true, "/index.do", request, response);
 	}
 
 	/**

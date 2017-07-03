@@ -68,7 +68,7 @@ public class CMemberQnaReplyWriteServlet extends HttpServlet {
 //		System.out.println(vo.getBad());
 //		System.out.println(vo.getObIdx());
 //		System.out.println(vo.getInsDate());
-//		System.out.println(vo.getExtColumn());
+//		System.out.println(vo.getpIdx());
 //
 //		pvo = (ProjectVo) request.getAttribute("pvo"); 
 //		

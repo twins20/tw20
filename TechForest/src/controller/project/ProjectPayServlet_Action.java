@@ -60,7 +60,7 @@ public class ProjectPayServlet_Action extends HttpServlet {
 //		if(row != 0) row += ps.projPayPnFundsMod(inputFV);
 //		if(row != 0) row += ps.projPayItemSellCntMod(inputFV);
 		
-		System.out.println(row);
+//		System.out.println(row);
 
 		PageRedirect pr = new PageRedirect(true, "/index.jsp", request, response);
 	}

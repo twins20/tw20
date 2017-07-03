@@ -42,7 +42,7 @@ public class MemberMemoDelServlet_Action extends HttpServlet {
 		
 //		System.out.println(row);
 				
-		PageRedirect pr = new PageRedirect(true, "/member/MemberMemoList.jsp", request, response);
+		PageRedirect pr = new PageRedirect(true, "/MemberMemoList.do", request, response);
 	}
 
 	/**

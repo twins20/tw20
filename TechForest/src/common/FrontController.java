@@ -49,7 +49,11 @@ public class FrontController extends HttpServlet {
 //			this.isRedirect = false;
 //			this.view = "/project/ProjectListByCate.jsp";
 		
-		if(command.equals("/ProjListByCate.do")){ 
+		if(command.equals("/index.do")){ 
+			
+			this.view = "/indexServlet";
+			
+		}else if(command.equals("/ProjListByCate.do")){ 
 			
 			this.view = "/ProjectListByCateServlet";
 			
@@ -479,9 +483,8 @@ public class FrontController extends HttpServlet {
 		
 		}
 		
-		RequestDispatcher rs = request.getRequestDispatcher(view);
-		rs.forward(request, response);
-
+		PageRedirect pr = new PageRedirect(false, view, request, response);
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
