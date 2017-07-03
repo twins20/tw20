@@ -19,10 +19,9 @@ public class AdminCmemChkListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
     public AdminCmemChkListServlet() {
-        super();
-       
+        super();       
     }
-
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		AdminServiceImpl as = new AdminServiceImpl();
@@ -32,15 +31,15 @@ public class AdminCmemChkListServlet extends HttpServlet {
 		alist = as.adminCmemChkList();
 		request.setAttribute("alist", alist);
 		
-		ArrayList<MemberVo> alist1 = (ArrayList<MemberVo>) request.getAttribute("alist");
-		
-		for(MemberVo vo : alist1){
-			System.out.println("사업자 등록 승인 리스트");			
-			System.out.println(vo.getIdx());
-			System.out.println(vo.getName());		
-			System.out.println(vo.getModDate());
-			System.out.println(vo.getStatus());
-		}
+//		ArrayList<MemberVo> alist1 = (ArrayList<MemberVo>) request.getAttribute("alist");
+//		
+//		for(MemberVo vo : alist1){
+//			System.out.println("사업자 등록 승인 리스트");			
+//			System.out.println(vo.getIdx());
+//			System.out.println(vo.getName());		
+//			System.out.println(vo.getModDate());
+//			System.out.println(vo.getStatus());
+//		}
 		
 		PageRedirect pr = new PageRedirect(false, "/admin/AdminCmemChkList.jsp", request, response);
 	}

@@ -18,29 +18,33 @@ public class AdminCmemChkOkServlet_Action extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
     public AdminCmemChkOkServlet_Action() {
-        super();
-        
+        super();        
     }
-
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		int idx = 0;
+		HttpSession session = request.getSession();
+		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
+		
 		AdminServiceImpl as = new AdminServiceImpl();	
 		
-		//관리자 사업자 등록 승인
-			
-		int idx = Integer.parseInt(request.getParameter("idx"));		
-//		int idx = 1;
+		//관리자 사업자 등록 승인			
+		int tmpCidx = 0; 
+		tmpCidx = Integer.parseInt(request.getParameter("idx"));		
 		
-		int row = as.adminCmemChkOk(idx);
-						
-		if(row != 0){
-			System.out.println("승인 성공");							
-		}else{
-			System.out.println("승인 실패");	
-		}
+		int row = 0;
+		row = as.adminCmemChkOkMem(tmpCidx);
+		row += as.adminCmemChkOkCmem(idx, tmpCidx);
+		
+//		System.out.println(row);
+//		if(row == 2){
+//			System.out.println("승인 성공");							
+//		}else{
+//			System.out.println("승인 실패");	
+//		}
 			
-		PageRedirect pr = new PageRedirect(true, "/admin/AdminCmemChkList.jsp", request, response);
+		PageRedirect pr = new PageRedirect(true, "/AdminCmemChkList.do", request, response);
 	}
 
 	

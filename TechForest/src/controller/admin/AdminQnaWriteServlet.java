@@ -16,10 +16,8 @@ public class AdminQnaWriteServlet extends HttpServlet {
        
     
     public AdminQnaWriteServlet() {
-        super();
-       
+        super();       
     }
-
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		

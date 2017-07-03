@@ -305,8 +305,8 @@ public class AdminServiceImpl {
 				fvo.setInFunds(rs.getInt("infunds"));
 				fvo.setInsDate(rs.getString("insdate"));
 				
-				data.put("pv",pvo);
-				data.put("fv",fvo);
+				data.put("pvo",pvo);
+				data.put("fvo",fvo);
 			
 				alist.add(data);
 			}
@@ -354,8 +354,8 @@ public class AdminServiceImpl {
 				bvo.setContents(rs.getString("contents"));
 				bvo.setbDepth(rs.getInt("bdepth"));				
 				
-				data.put("mv",mvo);
-				data.put("bv",bvo);
+				data.put("mvo",mvo);
+				data.put("bvo",bvo);
 			
 				alist.add(data);
 			}
@@ -420,7 +420,7 @@ public class AdminServiceImpl {
 	}
 	
 	//관리자 머니 승인 트랜잭션
-	public int adminMoneyModOkTransaction(int midx) {
+	public int adminMoneyModOkTransaction(int idx, int mIdx) {
 		
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null; 
@@ -432,12 +432,13 @@ public class AdminServiceImpl {
 			
 			this.sql = "UPDATE TF_MONEY_HIS " 
 					+		"SET STATUS = 1, "
-					+		"CHKADMIN = '관리자', " 
+					+		"CHKADMIN = (SELECT NICK FROM TF_MEMBER WHERE IDX=?), " 
 					+		"MODDATE = SYSDATE "
 					+		"WHERE MIDX = ?";
 		
 			pstmt = con.prepareStatement(this.sql); 
-			pstmt.setInt(1, midx);
+			pstmt.setInt(1, idx);
+			pstmt.setInt(2, mIdx);
 						
 			row = pstmt.executeUpdate();
 			
@@ -446,8 +447,8 @@ public class AdminServiceImpl {
 					+		"WHERE IDX = (SELECT IDX FROM TF_MONEY_HIS WHERE MIDX=?)";
 			
 			pstmt = con.prepareStatement(this.sql); 
-			pstmt.setInt(1, midx);
-			pstmt.setInt(2, midx);
+			pstmt.setInt(1, mIdx);
+			pstmt.setInt(2, mIdx);
 			
 			row += pstmt.executeUpdate();
 	
@@ -477,7 +478,7 @@ public class AdminServiceImpl {
 	
 	
 	//관리자 머니 충전 승인
-	public int adminMoneyModOk(int midx, Connection con){
+	public int adminMoneyModOk(int mIdx, Connection con){
 				
 		PreparedStatement pstmt = null;
 				
@@ -492,7 +493,7 @@ public class AdminServiceImpl {
 				+		"WHERE MIDX = ?";
 					
 			pstmt = con.prepareStatement(this.sql);							
-			pstmt.setInt(1, midx);	
+			pstmt.setInt(1, mIdx);	
 			row = pstmt.executeUpdate();			
 					
 		}catch(Exception e) { 
@@ -504,7 +505,7 @@ public class AdminServiceImpl {
 	}
 	
 	//관리자 머니 충전 승인시 머니값 변경
-	public int adminMoneyModImember(int midx, Connection con){
+	public int adminMoneyModImember(int mIdx, Connection con){
 		 
 		PreparedStatement pstmt = null; 
 		
@@ -517,8 +518,8 @@ public class AdminServiceImpl {
 				+		"WHERE IDX = (SELECT IDX FROM TF_MONEY_HIS WHERE MIDX=?)";
 					
 			pstmt = con.prepareStatement(this.sql);							
-			pstmt.setInt(1, midx);
-			pstmt.setInt(2, midx);
+			pstmt.setInt(1, mIdx);
+			pstmt.setInt(2, mIdx);
 			row = pstmt.executeUpdate();			
 					
 		}catch(Exception e) { 
@@ -530,7 +531,7 @@ public class AdminServiceImpl {
 	}
 	
 	//관리자 머니 충전 거부
-	public int adminMoneyModNOk(int midx){
+	public int adminMoneyModNOk(int idx, int mIdx){
 			
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null;	
@@ -540,11 +541,14 @@ public class AdminServiceImpl {
 		try { 	
 			
 			this.sql = "UPDATE TF_MONEY_HIS " 
-				+		"SET STATUS = 2 " 
-				+		"WHERE MIDX = ?";
+					+		"SET STATUS = 2, "
+					+		"CHKADMIN = (SELECT NICK FROM TF_MEMBER WHERE IDX=?), " 
+					+		"MODDATE = SYSDATE "
+					+		"WHERE MIDX = ?";
 					
 			pstmt = con.prepareStatement(this.sql);							
-			pstmt.setInt(1, midx);	
+			pstmt.setInt(1, idx);
+			pstmt.setInt(2, mIdx);
 			row = pstmt.executeUpdate();			
 					
 		}catch(Exception e) { 
@@ -963,7 +967,7 @@ public class AdminServiceImpl {
 	}
 	
 	//관리자 사업자 등록 승인
-	public int adminCmemChkOk(int idx){
+	public int adminCmemChkOkMem(int idx){
 			
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null; 
@@ -977,6 +981,32 @@ public class AdminServiceImpl {
 					
 			pstmt = con.prepareStatement(this.sql);							
 			pstmt.setInt(1, idx);	
+			row = pstmt.executeUpdate();			
+					
+		}catch(Exception e) { 
+			System.out.println(e.getMessage());
+		}finally { 
+			DBClose.close(con,pstmt); 
+		}	
+		return row;
+	}
+	
+	//관리자 사업자 등록 승인
+	public int adminCmemChkOkCmem(int idx, int tmpCidx){
+			
+		Connection con = dbconnect.getConnection(); 
+		PreparedStatement pstmt = null; 
+		int row = 0; 		
+		
+		try { 		
+			
+			this.sql = "UPDATE TF_CMEMBER_EXT "
+				+		"SET CHKADMIN = (SELECT NICK FROM TF_MEMBER WHERE IDX = ?) "
+				+		"WHERE IDX = ?";
+					
+			pstmt = con.prepareStatement(this.sql);							
+			pstmt.setInt(1, idx);	
+			pstmt.setInt(2, tmpCidx);
 			row = pstmt.executeUpdate();			
 					
 		}catch(Exception e) { 
@@ -1074,8 +1104,8 @@ public class AdminServiceImpl {
 				ivo.setItSCnt(rs.getInt("itscnt"));
 				ivo.setStatus(rs.getInt("status"));
 								
-				data.put("pv",pvo);
-				data.put("iv",ivo);
+				data.put("pvo",pvo);
+				data.put("ivo",ivo);
 			
 				alist.add(data);
 			}
@@ -1090,7 +1120,7 @@ public class AdminServiceImpl {
 	}
 	
 	//관리자 프로젝트 등록 승인
-	public int adminProJChkOk(int pidx){
+	public int adminProJChkOk(int idx, int pIdx){
 			
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null; 
@@ -1100,10 +1130,12 @@ public class AdminServiceImpl {
 			
 			this.sql = "UPDATE TF_PROJECT_LIST " 
 				+		"SET STATUS = 1 "
+				+		"CHKADMIN = (SELECT NICK FROM TF_MEMBER WHERE IDX = ?) "	
 				+		"WHERE PIDX = ?";
 					
 			pstmt = con.prepareStatement(this.sql);							
-			pstmt.setInt(1, pidx);	
+			pstmt.setInt(1, idx);	
+			pstmt.setInt(2, pIdx);
 			row = pstmt.executeUpdate();			
 					
 		}catch(Exception e) { 
@@ -1115,7 +1147,7 @@ public class AdminServiceImpl {
 	}
 
 	//관리자 프로젝트 등록 반려 
-	public int adminProJChkNOk(int pidx){
+	public int adminProJChkNOk(int idx, int pIdx){
 		
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null; 
@@ -1125,10 +1157,12 @@ public class AdminServiceImpl {
 			
 			this.sql = "UPDATE TF_PROJECT_LIST " 
 				+		"SET STATUS = 2 " 
+				+		"CHKADMIN = (SELECT NICK FROM TF_MEMBER WHERE IDX = ?) "
 				+		"WHERE PIDX = ?";
 					
 			pstmt = con.prepareStatement(this.sql);							
-			pstmt.setInt(1, pidx);	
+			pstmt.setInt(1, idx);
+			pstmt.setInt(2, pIdx);
 			row = pstmt.executeUpdate();			
 					
 		}catch(Exception e) { 
@@ -1188,7 +1222,7 @@ public class AdminServiceImpl {
 	}
 	
 	//관리자 고객센터 페이지 QNA 상세내용
-	public ArrayList<BoardVo> adminBoardQnaCon(int bidx){
+	public ArrayList<BoardVo> adminBoardQnaCon(int bIdx){
 		
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null; 
@@ -1203,7 +1237,7 @@ public class AdminServiceImpl {
 				+		"WHERE BIDX = ?";
 					
 			pstmt = con.prepareStatement(this.sql);
-			pstmt.setInt(1, bidx);
+			pstmt.setInt(1, bIdx);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) { 
@@ -1318,7 +1352,7 @@ public class AdminServiceImpl {
 	}
 	
 	//관리자 고객센터 페이지 QNA 삭제 
-	public int adminBoardQnaDel(int bidx){
+	public int adminBoardQnaDel(int bIdx){
 		
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null; 
@@ -1331,7 +1365,7 @@ public class AdminServiceImpl {
 				+		"WHERE BIDX = ?";
 		
 			pstmt = con.prepareStatement(this.sql); 
-			pstmt.setInt(1, bidx);					
+			pstmt.setInt(1, bIdx);					
 			
 			row = pstmt.executeUpdate();
 	
@@ -1393,7 +1427,7 @@ public class AdminServiceImpl {
 	}
 	
 	//관리자 고객센터 페이지 FAQ 상세내용 
-	public ArrayList<BoardVo> adminBoardFaqCon(int bidx){
+	public ArrayList<BoardVo> adminBoardFaqCon(int bIdx){
 		
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null; 
@@ -1408,7 +1442,7 @@ public class AdminServiceImpl {
 				+		"WHERE BIDX = ?";
 					
 			pstmt = con.prepareStatement(this.sql); 
-			pstmt.setInt(1, bidx);
+			pstmt.setInt(1, bIdx);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) { 
@@ -1516,7 +1550,7 @@ public class AdminServiceImpl {
 	}
 	
 	//관리자 고객센터 페이지 FAQ 삭제  
-	public int adminBoardFaqDel(int bidx){
+	public int adminBoardFaqDel(int bIdx){
 		
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null; 
@@ -1529,7 +1563,7 @@ public class AdminServiceImpl {
 				+		"WHERE BIDX = ?";
 		
 			pstmt = con.prepareStatement(this.sql); 
-			pstmt.setInt(1, bidx);					
+			pstmt.setInt(1, bIdx);					
 			
 			row = pstmt.executeUpdate();
 	
@@ -1591,7 +1625,7 @@ public class AdminServiceImpl {
 	}
 	
 	//관리자 고객센터 페이지 전체 공지사항 상세내용 
-	public ArrayList<BoardVo> adminBoardNoticeCon(int bidx){
+	public ArrayList<BoardVo> adminBoardNoticeCon(int bIdx){
 		
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null; 
@@ -1606,7 +1640,7 @@ public class AdminServiceImpl {
 				+		"WHERE BIDX = ?";
 					
 			pstmt = con.prepareStatement(this.sql); 
-			pstmt.setInt(1, bidx);
+			pstmt.setInt(1, bIdx);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) { 
@@ -1697,7 +1731,7 @@ public class AdminServiceImpl {
 	}
 	
 	//관리자 고객센터 페이지 전체 공지사항 삭제  
-	public int adminBoardNoticeQnaDel(int bidx){
+	public int adminBoardNoticeQnaDel(int bIdx){
 		
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null; 
@@ -1710,7 +1744,7 @@ public class AdminServiceImpl {
 				+		"WHERE BIDX = ?";
 		
 			pstmt = con.prepareStatement(this.sql); 
-			pstmt.setInt(1, bidx);					
+			pstmt.setInt(1, bIdx);					
 			
 			row = pstmt.executeUpdate();
 	
@@ -1773,7 +1807,7 @@ public class AdminServiceImpl {
 	}
 	
 	//관리자 뉴스관리 페이지 뉴스 상세내용  
-	public ArrayList<Map<String, Object>> adminBoardNewsCon(int bidx){
+	public ArrayList<Map<String, Object>> adminBoardNewsCon(int bIdx){
 		
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null; 
@@ -1791,7 +1825,7 @@ public class AdminServiceImpl {
 			this.sql = new PagingQ().pagingStr(sql, 10, 1);
 			
 			pstmt = con.prepareStatement(this.sql); 
-			pstmt.setInt(1, bidx);			
+			pstmt.setInt(1, bIdx);			
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) { 
@@ -1820,8 +1854,8 @@ public class AdminServiceImpl {
 				pvo.setpGrade(rs.getInt("pgrade"));
 				pvo.setStatus(rs.getInt("status"));
 								
-				data.put("vo", bvo);
-				data.put("pv", pvo);
+				data.put("bvo", bvo);
+				data.put("pvo", pvo);
 			
 				alist.add(data);
 			}
@@ -1896,7 +1930,7 @@ public class AdminServiceImpl {
 	}
 	
 	//관리자 뉴스관리 페이지 뉴스 삭제 
-	public int adminBoardNewsDel(int bidx){
+	public int adminBoardNewsDel(int bIdx){
 		
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null; 
@@ -1909,7 +1943,7 @@ public class AdminServiceImpl {
 				+		"WHERE BIDX = ?";
 		
 			pstmt = con.prepareStatement(this.sql); 
-			pstmt.setInt(1, bidx);					
+			pstmt.setInt(1, bIdx);					
 			
 			row = pstmt.executeUpdate();
 	

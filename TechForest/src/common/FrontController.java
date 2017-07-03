@@ -337,6 +337,10 @@ public class FrontController extends HttpServlet {
 			
 			this.view = "/AdminMemoSendServlet";
 			
+		}else if(command.equals("/AdminMoneyChkNOk_Action.do")){
+			
+			this.view = "/AdminMoneyChkNOkServlet_Action";
+			
 		}else if(command.equals("/AdminMoneyChkOk_Action.do")){
 			
 			this.view = "/AdminMoneyChkOkServlet_Action";

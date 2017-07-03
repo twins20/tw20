@@ -16,15 +16,12 @@ public class AdminImemWriteServlet extends HttpServlet {
        
    
     public AdminImemWriteServlet() {
-        super();
-      
+        super();      
     }
-
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		PageRedirect pr = new PageRedirect(false, "/admin/AdminImemWrite.jsp", request, response);
-		
+		PageRedirect pr = new PageRedirect(false, "/admin/AdminImemWrite.jsp", request, response);		
 	}
 
 	

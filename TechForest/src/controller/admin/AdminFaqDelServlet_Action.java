@@ -17,28 +17,28 @@ public class AdminFaqDelServlet_Action extends HttpServlet {
        
   
     public AdminFaqDelServlet_Action() {
-        super();
-        
+        super();        
     }
-
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 		AdminServiceImpl as = new AdminServiceImpl();
 		
-		int bidx = Integer.parseInt(request.getParameter("bidx"));		
-//		int bidx = 1;
+		int bIdx = 0;
+		bIdx = Integer.parseInt(request.getParameter("bIdx"));		
+//		int bIdx = 1;
 		
 		//관리자 고객센터 페이지 FAQ 삭제  
-		int row = as.adminBoardFaqDel(bidx);
+		int row = as.adminBoardFaqDel(bIdx);
 				
-		if (row != 0) {
-	    	System.out.println("성공적으로 삭제 되었습니다.");
-	    	
-	    }else{ 
-    		System.out.println("삭제에 실패 했습니다.");
-    		
-	    }		
+//		if (row != 0) {
+//	    	System.out.println("성공적으로 삭제 되었습니다.");
+//	    	
+//	    }else{ 
+//    		System.out.println("삭제에 실패 했습니다.");
+//    		
+//	    }		
+		
 		PageRedirect pr = new PageRedirect(true, "/AdminFaqList.do", request, response);
 	}
 

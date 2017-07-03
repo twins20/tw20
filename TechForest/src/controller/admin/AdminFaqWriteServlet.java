@@ -7,8 +7,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import common.PageRedirect;
+import service.AdminServiceImpl;
+import service.ProjectVo;
 
 
 @WebServlet("/AdminFaqWriteServlet")
@@ -17,30 +20,11 @@ public class AdminFaqWriteServlet extends HttpServlet {
        
     
     public AdminFaqWriteServlet() {
-        super();
-       
+        super();       
     }
-
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-//		int idx = 0;
-//		HttpSession session = request.getSession();
-//		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
-//		
-//		ProjectVo vo = new ProjectVo();
-//	
-//		AdminServiceImpl as = new AdminServiceImpl();
-//		vo = as.cMemNewsWriteProjNow(idx);
-//		
-//		request.setAttribute("vo", vo);
-				
-//		vo = (ProjectVo) request.getAttribute("vo"); 
-//	
-//		System.out.println(vo.getpIdx());
-//		System.out.println(vo.getpName());
-//		System.out.println(vo.getpCate());
-				
 		PageRedirect pr = new PageRedirect(false, "/admin/AdminFaqWrite.jsp", request, response);
 	}
 

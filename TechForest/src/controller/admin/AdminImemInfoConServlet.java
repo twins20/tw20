@@ -24,84 +24,85 @@ public class AdminImemInfoConServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
     public AdminImemInfoConServlet() {
-        super();
-       
+        super();       
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		AdminServiceImpl as = new AdminServiceImpl();
-		int idx = Integer.parseInt(request.getParameter("idx"));	
-
+		int idx = 0;
+		idx = Integer.parseInt(request.getParameter("idx"));	
 		
 		//관리자 투자자 회원 정보 페이지 회원별 상세 정보
 		ArrayList<MemberVo> alist = new ArrayList<MemberVo>();		
-		
 			alist = as.adminlmemInfoCon(idx);
-			request.setAttribute("alist", alist);		
-			ArrayList<MemberVo> alist1 = (ArrayList<MemberVo>) request.getAttribute("alist");
-			
-			for(MemberVo mv : alist1){
-				System.out.println(mv.getIdx());
-				System.out.println(mv.getId());
-				System.out.println(mv.getName());
-				System.out.println(mv.getPhone());
-				System.out.println(mv.getAddr());	
-			}
-		
+			request.setAttribute("alist", alist);
+	
 		//관리자 투자자 회원정보 페이지 회원별 충전 기록
-		ArrayList<MoneyVo> flist = new ArrayList<MoneyVo>();
-		
-			flist = as.adminImemInfoMoneyHis(idx);
-			request.setAttribute("flist", flist);
-			ArrayList<MoneyVo> flist1 = (ArrayList<MoneyVo>) request.getAttribute("flist");
-			
-			for(MoneyVo mv : flist1){
-				System.out.println(mv.getmIdx());
-				System.out.println(mv.getChgMoney());
-				System.out.println(mv.getInsDate());
-				System.out.println(mv.getStatus());					
-			}
+		ArrayList<MoneyVo> blist = new ArrayList<MoneyVo>();		
+			blist = as.adminImemInfoMoneyHis(idx);
+			request.setAttribute("blist", blist);
 			
 		//관리자 투자자 회원정보 페이지 프로젝트 참가 기록 리스트
-		ArrayList<Map<String, Object>> glist = new ArrayList<Map<String, Object>>();
-		
-		glist =  as.adminImemInfoProjHis(idx);		
-		request.setAttribute("glist", glist);				
-		ArrayList<Map<String, Object>> glist1 = (ArrayList<Map<String, Object>>) request.getAttribute("glist"); 
-		
-		for(Map<String, Object> hashmap : glist1){
-			
-			ProjectVo pv = (ProjectVo) hashmap.get("pv");
-			FundVo fv = (FundVo) hashmap.get("fv");		
-			
-			System.out.println(pv.getpIdx());
-			System.out.println(pv.getpName());
-			System.out.println(fv.getInFunds());
-			System.out.println(fv.getInsDate());
-			System.out.println(pv.getPnFunds());
-			System.out.println(pv.getPtFunds());			
-		}	
+		ArrayList<Map<String, Object>> clist = new ArrayList<Map<String, Object>>();		
+			clist =  as.adminImemInfoProjHis(idx);		
+			request.setAttribute("clist", clist);		
 		
 		//관리자 투자자 회원정보 페이지 QNA 참가기록 리스트		
-		ArrayList<Map<String, Object>> hlist = new ArrayList<Map<String, Object>>();
-				System.out.println("qna");
-				hlist =  as.adminImemInfoQnaHis(idx);		
-				request.setAttribute("hlist", hlist);				
-				ArrayList<Map<String, Object>> hlist1 = (ArrayList<Map<String, Object>>) request.getAttribute("hlist"); 
+		ArrayList<Map<String, Object>> dlist = new ArrayList<Map<String, Object>>();				
+			dlist =  as.adminImemInfoQnaHis(idx);		
+			request.setAttribute("dlist", dlist);	
 				
-				for(Map<String, Object> hashmap : hlist1){
-					
-					MemberVo mv = (MemberVo) hashmap.get("mv");
-					BoardVo bv = (BoardVo) hashmap.get("bv");		
-					
-					System.out.println(mv.getIdx());
-					System.out.println(bv.getContents());
-					System.out.println(mv.getInsDate());
-					System.out.println(bv.getbDepth());							
-				}	
+//		ArrayList<MemberVo> alist1 = (ArrayList<MemberVo>) request.getAttribute("alist");
+//		
+//		for(MemberVo vo : alist1){
+//			System.out.println(vo.getIdx());
+//			System.out.println(vo.getId());
+//			System.out.println(vo.getName());
+//			System.out.println(vo.getPhone());
+//			System.out.println(vo.getAddr());	
+//		}
+//
+//		ArrayList<MoneyVo> blist1 = (ArrayList<MoneyVo>) request.getAttribute("blist");
+//		
+//		for(MoneyVo vo : blist1){
+//			System.out.println(vo.getmIdx());
+//			System.out.println(vo.getChgMoney());
+//			System.out.println(vo.getInsDate());
+//			System.out.println(vo.getStatus());					
+//		}
+//
+//		ArrayList<Map<String, Object>> clist1 = (ArrayList<Map<String, Object>>) request.getAttribute("clist"); 
+//		
+//		for(Map<String, Object> hashmap : clist1){
+//			
+//			ProjectVo pvo = (ProjectVo) hashmap.get("pvo");
+//			System.out.println(pvo.getpIdx());
+//			System.out.println(pvo.getpName());				
+//			System.out.println(pvo.getPnFunds());
+//			System.out.println(pvo.getPtFunds());	
+//				
+//			FundVo fvo = (FundVo) hashmap.get("fvo");	
+//			System.out.println(fvo.getInFunds());
+//			System.out.println(fvo.getInsDate());
+//			
+//		}	
+//		
+//		ArrayList<Map<String, Object>> dlist1 = (ArrayList<Map<String, Object>>) request.getAttribute("dlist"); 
+//		
+//		for(Map<String, Object> hashmap : dlist1){
+//			
+//			MemberVo mvo = (MemberVo) hashmap.get("mvo");
+//			System.out.println(mvo.getIdx());
+//			System.out.println(mvo.getInsDate());
+//			
+//			BoardVo bvo = (BoardVo) hashmap.get("bvo");	
+//			System.out.println(bvo.getContents());
+//			System.out.println(bvo.getbDepth());
+//			
+//		}	
 		
-			PageRedirect pr = new PageRedirect(false, "/admin/AdminImemInfoCon.jsp", request, response);	
+		PageRedirect pr = new PageRedirect(false, "/admin/AdminImemInfoCon.jsp", request, response);	
 	}
 
 	

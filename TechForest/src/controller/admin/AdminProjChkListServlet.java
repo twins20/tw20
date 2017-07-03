@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import common.PageRedirect;
 import service.AdminServiceImpl;
 import service.ProjectVo;
 
@@ -19,10 +20,8 @@ public class AdminProjChkListServlet extends HttpServlet {
        
    
     public AdminProjChkListServlet() {
-        super();
-       
+        super();       
     }
-
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
@@ -32,17 +31,18 @@ public class AdminProjChkListServlet extends HttpServlet {
 		ArrayList<ProjectVo> alist = new ArrayList<ProjectVo>();
 				
 			alist = as.adminIndexPProjectChkList();
-			request.setAttribute("alist", alist);		
-			ArrayList<ProjectVo> alist1 = (ArrayList<ProjectVo>) request.getAttribute("alist");
+			request.setAttribute("alist", alist);
 			
-			for(ProjectVo pv : alist1){
-				System.out.println(pv.getpIdx());
-				System.out.println(pv.getpName());
-				System.out.println(pv.getInsDate());
-				System.out.println(pv.getStatus());			
-			}
+//			ArrayList<ProjectVo> alist1 = (ArrayList<ProjectVo>) request.getAttribute("alist");
+//			
+//			for(ProjectVo vo : alist1){
+//				System.out.println(vo.getpIdx());
+//				System.out.println(vo.getpName());
+//				System.out.println(vo.getInsDate());
+//				System.out.println(vo.getStatus());			
+//			}
 		
-		
+		PageRedirect pr = new PageRedirect(false, "/admin/AdminProjChkList.jsp", request, response);
 	}
 
 

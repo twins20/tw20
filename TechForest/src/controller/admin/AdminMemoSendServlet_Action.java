@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import common.PageRedirect;
 import service.AdminServiceImpl;
 import service.BoardVo;
 import service.MemoVo;
@@ -29,7 +30,7 @@ public class AdminMemoSendServlet_Action extends HttpServlet {
 		//관리자 메모 작성 액션
 		int row = 0;
 		int sendIdx = 0;
-		int recvIdx = 0;		
+		int recvIdx = 0;	
 		
 		String contents = null;
 		
@@ -43,7 +44,10 @@ public class AdminMemoSendServlet_Action extends HttpServlet {
 				
 		row = as.adminBoardMemoSend(sendIdx, recvIdx, inputMV);
 				
-		System.out.println(row);		
+//		System.out.println(row);		
+		
+		PageRedirect pr = new PageRedirect(true, "/AdminMemoList.do", request, response);		
+		
 	}
 
 

@@ -20,17 +20,15 @@ public class AdminNoticeModServlet_Action extends HttpServlet {
        
     
     public AdminNoticeModServlet_Action() {
-        super();
-      
+        super();      
     }
-
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int bidx = 0;
+		int bIdx = 0;
 		String cate = null, title = null, contents = null;
 		
-		if(request.getParameter("bidx") != null) bidx = Integer.parseInt(request.getParameter("bidx"));
+		if(request.getParameter("bIdx") != null) bIdx = Integer.parseInt(request.getParameter("bIdx"));
 		if(request.getParameter("cate") != null) cate = request.getParameter("cate");
 		if(request.getParameter("title") != null) title = request.getParameter("title");
 		if(request.getParameter("contents") != null) contents = request.getParameter("contents");
@@ -41,7 +39,7 @@ public class AdminNoticeModServlet_Action extends HttpServlet {
 		InputBV.setCate(cate);
 		InputBV.setTitle(title);
 		InputBV.setContents(contents);
-		InputBV.setbIdx(bidx);
+		InputBV.setbIdx(bIdx);
 		
 		int row = 0;
 		
@@ -51,27 +49,24 @@ public class AdminNoticeModServlet_Action extends HttpServlet {
 		
 		if(row == 0){
 			
-			System.out.println("수정실패");	
+//			System.out.println("수정실패");	
 			PageRedirect pr = new PageRedirect(false, "/admin/AdminNoticeMod.jsp", request, response);
 		
 		}else{
 			
-			System.out.println("수정성공");
+//			System.out.println("수정성공");
 			ArrayList<BoardVo> vo = new ArrayList<BoardVo>();
-			vo = as.adminBoardNoticeCon(bidx);
+			vo = as.adminBoardNoticeCon(bIdx);
 			
 			request.setAttribute("vo", vo);
 			
-			vo = (ArrayList<BoardVo>) request.getAttribute("vo");
-/*		
-			for(BoardVo bv : vo){
-				
-				System.out.println(bv.getCate());
-				System.out.println(bv.getTitle());
-				System.out.println(bv.getContents());
-				
-			}
-*/
+//			vo = (ArrayList<BoardVo>) request.getAttribute("vo");
+//		
+//			for(BoardVo bv : vo){				
+//				System.out.println(bv.getCate());
+//				System.out.println(bv.getTitle());
+//				System.out.println(bv.getContents());				
+//			}
 			
 			PageRedirect pr = new PageRedirect(true, "/AdminNoticeCon.do", request, response);
 		}

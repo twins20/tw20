@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import common.PageRedirect;
 import service.AdminServiceImpl;
 import service.ItemVo;
 import service.MemberVo;
@@ -23,52 +24,53 @@ public class AdminProjChkConServlet extends HttpServlet {
        
   
     public AdminProjChkConServlet() {
-        super();
-      
+        super();      
     }
-
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 		AdminServiceImpl as = new AdminServiceImpl();	
-		int pidx = Integer.parseInt(request.getParameter("pidx"));	
+		int pIdx = 0;
+		pIdx = Integer.parseInt(request.getParameter("pIdx"));	
 		
 		//관리자 프로젝트 등록 승인 내용  
 		ArrayList<Map<String, Object>> alist = new ArrayList<Map<String, Object>>();
 					
-		alist =  as.adminProJChkCon(pidx);		
+		alist =  as.adminProJChkCon(pIdx);		
 		request.setAttribute("alist", alist);
 				
-		ArrayList<Map<String, Object>> alist1 = (ArrayList<Map<String, Object>>) request.getAttribute("alist"); 
+//		ArrayList<Map<String, Object>> alist1 = (ArrayList<Map<String, Object>>) request.getAttribute("alist"); 
+//		
+//		for(Map<String, Object> hashmap : alist1){
+//			
+//			ProjectVo pvo = (ProjectVo) hashmap.get("pvp");						
+//			System.out.println("프로젝트 승인전 컨텐츠");
+//			System.out.println(pvo.getpName());
+//			System.out.println(pvo.getpCate());
+//			System.out.println(pvo.getContents());
+//			System.out.println(pvo.getItList());
+//			System.out.println(pvo.getItListCnt());
+//			System.out.println(pvo.getPtFunds());
+//			System.out.println(pvo.getPnFunds());
+//			System.out.println(pvo.getpGrade());
+//			System.out.println(pvo.getStatus());
+//			System.out.println(pvo.getInsDate());
+//			System.out.println(pvo.getPsDate());
+//			System.out.println(pvo.getPeDate());
+//			System.out.println(pvo.getPcDate());
+//			
+//			ItemVo ivo = (ItemVo) hashmap.get("ivp");
+//			System.out.println(ivo.getItIdx());
+//			System.out.println(ivo.getItName());
+//			System.out.println(ivo.getItPrice());
+//			System.out.println(ivo.getContents());
+//			System.out.println(ivo.getItTCnt());
+//			System.out.println(ivo.getItSCnt());
+//			System.out.println(ivo.getStatus());
+//					
+//		}
 		
-		for(Map<String, Object> hashmap : alist1){
-			
-			ProjectVo pv = (ProjectVo) hashmap.get("pv");
-			ItemVo iv = (ItemVo) hashmap.get("iv");
-						
-			System.out.println("프로젝트 승인전 컨텐츠");
-			System.out.println(pv.getpName());
-			System.out.println(pv.getpCate());
-			System.out.println(pv.getContents());
-			System.out.println(pv.getItList());
-			System.out.println(pv.getItListCnt());
-			System.out.println(pv.getPtFunds());
-			System.out.println(pv.getPnFunds());
-			System.out.println(pv.getpGrade());
-			System.out.println(pv.getStatus());
-			System.out.println(pv.getInsDate());
-			System.out.println(pv.getPsDate());
-			System.out.println(pv.getPeDate());
-			System.out.println(pv.getPcDate());
-			System.out.println(iv.getItIdx());
-			System.out.println(iv.getItName());
-			System.out.println(iv.getItPrice());
-			System.out.println(iv.getContents());
-			System.out.println(iv.getItTCnt());
-			System.out.println(iv.getItSCnt());
-			System.out.println(iv.getStatus());
-					
-		}
+		PageRedirect pr = new PageRedirect(false, "/admin/AdminProjChkCon.jsp", request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

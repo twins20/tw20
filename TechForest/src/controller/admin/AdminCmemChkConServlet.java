@@ -18,15 +18,13 @@ public class AdminCmemChkConServlet extends HttpServlet {
        
   
     public AdminCmemChkConServlet() {
-        super();
-    
+        super();    
     }
-
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int idx = Integer.parseInt(request.getParameter("idx"));					
-		PageRedirect pr = new PageRedirect(false, "/AdminCmemInfoConServlet", request, response);				
+//		int idx = Integer.parseInt(request.getParameter("idx"));					
+		PageRedirect pr = new PageRedirect(false, "/admin/AdminCmemInfoCon.jsp", request, response);				
 	}
 
 

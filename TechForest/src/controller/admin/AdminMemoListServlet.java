@@ -22,10 +22,8 @@ public class AdminMemoListServlet extends HttpServlet {
        
   
     public AdminMemoListServlet() {
-        super();
-     
+        super();     
     }
-
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -37,26 +35,25 @@ public class AdminMemoListServlet extends HttpServlet {
 		int idx = 0;
 		HttpSession session = request.getSession();		
 		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");		
-//		int idx = Integer.parseInt(request.getParameter("idx"));
-//		int idx = 1;
 		
 		alist = as.adminBoardMemoList(idx);
 		request.setAttribute("alist", alist);
-		ArrayList<MemoVo> alist1 = (ArrayList<MemoVo>) request.getAttribute("alist");
 		
-		for(MemoVo mv : alist1){
-			
-			System.out.println("메모 리스트");			
-			System.out.println(mv.getMemoIdx());
-			System.out.println(mv.getSendIdx());		
-			System.out.println(mv.getRecvIdx());
-			System.out.println(mv.getContents());
-			System.out.println(mv.getStatus());
-			System.out.println(mv.getInsDate());
-			System.out.println(mv.getModDate());			
-		}
+//		ArrayList<MemoVo> alist1 = (ArrayList<MemoVo>) request.getAttribute("alist");
+//		
+//		for(MemoVo vo : alist1){
+//			
+//			System.out.println("메모 리스트");			
+//			System.out.println(vo.getMemoIdx());
+//			System.out.println(vo.getSendIdx());		
+//			System.out.println(vo.getRecvIdx());
+//			System.out.println(vo.getContents());
+//			System.out.println(vo.getStatus());
+//			System.out.println(vo.getInsDate());
+//			System.out.println(vo.getModDate());			
+//		}
 		
-		PageRedirect pr = new PageRedirect(false, "/admin/AdminCmemChkList.jsp", request, response);		
+		PageRedirect pr = new PageRedirect(false, "/admin/AdminMemoList.jsp", request, response);		
 		
 	}
 

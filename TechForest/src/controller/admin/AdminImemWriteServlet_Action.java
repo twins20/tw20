@@ -17,10 +17,8 @@ public class AdminImemWriteServlet_Action extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
     public AdminImemWriteServlet_Action() {
-        super();
-       
+        super();       
     }
-
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -48,10 +46,9 @@ public class AdminImemWriteServlet_Action extends HttpServlet {
 		vo.setType(type);
 		
 		MemberServiceImpl ms = new MemberServiceImpl();
-		row = ms.memJoin(vo);
-		
-		System.out.println(row);
-		PageRedirect pr = new PageRedirect(false, "/admin/AdminImeminfoList.jsp", request, response);
+		row = ms.memJoin(vo);		
+//		System.out.println(row);
+		PageRedirect pr = new PageRedirect(true, "/AdminImemInfoList.do", request, response);
 	}
 
 	

@@ -20,15 +20,13 @@ public class AdminQnaWriteServlet_Action extends HttpServlet {
        
    
     public AdminQnaWriteServlet_Action() {
-        super();
-        
+        super();        
     }
-
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		int idx = 0;
-		int bidx = 0;
+		int bIdx = 0;
 		HttpSession session = request.getSession();
 		
 		if(session.getAttribute("idx") != null){
@@ -37,7 +35,7 @@ public class AdminQnaWriteServlet_Action extends HttpServlet {
 		
 		String title = null, contents = null,  cate = null;	
 				
-		if(Integer.parseInt(request.getParameter("bidx")) != 0) bidx = Integer.parseInt(request.getParameter("bidx"));
+		if(Integer.parseInt(request.getParameter("bIdx")) != 0) bIdx = Integer.parseInt(request.getParameter("bIdx"));
 		if(request.getParameter("title") != null) title = request.getParameter("title").trim();
 		if(request.getParameter("contents") != null) contents = request.getParameter("contents").trim();
 		if(request.getParameter("cate") != null) cate = request.getParameter("cate").trim();
@@ -45,7 +43,7 @@ public class AdminQnaWriteServlet_Action extends HttpServlet {
 		
 		BoardVo inputBV = new BoardVo();
 		
-		inputBV.setbIdx(bidx);
+		inputBV.setbIdx(bIdx);
 		inputBV.setIdx(idx);
 		inputBV.setCate(cate);
 		inputBV.setTitle(title);
@@ -56,9 +54,9 @@ public class AdminQnaWriteServlet_Action extends HttpServlet {
 		AdminServiceImpl as = new AdminServiceImpl();
 		row = as.adminBoardQnaWrite(inputBV);
 		
-		System.out.println(row);
+//		System.out.println(row);
 		
-		PageRedirect pr = new PageRedirect(true, "/AdminQnaListServlet", request, response);
+		PageRedirect pr = new PageRedirect(true, "/AdminQnaList.do", request, response);
 	}
 
 	

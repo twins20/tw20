@@ -20,10 +20,8 @@ public class AdminNoticeWriteServlet_Action extends HttpServlet {
        
     
     public AdminNoticeWriteServlet_Action() {
-        super();
-       
+        super();       
     }
-
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -51,9 +49,9 @@ public class AdminNoticeWriteServlet_Action extends HttpServlet {
 		AdminServiceImpl as = new AdminServiceImpl();
 		row = as.adminBoardNoticeWrite(inputBV);
 		
-		System.out.println(row);
+//		System.out.println(row);
 		
-//		PageRedirect pr = new PageRedirect(true, "/AdminNoticeListServlet", request, response);
+		PageRedirect pr = new PageRedirect(true, "/AdminNoticeList.do", request, response);
 	}
 
 	

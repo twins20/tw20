@@ -20,10 +20,8 @@ public class AdminFaqWriteServlet_Action extends HttpServlet {
        
   
     public AdminFaqWriteServlet_Action() {
-        super();
-      
+        super();      
     }
-
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -52,7 +50,7 @@ public class AdminFaqWriteServlet_Action extends HttpServlet {
 		
 		System.out.println(row);
 		
-//		PageRedirect pr = new PageRedirect(true, "/AdminFaqListServlet", request, response);
+		PageRedirect pr = new PageRedirect(true, "/AdminFaqList.do", request, response);
 		
 	}
 

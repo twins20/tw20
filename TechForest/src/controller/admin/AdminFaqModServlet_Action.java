@@ -20,17 +20,15 @@ public class AdminFaqModServlet_Action extends HttpServlet {
        
     
     public AdminFaqModServlet_Action() {
-        super();
-        
+        super();        
     }
-
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int bidx = 0;
+		int bIdx = 0;
 		String cate = null, title = null, contents = null;
 		
-		if(request.getParameter("bidx") != null) bidx = Integer.parseInt(request.getParameter("bidx"));
+		if(request.getParameter("bIdx") != null) bIdx = Integer.parseInt(request.getParameter("bIdx"));
 		if(request.getParameter("cate") != null) cate = request.getParameter("cate");
 		if(request.getParameter("title") != null) title = request.getParameter("title");
 		if(request.getParameter("contents") != null) contents = request.getParameter("contents");
@@ -41,7 +39,7 @@ public class AdminFaqModServlet_Action extends HttpServlet {
 		InputBV.setCate(cate);
 		InputBV.setTitle(title);
 		InputBV.setContents(contents);
-		InputBV.setbIdx(bidx);
+		InputBV.setbIdx(bIdx);
 		
 		int row = 0;			
 		row = as.adminBoardFaqMod(InputBV);
@@ -55,8 +53,7 @@ public class AdminFaqModServlet_Action extends HttpServlet {
 		}else{
 			
 			ArrayList<BoardVo> vo = new ArrayList<BoardVo>();
-			vo = as.adminBoardFaqCon(bidx);
-			
+			vo = as.adminBoardFaqCon(bIdx);			
 			request.setAttribute("vo", vo);
 			
 			vo = (ArrayList<BoardVo>) request.getAttribute("vo");

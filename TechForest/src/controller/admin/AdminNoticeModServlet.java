@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import common.PageRedirect;
 import service.AdminServiceImpl;
 import service.BoardVo;
 
@@ -26,30 +27,34 @@ public class AdminNoticeModServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		AdminServiceImpl as = new AdminServiceImpl();	
-		int bidx = Integer.parseInt(request.getParameter("bidx"));	
-//		int bidx = 1;
+		int bIdx = 0;
+		bIdx = Integer.parseInt(request.getParameter("bIdx"));	
+//		int bIdx = 1;
 				
 		//관리자 고객센터 페이지 전체 공지사항 상세내용 
 		ArrayList<BoardVo> alist = new ArrayList<BoardVo>();	
-		alist = as.adminBoardNoticeCon(bidx);
-		request.setAttribute("alist", alist);	
-		ArrayList<BoardVo> alist1 = (ArrayList<BoardVo>) request.getAttribute("alist");
+		alist = as.adminBoardNoticeCon(bIdx);
+		request.setAttribute("alist", alist);
 		
-		for(BoardVo vo : alist1){
-			System.out.println("공지사항 상세내용");
-			System.out.println(vo.getbIdx());
-			System.out.println(vo.getIdx());
-			System.out.println(vo.getCate());
-			System.out.println(vo.getTitle());
-			System.out.println(vo.getHit());	
-			System.out.println(vo.getGood());
-			System.out.println(vo.getBad());
-			System.out.println(vo.getObIdx());
-			System.out.println(vo.getRbIdx());
-			System.out.println(vo.getContents());
-			System.out.println(vo.getInsDate());
-			System.out.println(vo.getModDate());		
-		}
+//		ArrayList<BoardVo> alist1 = (ArrayList<BoardVo>) request.getAttribute("alist");
+//		
+//		for(BoardVo vo : alist1){
+//			System.out.println("공지사항 상세내용");
+//			System.out.println(vo.getbIdx());
+//			System.out.println(vo.getIdx());
+//			System.out.println(vo.getCate());
+//			System.out.println(vo.getTitle());
+//			System.out.println(vo.getHit());	
+//			System.out.println(vo.getGood());
+//			System.out.println(vo.getBad());
+//			System.out.println(vo.getObIdx());
+//			System.out.println(vo.getRbIdx());
+//			System.out.println(vo.getContents());
+//			System.out.println(vo.getInsDate());
+//			System.out.println(vo.getModDate());		
+//		}
+		
+		PageRedirect pr = new PageRedirect(false, "/admin/AdminNoticeMod.jsp", request, response);
 	}
 
 	

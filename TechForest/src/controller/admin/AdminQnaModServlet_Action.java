@@ -26,10 +26,10 @@ public class AdminQnaModServlet_Action extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int bidx = 0;
+		int bIdx = 0;
 		String cate = null, title = null, contents = null;
 		
-		if(request.getParameter("bidx") != null) bidx = Integer.parseInt(request.getParameter("bidx"));
+		if(request.getParameter("bidx") != null) bIdx = Integer.parseInt(request.getParameter("bIdx"));
 		if(request.getParameter("cate") != null) cate = request.getParameter("cate");
 		if(request.getParameter("title") != null) title = request.getParameter("title");
 		if(request.getParameter("contents") != null) contents = request.getParameter("contents");
@@ -40,24 +40,24 @@ public class AdminQnaModServlet_Action extends HttpServlet {
 		InputBV.setCate(cate);
 		InputBV.setTitle(title);
 		InputBV.setContents(contents);
-		InputBV.setbIdx(bidx);
+		InputBV.setbIdx(bIdx);
 		
 		int row = 0;
 		
 		row = as.adminBoardQnaMod(InputBV);
 		
-		System.out.println(row);
+//		System.out.println(row);
 		
 		if(row == 0){
 			
-			System.out.println("수정실패");	
+//			System.out.println("수정실패");	
 			PageRedirect pr = new PageRedirect(false, "/admin/AdminQnaMod.jsp", request, response);
 		
 		}else{
 			
-			System.out.println("수정성공");
+//			System.out.println("수정성공");
 			ArrayList<BoardVo> vo = new ArrayList<BoardVo>();
-			vo = as.adminBoardQnaCon(bidx);
+			vo = as.adminBoardQnaCon(bIdx);
 			
 			request.setAttribute("vo", vo);
 			

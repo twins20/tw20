@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import common.DBClose;
 import common.DBConnect;
@@ -23,32 +24,34 @@ public class AdminMoneyChkOkServlet_Action extends HttpServlet {
        
     
     public AdminMoneyChkOkServlet_Action() {
-        super();
-        
+        super();        
     }
-
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		AdminServiceImpl as = new AdminServiceImpl();
 		
-//		int midx = Integer.parseInt(request.getParameter("midx"));
-		int midx = 1;
+		int idx = 0;
+		HttpSession session = request.getSession();
+		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
 		
-		//관리자 머니 충전 승인				
+		int mIdx = 0;
+		mIdx = Integer.parseInt(request.getParameter("mIdx"));
+
 		
-		int row = as.adminMoneyModOkTransaction(midx);		
+		//관리자 머니 충전 승인	
+//		int idx = 1;
+//		int mIdx = 1;
+		int row = 0;
+		row = as.adminMoneyModOkTransaction(idx, mIdx);		
 		
-		if(row == 2){				
-			System.out.println("승인 성공");	 //row = 2			
-		}else{
-			System.out.println("승인 실패");	 //row = 0 or 1
-		}
+//		if(row == 2){				
+//			System.out.println("승인 성공");	 	
+//		}else{
+//			System.out.println("승인 실패");	 
+//		}
 		
-//		PageRedirect pr = new PageRedirect(false, "/admin/AdminMoneyList.jsp", request, response);		
-		
-		
-				
+		PageRedirect pr = new PageRedirect(true, "/AdminMoneyList.do", request, response);							
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

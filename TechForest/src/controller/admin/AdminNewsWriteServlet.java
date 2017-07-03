@@ -16,10 +16,8 @@ public class AdminNewsWriteServlet extends HttpServlet {
        
    
     public AdminNewsWriteServlet() {
-        super();
-        
+        super();        
     }
-
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		

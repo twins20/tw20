@@ -16,10 +16,8 @@ public class AdminNoticeWriteServlet extends HttpServlet {
        
     
     public AdminNoticeWriteServlet() {
-        super();
-        
+        super();        
     }
-
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		

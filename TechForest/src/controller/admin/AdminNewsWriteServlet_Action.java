@@ -20,10 +20,8 @@ public class AdminNewsWriteServlet_Action extends HttpServlet {
        
    
     public AdminNewsWriteServlet_Action() {
-        super();
-       
+        super();       
     }
-
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -51,9 +49,9 @@ public class AdminNewsWriteServlet_Action extends HttpServlet {
 		AdminServiceImpl as = new AdminServiceImpl();
 		row = as.adminBoardNewsWrite(inputBV);
 		
-		System.out.println(row);
+//		System.out.println(row);
 		
-//		PageRedirect pr = new PageRedirect(true, "/AdminNewsListServlet", request, response);
+		PageRedirect pr = new PageRedirect(true, "/AdminNewsListServlet", request, response);
 		
 	}
 

@@ -17,28 +17,28 @@ public class AdminNewsDelServlet_Action extends HttpServlet {
        
    
     public AdminNewsDelServlet_Action() {
-        super();
-      
+        super();      
     }
-
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		AdminServiceImpl as = new AdminServiceImpl();
-//		int bidx = Integer.parseInt(request.getParameter("bidx"));
+		int bIdx = 0;
+		bIdx = Integer.parseInt(request.getParameter("bIdx"));
 			
-		int bidx = 1;
+//		int bIdx = 1;
 		
 		//관리자 뉴스관리 페이지 뉴스 삭제 	
-		int row = as.adminBoardNewsDel(bidx);
+		int row = as.adminBoardNewsDel(bIdx);
 				
 		if (row != 0) {
-	    	System.out.println("성공적으로 삭제 되었습니다.");
-	    	PageRedirect pr = new PageRedirect(false, "/AdminNewsListServlet", request, response);
+//	    	System.out.println("성공적으로 삭제 되었습니다.");
+	    	PageRedirect pr = new PageRedirect(true, "/AdminNewsList.do", request, response);
 	    }else{ 
-    		System.out.println("삭제에 실패 했습니다.");
-    		PageRedirect pr = new PageRedirect(false, "/AdminNewsListServlet", request, response);
+//    		System.out.println("삭제에 실패 했습니다.");
+    		PageRedirect pr = new PageRedirect(true, "/AdminNewsList.do", request, response);
 	    }
+		
 	}
 
 

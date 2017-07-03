@@ -20,30 +20,30 @@ public class AdminImemInfoListServlet extends HttpServlet {
        
 
     public AdminImemInfoListServlet() {
-        super();
- 
+        super(); 
     }
-
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		AdminServiceImpl as = new AdminServiceImpl();
 				
 		//관리자 투자자 회원정보 페이지 회원리스트
-		ArrayList<MemberVo> dlist = new ArrayList<MemberVo>();		
+		ArrayList<MemberVo> alist = new ArrayList<MemberVo>();		
 					
-			dlist = as.adminlmemInfoList();
-			request.setAttribute("dlist", dlist);		
-			ArrayList<MemberVo> dlist1 = (ArrayList<MemberVo>) request.getAttribute("dlist");
+			alist = as.adminlmemInfoList();
+			request.setAttribute("alist", alist);
 			
-			for(MemberVo mv : dlist1){
-				System.out.println(mv.getIdx());
-				System.out.println(mv.getId());
-				System.out.println(mv.getName());
-				System.out.println(mv.getStatus());
-				System.out.println(mv.getMoney());	
-			}
-			PageRedirect pr = new PageRedirect(false, "/admin/AdminImemInfoList.jsp", request, response);
+//		ArrayList<MemberVo> alist1 = (ArrayList<MemberVo>) request.getAttribute("alist");
+//		
+//		for(MemberVo vo : alist1){
+//			System.out.println(vo.getIdx());
+//			System.out.println(vo.getId());
+//			System.out.println(vo.getName());
+//			System.out.println(vo.getStatus());
+//			System.out.println(vo.getMoney());	
+//		}
+			
+		PageRedirect pr = new PageRedirect(false, "/admin/AdminImemInfoList.jsp", request, response);
 	}
 
 

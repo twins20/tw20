@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import common.PageRedirect;
 import service.AdminServiceImpl;
 import service.BoardVo;
 
@@ -32,24 +33,27 @@ public class AdminNoticeListSevlet extends HttpServlet {
 		 
 		alist = as.adminBoardNoticeList();
 		request.setAttribute("alist", alist);
-		ArrayList<BoardVo> alist1 = (ArrayList<BoardVo>) request.getAttribute("alist");
 		
-		for(BoardVo vo : alist1){
-			
-			System.out.println("공지사항리스트");
-			System.out.println(vo.getrNum());
-			System.out.println(vo.getbIdx());
-			System.out.println(vo.getIdx());
-			System.out.println(vo.getCate());
-			System.out.println(vo.getTitle());
-			System.out.println(vo.getHit());
-			System.out.println(vo.getGood());
-			System.out.println(vo.getBad());
-			System.out.println(vo.getCommCnt());
-			System.out.println(vo.getObIdx());
-			System.out.println(vo.getInsDate());
-			System.out.println(vo.getModDate());			
-		}	
+//		ArrayList<BoardVo> alist1 = (ArrayList<BoardVo>) request.getAttribute("alist");
+//		
+//		for(BoardVo vo : alist1){
+//			
+//			System.out.println("공지사항리스트");
+//			System.out.println(vo.getrNum());
+//			System.out.println(vo.getbIdx());
+//			System.out.println(vo.getIdx());
+//			System.out.println(vo.getCate());
+//			System.out.println(vo.getTitle());
+//			System.out.println(vo.getHit());
+//			System.out.println(vo.getGood());
+//			System.out.println(vo.getBad());
+//			System.out.println(vo.getCommCnt());
+//			System.out.println(vo.getObIdx());
+//			System.out.println(vo.getInsDate());
+//			System.out.println(vo.getModDate());			
+//		}	
+		
+		PageRedirect pr = new PageRedirect(false, "/admin/AdminNoticeList.jsp", request, response);
 	}
 
 	
