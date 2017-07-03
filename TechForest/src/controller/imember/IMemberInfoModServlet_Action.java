@@ -61,7 +61,6 @@ public class IMemberInfoModServlet_Action extends HttpServlet {
 //    	System.out.println(row);
     	   	
     	PageRedirect pr = new PageRedirect(true, "/imember/IMemberInfoCon.do", request, response);
-    	
 	}
 
 	/**

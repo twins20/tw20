@@ -63,9 +63,7 @@ public class IMemberMoneyHisServlet extends HttpServlet {
 			
 		}
 		
-		
-		PageRedirect pr = new PageRedirect(false, "/imember/IMemberMoneyHis.jsp", request, response);
-		
+		PageRedirect pr = new PageRedirect(false, "/imember/IMemberMoneyHis.jsp", request, response);	
 	}
 
 	/**

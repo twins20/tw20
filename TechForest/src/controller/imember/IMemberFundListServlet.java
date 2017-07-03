@@ -35,7 +35,7 @@ public class IMemberFundListServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		//투자자 프로젝트 투자 리스트, 인포그래프
 		int idx = 1;
@@ -94,7 +94,6 @@ public class IMemberFundListServlet extends HttpServlet {
 		}
 		
 		PageRedirect pr = new PageRedirect(false, "/imember/IMemberFundList.jsp", request, response);
-		
 	}
 
 

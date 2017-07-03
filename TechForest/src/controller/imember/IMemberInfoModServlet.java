@@ -55,7 +55,7 @@ public class IMemberInfoModServlet extends HttpServlet {
 		
 			PageRedirect pr = new PageRedirect(false, "/imember/IMemberInfoCon.jsp", request, response);
 		
-		}else {
+		}else{
 			
 			MemberVo vo = new MemberVo();
 			vo = si.IMemberInfoCon(idx, 10, 1);
@@ -74,7 +74,6 @@ public class IMemberInfoModServlet extends HttpServlet {
 			System.out.println(vo.getType());
 			
 			PageRedirect pr = new PageRedirect(false, "/imember/IMemberInfoMod.jsp", request, response);
-			
 		}
 	
 	}

@@ -55,7 +55,6 @@ public class IMemberMoneyChargeServlet_Action extends HttpServlet {
 		System.out.println(row);
 		
 		PageRedirect pr = new PageRedirect(true, "/IMemberMonyHisServlet.do", request, response);
-		
 	}
 
 	/**

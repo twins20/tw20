@@ -57,7 +57,6 @@ public class IMemberWishListServlet extends HttpServlet {
 		}
 		
 		PageRedirect pr = new PageRedirect(false, "/imember/IMemberWishList.jsp", request, response);
-		
 	}
 
 	/**

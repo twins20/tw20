@@ -35,7 +35,7 @@ public class IMemberIndexPServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		//투자자 인덱스 프로젝트 리스트  
 		int idx = 1;
@@ -89,8 +89,7 @@ public class IMemberIndexPServlet extends HttpServlet {
 		
 		}
 		
-		PageRedirect pr = new PageRedirect(false, "/imember/IMemberIndexP.jsp", request, response);
-		
+		PageRedirect pr = new PageRedirect(false, "/imember/IMemberIndexP.jsp", request, response);	
 	}
 
 	/**
