@@ -2,6 +2,7 @@ package service;
 
 public class BoardCommVo {
 	
+	private int rNum;
 	private int commIdx;
 	private int bIdx;
 	private int idx;
@@ -15,6 +16,12 @@ public class BoardCommVo {
 	private String insDate;
 	private String modDate;
 	
+	public int getrNum() {
+		return rNum;
+	}
+	public void setrNum(int rNum) {
+		this.rNum = rNum;
+	}
 	public int getCommIdx() {
 		return commIdx;
 	}

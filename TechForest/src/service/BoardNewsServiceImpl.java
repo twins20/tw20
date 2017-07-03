@@ -25,6 +25,7 @@ public class BoardNewsServiceImpl {
 		ArrayList<BoardVo> alist = new ArrayList<BoardVo>();
 		
 		try {
+			
 			this.sql = "SELECT * "
 				+ 		"FROM TF_BOARD_NEWS "
 				+ 		"WHERE VIEWSTAT = 1 "
@@ -33,14 +34,14 @@ public class BoardNewsServiceImpl {
 					
 			this.sql = new  PagingQ().pagingStr(this.sql, listCnt, pageCnt);
 			
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(this.sql);
 			pstmt.setString(1, cate);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()){
 				
 				BoardVo vo = new BoardVo();
-//				vo.setrNum(rs.getInt("rnum"));
+				vo.setrNum(rs.getInt("rnum"));
 				vo.setbIdx(rs.getInt("bidx"));
 				vo.setIdx(rs.getInt("idx"));
 				vo.setCate(rs.getString("cate"));
@@ -51,10 +52,9 @@ public class BoardNewsServiceImpl {
 				vo.setCommCnt(rs.getInt("commcnt"));
 				vo.setInsDate(rs.getString("insdate"));
 				vo.setModDate(rs.getString("moddate"));
-//				vo.setExtColumn(rs.getString("extcolumn"));
+				vo.setpIdx(rs.getInt("pidx"));
 								
-				alist.add(vo);
-							
+				alist.add(vo);				
 			}
 					
 		}catch(Exception e){
@@ -76,11 +76,12 @@ public class BoardNewsServiceImpl {
 		ArrayList<BoardVo> alist = new ArrayList<BoardVo>();
 		
 		try {
+			
 			this.sql = "SELECT * "
 				+	"FROM TF_BOARD_NEWS "
 				+	"WHERE BIDX = ? " ;				
 			
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(this.sql);
 			pstmt.setInt(1,bidx);
 			rs = pstmt.executeQuery();
 			
@@ -100,8 +101,8 @@ public class BoardNewsServiceImpl {
 				vo.setModDate(rs.getString("moddate"));
 				
 				alist.add(vo);
-				
 			}
+			
 		}catch(Exception e){
 			System.out.println(e.getMessage());
 		}finally{
@@ -121,6 +122,7 @@ public class BoardNewsServiceImpl {
 		ArrayList<BoardCommVo> blist = new ArrayList<BoardCommVo>();
 		
 		try{		
+			
 			this.sql = "SELECT * "
 				+ 	"FROM TF_BOARD_COMM_NEWS "
 				+ 	"WHERE BIDX = ? "
@@ -129,14 +131,14 @@ public class BoardNewsServiceImpl {
 			
 			this.sql = new PagingQ().pagingStr(this.sql, listCnt, pageCnt);
 			
-			pstmt =con.prepareStatement(sql);
+			pstmt =con.prepareStatement(this.sql);
 			pstmt.setInt(1, bidx);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()){
 				
 				BoardCommVo vc = new BoardCommVo();			
-//				vc.setrNum(rs.getInt("rnum"));
+				vc.setrNum(rs.getInt("rnum"));
 				vc.setCommIdx(rs.getInt("commidx"));
 				vc.setbIdx(rs.getInt("bidx"));
 				vc.setIdx(rs.getInt("idx"));
@@ -148,6 +150,7 @@ public class BoardNewsServiceImpl {
 							
 				blist.add(vc);
 			}
+			
 		}catch(Exception e){
 			System.out.println(e.getMessage());
 		}finally{
@@ -165,6 +168,7 @@ public class BoardNewsServiceImpl {
 		int row = 0;
 
 		try{
+			
 			this.sql = " INSERT INTO TF_BOARD_COMM_NEWS (COMMIDX, BIDX, IDX, COMMENTS, GOOD, BAD, OCOMMIDX, RCOMMIDX, COMMDEPTH, VIEWSTAT, INSDATE, MODDATE) "
 				+	" VALUES (SEQ_TF_COMMIDX_NEWS.NEXTVAL, ?, ?, ?, 0, 0, SEQ_TF_COMMIDX_NEWS.CURRVAL, 1, 1, 1, SYSDATE, SYSDATE) ";			
 		
@@ -210,7 +214,7 @@ public class BoardNewsServiceImpl {
 			this.sql = "INSERT INTO TF_BOARD_COMM_NEWS (COMMIDX, BIDX, IDX, COMMENTS, GOOD, BAD, OCOMMIDX, RCOMMIDX, COMMDEPTH, VIEWSTAT, INSDATE, MODDATE) "
 				+	"VALUES (SEQ_TF_COMMIDX_NEWS.NEXTVAL, (SELECT BIDX FROM TF_BOARD_COMM_NEWS WHERE COMMIDX = ?), ?, ?, 0, 0, (SELECT OCOMMIDX FROM TF_BOARD_COMM_NEWS WHERE COMMIDX = ?), (SELECT RCOMMIDX FROM TF_BOARD_COMM_NEWS WHERE COMMIDX = ?) + 1, (SELECT COMMDEPTH FROM TF_BOARD_COMM_NEWS WHERE COMMIDX = ?) + 1, 1, SYSDATE, SYSDATE)";	
 				
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(this.sql);
 			
 			pstmt.setInt(1, vc.getOcommIdx());
 			pstmt.setInt(2, vc.getIdx());
@@ -251,9 +255,10 @@ public class BoardNewsServiceImpl {
 		int row = 0;
 		
 		try{			
+			
 			this.sql = " UPDATE TF_BOARD_COMM_NEWS "
-				+	" SET COMMENTS =?, MODDATE =SYSDATE "
-				+	" WHERE COMMIDX =? ";
+				+	" SET COMMENTS = ?, MODDATE = SYSDATE "
+				+	" WHERE COMMIDX = ? ";
 			
 			pstmt = con.prepareStatement(sql);			
 			pstmt.setString(1, vc.getComments());
@@ -280,9 +285,11 @@ public class BoardNewsServiceImpl {
 		ArrayList<ProjectVo> alist = new ArrayList<ProjectVo>();
 		
 		try{
+			
 			this.sql = "SELECT * "
 				+	"FROM TF_PROJECT_LIST "
 				+	"WHERE PIDX = (SELECT PIDX FROM TF_BOARD_NEWS WHERE BIDX = ?)";
+			
 			this.sql=new PagingQ().pagingStr(this.sql, listCnt, pageCnt);
 				
 			pstmt = con.prepareStatement(sql);
@@ -301,8 +308,7 @@ public class BoardNewsServiceImpl {
 				vo.setPtFunds(rs.getInt("ptfunds"));
 				vo.setPnFunds(rs.getInt("pnfunds"));
 				
-				alist.add(vo);
-				
+				alist.add(vo);	
 			}			
 			
 		}catch(Exception e){
@@ -321,9 +327,10 @@ public class BoardNewsServiceImpl {
 		int row = 0;
 		
 		try{
+			
 			this.sql = "UPDATE TF_BOARD_NEWS "
 				+ 	"SET HIT = HIT +1 "
-				+ 	"WHERE BIDX =?";
+				+ 	"WHERE BIDX = ?";
 					
 			pstmt = con.prepareStatement(sql);		
 			pstmt.setInt(1, bidx);		
@@ -346,9 +353,10 @@ public class BoardNewsServiceImpl {
 		  int row = 0;
 		  
 		  try{
+			  
 			  this.sql="UPDATE TF_BOARD_COMM_NEWS "
 		  	 	  +	  "SET VIEWSTAT = 0 "
-		  	  	  +   "WHERE BIDX = ? ";
+		  	  	  +   "WHERE BIDX = ?";
 			   
 			  pstmt = con.prepareStatement(sql);
 			  pstmt.setInt(1, bidx);

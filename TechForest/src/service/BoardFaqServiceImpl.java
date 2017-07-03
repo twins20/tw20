@@ -19,7 +19,7 @@ public class BoardFaqServiceImpl {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		ArrayList<BoardVo> list = new ArrayList<BoardVo>();
+		ArrayList<BoardVo> alist = new ArrayList<BoardVo>();
 		
 		try{
 			
@@ -41,8 +41,7 @@ public class BoardFaqServiceImpl {
 				vo.setHit(rs.getInt("hit"));
 				vo.setInsDate(rs.getString("insdate"));
 				
-				list.add(vo);				
-			
+				alist.add(vo);				
 			}
 			
 		}catch(Exception e){
@@ -51,7 +50,7 @@ public class BoardFaqServiceImpl {
 			DBClose.close(con,pstmt,rs);
 		}
 		
-		return list;
+		return alist;
 		
 	}
 	
@@ -64,14 +63,16 @@ public class BoardFaqServiceImpl {
 		ArrayList<BoardVo> alist = new ArrayList<BoardVo>();
 		
 		try{
+			
 			this.sql = "SELECT BIDX, CATE, TITLE, HIT, INSDATE "
 				+	"FROM TF_BOARD_FAQ "
-				+	"WHERE CATE =? "
+				+	"WHERE CATE = ? "
 				+	"ORDER BY BIDX DESC ";
+			
 			this.sql = new PagingQ().pagingStr(this.sql, listCnt, pageCnt);
 			
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, "회원");
+			pstmt.setString(1, cate);
 			rs = pstmt.executeQuery();
 	
 			while(rs.next()){
@@ -102,12 +103,12 @@ public class BoardFaqServiceImpl {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		ArrayList<BoardVo> list = new ArrayList<BoardVo>();
+		ArrayList<BoardVo> alist = new ArrayList<BoardVo>();
 		
 		try{
 			this.sql = "SELECT CATE, TITLE, CONTENTS, HIT, INSDATE "
 				+	"FROM TF_BOARD_FAQ "
-				+	"WHERE BIDX = ? ";
+				+	"WHERE BIDX = ?";
 			
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, bidx);
@@ -122,7 +123,7 @@ public class BoardFaqServiceImpl {
 				vo.setHit(rs.getInt("hit"));
 				vo.setInsDate(rs.getString("insdate"));
 			
-				list.add(vo);
+				alist.add(vo);
 			}
 		}catch(Exception e){
 			System.out.println(e.getMessage());
@@ -130,7 +131,7 @@ public class BoardFaqServiceImpl {
 			DBClose.close(con,pstmt,rs);
 		}
 		
-		return list;
+		return alist;
 	}
 
 	
