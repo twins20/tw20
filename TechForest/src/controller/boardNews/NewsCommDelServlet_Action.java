@@ -30,16 +30,15 @@ public class NewsCommDelServlet_Action extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-//		HttpSession session =request.getSession();
-//		int idx = (Integer) null;
-//		if(session.getAttribute("idx") !=null) idx = (Integer) session.getAttribute("idx");
 		
-		int bidx = 0;
-		if(request.getParameter("bidx") != null) bidx = Integer.parseInt(request.getParameter("bidx"));
+		int idx = 0, bIdx = 0;
+		
+		HttpSession session =request.getSession();
+		if(session.getAttribute("idx") !=null) idx = (Integer) session.getAttribute("idx");
+		if(request.getParameter("bidx") != null) bIdx = Integer.parseInt(request.getParameter("bidx"));
 		
 		BoardNewsServiceImpl bs = new BoardNewsServiceImpl();				
-		bs.boardNewsCommDel(bidx); 		
+		bs.boardNewsCommDel(bIdx); 		
 		
 		PageRedirect pr = new PageRedirect(true,"/NewsListServlet.do",request, response);
 	}

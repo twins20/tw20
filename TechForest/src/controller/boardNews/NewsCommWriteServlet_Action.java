@@ -31,31 +31,27 @@ public class NewsCommWriteServlet_Action extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-
-		BoardNewsServiceImpl br = new BoardNewsServiceImpl();				
-		HttpSession session = request.getSession();
 		
-		int bidx = (Integer) null;
-		if(session.getAttribute("bidx") != null) bidx = (Integer) session.getAttribute("bidx");
-		
-		int idx = (Integer) null; 
-		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");		
-		
+		int idx = 0, bIdx = 0;
 		String comments = null;
+				
+		HttpSession session = request.getSession();
+		if(session.getAttribute("bidx") != null) bIdx = (Integer) session.getAttribute("bidx");
+		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");		
 		if(session.getAttribute("comments") != null) comments = request.getParameter("commnets").trim();
 		
 		BoardCommVo vc = new BoardCommVo();
 		
 		vc.setIdx(idx);
-		vc.setbIdx(bidx);
+		vc.setbIdx(bIdx);
 		vc.setComments(comments);
 		
 		int row = 0;
+		
+		BoardNewsServiceImpl br = new BoardNewsServiceImpl();
 		row = br.boardNewsCommWrite(vc);
 			
-		PageRedirect pr = new PageRedirect(true,"/NewsConServlet.do",request, response);	
-
+		PageRedirect pr = new PageRedirect(true, "/NewsConServlet.do", request, response);	
 	}
 
 	/**

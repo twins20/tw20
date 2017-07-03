@@ -33,17 +33,15 @@ public class NewsListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub		
-//		HttpSession session = request.getSession();
-//		int idx =(Integer) null;
-//		if(session.getAttribute("idx") !=null) idx = (Integer) request.getAttribute("idx");
-
-		int bidx = 0;
+		
+		int bIdx = 0;
 		String cate = null;
-		if(request.getParameter("bidx") != null) bidx = Integer.parseInt(request.getParameter("bidx"));
+		
+		if(request.getParameter("bidx") != null) bIdx = Integer.parseInt(request.getParameter("bidx"));
+		if(request.getParameter("cate") != null) cate = request.getParameter("cate");
 				
 		BoardNewsServiceImpl bs = new BoardNewsServiceImpl(); 
-		ArrayList<BoardVo> list = bs.boardNewsListCate(cate,1,1); 
+		ArrayList<BoardVo> list = bs.boardNewsListCate(cate,10,1); 
 		
 		request.setAttribute("list", list);		
 		
@@ -66,7 +64,6 @@ public class NewsListServlet extends HttpServlet {
 		}	
 		
 		PageRedirect pr = new PageRedirect(false,"/boardQna/QnaList.jsp", request, response);
-		
 	}
 
 	/**

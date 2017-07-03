@@ -25,13 +25,13 @@ public class QnaModServlet extends HttpServlet {
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		int idx = 0;
+	
 		HttpSession session = request.getSession();
-		int idx = (Integer) null;
 		if(session.getAttribute("idx") !=null) idx = (Integer) request.getAttribute("idx");
 		
 		
-		PageRedirect pr = new PageRedirect(false,"/QnaModServlet",request,response);
-		
+		PageRedirect pr = new PageRedirect(false,"/QnaModServlet",request,response);	
 	}
 
 	/**

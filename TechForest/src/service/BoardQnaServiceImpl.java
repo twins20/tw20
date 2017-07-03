@@ -34,7 +34,7 @@ public class BoardQnaServiceImpl {
 			  
 			this.sql=new PagingQ().pagingStr(this.sql, listCnt, pageCnt);
 			  
-			pstmt=con.prepareStatement(sql);
+			pstmt=con.prepareStatement(this.sql);
 			pstmt.setInt(1, idx);
 			rs=pstmt.executeQuery();
 			  
@@ -76,9 +76,9 @@ public class BoardQnaServiceImpl {
 		  try{
 			 
 			  this.sql=	"INSERT INTO TF_BOARD_QNA (BIDX, IDX, CATE, TITLE, CONTENTS, HIT, GOOD, BAD, OBIDX, RBIDX, BDEPTH, COMMCNT, VIEWSTAT, INSDATE, MODDATE, EXTCOLUMN) "
-			  	+	"VALUES (SEQ_TF_BIDX_QNA.NEXTVAL, ?, ?, ?, ?, 0, 0, 0, SEQ_TF_BIDX_QNA.CURRVAL, 1, 1, 1, 0, SYSDATE, SYSDATE, ?)";
+			  	+		"VALUES (SEQ_TF_BIDX_QNA.NEXTVAL, ?, ?, ?, ?, 0, 0, 0, SEQ_TF_BIDX_QNA.CURRVAL, 1, 1, 1, 0, SYSDATE, SYSDATE, ?)";
 		 
-			  pstmt=con.prepareStatement(sql);
+			  pstmt=con.prepareStatement(this.sql);
 			  
 			  pstmt.setInt(1, vo.getIdx());
 			  pstmt.setString(2, vo.getCate());
@@ -109,10 +109,10 @@ public class BoardQnaServiceImpl {
 		 try{
 			  
 			 this.sql="SELECT * "
-				+	"FROM TF_BOARD_QNA "
-			  	+	"WHERE BIDX = ? ";
+				+		"FROM TF_BOARD_QNA "
+			  	+		"WHERE BIDX = ? ";
 			 
-			 pstmt=con.prepareStatement(sql);
+			 pstmt=con.prepareStatement(this.sql);
 			 pstmt.setInt(1, bidx);
 			 rs=pstmt.executeQuery();
 			
@@ -154,12 +154,12 @@ public class BoardQnaServiceImpl {
 		  try{
 			  
 			  this.sql="SELECT * "
-			  	  +	  "FROM TF_PROJECT_LIST	"
-			  	  +	  "WHERE PIDX = (SELECT PIDX FROM TF_BOARD_QNA WHERE BIDX = ? )";
+			  	  +	 	 "FROM TF_PROJECT_LIST	"
+			  	  +	 	 "WHERE PIDX = (SELECT PIDX FROM TF_BOARD_QNA WHERE BIDX = ? )";
 			 
 			  this.sql=new PagingQ().pagingStr(this.sql, listCnt, pageCnt);
 			  
-			  pstmt = con.prepareStatement(sql);
+			  pstmt = con.prepareStatement(this.sql);
 			  pstmt.setInt(1, bidx);
 			  rs = pstmt.executeQuery();
 			 		  
@@ -197,10 +197,10 @@ public class BoardQnaServiceImpl {
 		  try{
 			  
 			  this.sql="UPDATE TF_BOARD_QNA "
-				  +	   "SET TITLE = ?, CONTENTS = ?, MODDATE = SYSDATE "
-			  	  +	   "WHERE BIDX = ? ";
+				  +	  	 "SET TITLE = ?, CONTENTS = ?, MODDATE = SYSDATE "
+			  	  +	  	 "WHERE BIDX = ? ";
 			  		  
-			  pstmt=con.prepareStatement(sql);
+			  pstmt=con.prepareStatement(this.sql);
 			 
 			  pstmt.setString(1, vo.getTitle());
 			  pstmt.setString(2, vo.getContents());
@@ -226,10 +226,10 @@ public class BoardQnaServiceImpl {
 		  try{
 			
 			  this.sql = "UPDATE TF_BOARD_QNA "
-		  		+	"SET VIEWSTAT = 0 "
-		  		+	"WHERE BIDX = ? ";
+		  		+		"SET VIEWSTAT = 0 "
+		  		+		"WHERE BIDX = ? ";
 			  
-			  pstmt = con.prepareStatement(sql);
+			  pstmt = con.prepareStatement(this.sql);
 			  pstmt.setInt(1, bidx);
 			  
 			  row = pstmt.executeUpdate();

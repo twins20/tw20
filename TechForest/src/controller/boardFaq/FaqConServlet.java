@@ -35,11 +35,8 @@ public class FaqConServlet extends HttpServlet {
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-//		HttpSession session =request.getSession();
-//		int idx =(Integer) null;
-//		if(session.getAttribute("idx") != null) idx =(Integer) session.getAttribute("idx");
-		
-		int bidx = 0;				
+		int bidx = 0;
+				
 		if(request.getParameter("bidx") != null) bidx = Integer.parseInt(request.getParameter("bidx"));
 			
 		BoardFaqServiceImpl bs = new BoardFaqServiceImpl();
@@ -48,8 +45,8 @@ public class FaqConServlet extends HttpServlet {
 		list = bs.boardFaqCon(bidx);		
 		request.setAttribute("list", list);
 		
-		ArrayList<BoardVo> list2 = (ArrayList<BoardVo>) request.getAttribute("list");
-		for(BoardVo vo : list2) {
+//		ArrayList<BoardVo> list2 = (ArrayList<BoardVo>) request.getAttribute("list");
+		for(BoardVo vo : list) {
 			
 //			System.out.println(vo.getCate());
 //			System.out.println(vo.getTitle());
@@ -61,8 +58,7 @@ public class FaqConServlet extends HttpServlet {
 	 
 		bs.boardFaqHit(bidx);
 		
-		PageRedirect pr = new PageRedirect(false,"/boardFaq/FaqCon.jsp",request,response);
-		
+		PageRedirect pr = new PageRedirect(false, "/boardFaq/FaqCon.jsp", request, response);
 	}
 
 	/**

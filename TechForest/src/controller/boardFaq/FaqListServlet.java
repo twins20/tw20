@@ -35,18 +35,17 @@ public class FaqListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-//		HttpSession session=request.getSession();		
-//		int idx = (Integer) null;
-//		if(session.getAttribute("idx") !=null) idx = (Integer) session.getAttribute("idx");		
 		
 		int bidx = 0;
+		String cate = null;
+		
 		if(request.getParameter("bidx") != null) bidx = Integer.parseInt(request.getParameter("bidx"));
-				
+		if(request.getParameter("cate") !=null)	 cate = request.getParameter("cate");
+		
 		BoardFaqServiceImpl bs = new BoardFaqServiceImpl();
 		ArrayList<BoardVo> alist = new ArrayList<BoardVo>();
 		
-		alist = bs.boardFaqList(1, 1);
+		alist = bs.boardFaqList(10, 1);
 		
 		request.setAttribute("list", alist);
 	
@@ -61,10 +60,8 @@ public class FaqListServlet extends HttpServlet {
 		
 		}
 		
-		
-		String cate = "회원";
 		ArrayList<BoardVo> blist = new ArrayList<BoardVo>();
-		blist = bs.boardListCate(cate, 1, 1);
+		blist = bs.boardListCate(cate, 10, 1);
 		
 		request.setAttribute("blist", blist);	
 		

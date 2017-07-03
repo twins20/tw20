@@ -79,10 +79,10 @@ public class BoardNewsServiceImpl {
 			
 			this.sql = "SELECT * "
 				+	"FROM TF_BOARD_NEWS "
-				+	"WHERE BIDX = ? " ;				
+				+	"WHERE BIDX = ?" ;				
 			
 			pstmt = con.prepareStatement(this.sql);
-			pstmt.setInt(1,bidx);
+			pstmt.setInt(1, bidx);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()){
@@ -172,7 +172,7 @@ public class BoardNewsServiceImpl {
 			this.sql = " INSERT INTO TF_BOARD_COMM_NEWS (COMMIDX, BIDX, IDX, COMMENTS, GOOD, BAD, OCOMMIDX, RCOMMIDX, COMMDEPTH, VIEWSTAT, INSDATE, MODDATE) "
 				+	" VALUES (SEQ_TF_COMMIDX_NEWS.NEXTVAL, ?, ?, ?, 0, 0, SEQ_TF_COMMIDX_NEWS.CURRVAL, 1, 1, 1, SYSDATE, SYSDATE) ";			
 		
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(this.sql);
 			
 			pstmt.setInt(1, vc.getbIdx());
 			pstmt.setInt(2, vc.getIdx());
@@ -205,7 +205,8 @@ public class BoardNewsServiceImpl {
 				+	"WHERE OCOMMIDX = (SELECT OCOMMIDX FROM TF_BOARD_COMM_NEWS WHERE COMMIDX = ?) "
 				+ 		"AND RCOMMIDX > (SELECT RCOMMIDX FROM TF_BOARD_COMM_NEWS WHERE COMMIDX = ?)";
 		
-			pstmt = con.prepareStatement(sql);			
+			pstmt = con.prepareStatement(this.sql);	
+			
 			pstmt.setInt(1, vc.getOcommIdx());
 			pstmt.setInt(2, vc.getOcommIdx());
 							
@@ -260,7 +261,7 @@ public class BoardNewsServiceImpl {
 				+	" SET COMMENTS = ?, MODDATE = SYSDATE "
 				+	" WHERE COMMIDX = ? ";
 			
-			pstmt = con.prepareStatement(sql);			
+			pstmt = con.prepareStatement(this.sql);			
 			pstmt.setString(1, vc.getComments());
 			pstmt.setInt(2, vc.getCommIdx());
 			
@@ -332,7 +333,7 @@ public class BoardNewsServiceImpl {
 				+ 	"SET HIT = HIT +1 "
 				+ 	"WHERE BIDX = ?";
 					
-			pstmt = con.prepareStatement(sql);		
+			pstmt = con.prepareStatement(this.sql);		
 			pstmt.setInt(1, bidx);		
 			row = pstmt.executeUpdate();
 			
@@ -358,7 +359,7 @@ public class BoardNewsServiceImpl {
 		  	 	  +	  "SET VIEWSTAT = 0 "
 		  	  	  +   "WHERE BIDX = ?";
 			   
-			  pstmt = con.prepareStatement(sql);
+			  pstmt = con.prepareStatement(this.sql);
 			  pstmt.setInt(1, bidx);
 			  
 			  row = pstmt.executeUpdate();

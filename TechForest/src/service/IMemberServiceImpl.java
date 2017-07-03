@@ -25,15 +25,15 @@ public class IMemberServiceImpl {
 		try { 
 			
 			this.sql = "SELECT A.PIDX, A.IDX, A.PNAME, A.PCATE, A.PGRADE, A.PNFUNDS, A.PTFUNDS, B.STATUS "
-				+	"FROM TF_PROJECT_LIST A, TF_FUND_HIS B "
-				+	"WHERE A.PIDX = B.PIDX "
-				+		"AND B.STATUS = 1 "
-				+		"AND B.IDX = ?";	
+				+		"FROM TF_PROJECT_LIST A, TF_FUND_HIS B "
+				+		"WHERE A.PIDX = B.PIDX "
+				+			"AND B.STATUS = 1 "
+				+			"AND B.IDX = ?";	
 		
 			this.sql = new PagingQ().pagingStr(this.sql, listCnt, nowPage);
 			
-			pstmt = con.prepareStatement(sql); 
-			pstmt.setInt(1,idx);
+			pstmt = con.prepareStatement(this.sql); 
+			pstmt.setInt(1, idx);
 			rs = pstmt.executeQuery();  
 			
 			while(rs.next()) {  
@@ -80,14 +80,14 @@ public class IMemberServiceImpl {
 		try {
 		
 			this.sql = "SELECT A.* , (SELECT MAX(BDEPTH) FROM TF_BOARD_QNA WHERE bIDX = BIDX) "
-				+ 	"FROM TF_BOARD_QNA A "
-				+ 	"WHERE VIEWSTAT = 1 "
-				+ 		"AND IDX = ? "
-				+ 	"ORDER BY OBIDX DESC, RBIDX ASC";
+				+ 		"FROM TF_BOARD_QNA A "
+				+ 		"WHERE VIEWSTAT = 1 "
+				+ 			"AND IDX = ? "
+				+ 		"ORDER BY OBIDX DESC, RBIDX ASC";
 		
 			this.sql = new PagingQ().pagingStr(this.sql, listCnt, pageCnt);	
 			
-			pstmt = con.prepareStatement(sql); 
+			pstmt = con.prepareStatement(this.sql); 
 			pstmt.setInt(1,idx);
 			rs = pstmt.executeQuery();  
 			
@@ -120,7 +120,7 @@ public class IMemberServiceImpl {
 			
 	
 	//투자자 회원정보 페이지 
-	public MemberVo IMemberInfoCon(int idx, int listCnt, int nowPage){
+	public MemberVo IMemberInfoCon(int idx){
 		
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null;  
@@ -130,10 +130,10 @@ public class IMemberServiceImpl {
 		try { 
 			
 			this.sql = "SELECT * "
-				+ 	"FROM TF_MEMBER "
-				+ 	"WHERE IDX = ?";
+				+ 		"FROM TF_MEMBER "
+				+ 		"WHERE IDX = ?";
 			
-			pstmt = con.prepareStatement(sql); 
+			pstmt = con.prepareStatement(this.sql); 
 			pstmt.setInt(1,idx);
 			rs = pstmt.executeQuery();
 			
@@ -174,11 +174,11 @@ public class IMemberServiceImpl {
 		try { 
 			
 			this.sql = "SELECT COUNT(*) "
-				+ 	"FROM TF_MEMBER "
-				+ 	"WHERE IDX = ? "
-				+ 		"AND PW = ?";
+				+ 		"FROM TF_MEMBER "
+				+ 		"WHERE IDX = ? "
+				+ 			"AND PW = ?";
 			
-			pstmt = con.prepareStatement(sql); 
+			pstmt = con.prepareStatement(this.sql); 
 			pstmt.setInt(1,InputMV.getIdx());
 			pstmt.setString(2,InputMV.getPw());
 			rs = pstmt.executeQuery();  
@@ -200,7 +200,7 @@ public class IMemberServiceImpl {
 	}
 	
 	//투자자 회원정보 수정버튼
-	public int IMemInfoModAction(MemberVo InputMV,int idx){
+	public int IMemInfoModAction(MemberVo InputMV, int idx){
 		
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null;
@@ -210,10 +210,10 @@ public class IMemberServiceImpl {
 		try {
 			
 			this.sql = "UPDATE TF_MEMBER "
-				+ 	"SET PW = ?, NICK = ?, PHONE = ?, ADDR = ? "
-				+ 	"WHERE IDX = ?";
+				+ 		"SET PW = ?, NICK = ?, PHONE = ?, ADDR = ? "
+				+ 		"WHERE IDX = ?";
 			
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(this.sql);
 			pstmt.setString(1,InputMV.getPw());
 			pstmt.setString(2, InputMV.getNick());
 			pstmt.setInt(3, InputMV.getPhone());
@@ -243,11 +243,11 @@ public class IMemberServiceImpl {
 		try { 
 			
 			this.sql = "SELECT *"
-				+ 	"FROM TF_MONEY_HIS "
-				+ 	"WHERE IDX = ?";	
+				+ 		"FROM TF_MONEY_HIS "
+				+ 		"WHERE IDX = ?";	
 			
-			pstmt = con.prepareStatement(sql); 
-			pstmt.setInt(1,idx);
+			pstmt = con.prepareStatement(this.sql); 
+			pstmt.setInt(1, idx);
 			rs = pstmt.executeQuery();  
 			
 			while(rs.next()) {  
@@ -290,9 +290,9 @@ public class IMemberServiceImpl {
 			{ 
 			
 			this.sql = "INSERT INTO TF_MONEY_HIS (MIDX, IDX, CONTENTS, CHGMONEY, BMONEY, AMONEY, STATUS, TYPE, INSDATE, MODDATE, CHKADMIN) "
-				+ 	"VALUES (SEQ_TF_MIDX.NEXTVAL, ?, ?, ?, (SELECT * FROM (SELECT AMONEY FROM TF_MONEY_HIS WHERE IDX = 1 ORDER BY MIDX DESC) WHERE ROWNUM = 1), (SELECT * FROM (SELECT AMONEY FROM TF_MONEY_HIS WHERE IDX = 1 ORDER BY MIDX DESC) WHERE ROWNUM = 1), 0, 0, SYSDATE, SYSDATE, NULL)";
+				+ 		"VALUES (SEQ_TF_MIDX.NEXTVAL, ?, ?, ?, (SELECT * FROM (SELECT AMONEY FROM TF_MONEY_HIS WHERE IDX = 1 ORDER BY MIDX DESC) WHERE ROWNUM = 1), (SELECT * FROM (SELECT AMONEY FROM TF_MONEY_HIS WHERE IDX = 1 ORDER BY MIDX DESC) WHERE ROWNUM = 1), 0, 0, SYSDATE, SYSDATE, NULL)";
 			
-			pstmt = con.prepareStatement(sql); 
+			pstmt = con.prepareStatement(this.sql); 
 			
 			pstmt.setInt(1, InputMV.getIdx()); 
 			pstmt.setString(2, InputMV.getContents());
@@ -322,14 +322,14 @@ public class IMemberServiceImpl {
 		try { 
 			
 			this.sql = "SELECT B.PIDX PIDX, B.PNAME PNAME, B.PTFUNDS PTFUNDS, B.PNFUNDS PNFUNDS "
-				+ 	"FROM TF_FUND_HIS A, TF_PROJECT_LIST B "
-				+ 	"WHERE A.PIDX = B.PIDX "
-				+ 		"AND A.ROWID IN "
-				+ 			"(SELECT MAX(ROWID) FROM TF_FUND_HIS WHERE IDX = ? GROUP BY PIDX) "
-				+ 		"AND B.STATUS < 4 "
-				+ 	"ORDER BY FIDX DESC ";
+				+ 		"FROM TF_FUND_HIS A, TF_PROJECT_LIST B "
+				+ 		"WHERE A.PIDX = B.PIDX "
+				+ 			"AND A.ROWID IN "
+				+ 				"(SELECT MAX(ROWID) FROM TF_FUND_HIS WHERE IDX = ? GROUP BY PIDX) "
+				+ 			"AND B.STATUS < 4 "
+				+ 		"ORDER BY FIDX DESC ";
 				
-			pstmt = con.prepareStatement(sql); 
+			pstmt = con.prepareStatement(this.sql); 
 			pstmt.setInt(1,idx);
 			rs = pstmt.executeQuery();  
 			
@@ -365,11 +365,11 @@ public class IMemberServiceImpl {
 		try { 
 			
 			this.sql = "SELECT * "
-				+ 	"FROM TF_FUND_HIS "
-				+ 	"WHERE STATUS = 1 "
-				+ 		"AND PIDX = ?";		
+				+ 		"FROM TF_FUND_HIS "
+				+ 		"WHERE STATUS = 1 "
+				+ 			"AND PIDX = ?";		
 			
-			pstmt = con.prepareStatement(sql); 
+			pstmt = con.prepareStatement(this.sql); 
 			pstmt.setInt(1,pidx);
 			rs = pstmt.executeQuery();  
 			
@@ -407,16 +407,16 @@ public class IMemberServiceImpl {
 		try { 
 			
 			this.sql = "SELECT A.* "
-				+	"FROM TF_PROJECT_LIST A,TF_WISH_LIST B "
-				+ 	"WHERE A.PIDX = B.PIDX "
-				+ 		"AND B.VIEWSTAT = 1 "
-				+ 		"AND A.STATUS = 1 "
-				+ 		"AND B.IDX = ? "
-				+ 	"ORDER BY WIDX";		
+				+		"FROM TF_PROJECT_LIST A,TF_WISH_LIST B "
+				+ 		"WHERE A.PIDX = B.PIDX "
+				+ 			"AND B.VIEWSTAT = 1 "
+				+ 			"AND A.STATUS = 1 "
+				+ 			"AND B.IDX = ? "
+				+ 		"ORDER BY WIDX";		
 			
 			this.sql = new PagingQ().pagingStr(this.sql, listCnt, nowPage);
 			
-			pstmt = con.prepareStatement(sql); 
+			pstmt = con.prepareStatement(this.sql); 
 			pstmt.setInt(1,idx);
 			rs = pstmt.executeQuery();  
 			
@@ -453,10 +453,10 @@ public class IMemberServiceImpl {
 		try { 
 			
 			this.sql = "UPDATE TF_WISH_LIST "
-				+ 	"SET VIEWSTAT = 0 "
-				+ 	"WHERE IDX = ?";
+				+ 		"SET VIEWSTAT = 0 "
+				+ 		"WHERE IDX = ?";
 			
-			pstmt = con.prepareStatement(sql); 
+			pstmt = con.prepareStatement(this.sql); 
 			pstmt.setInt(1, idx); 
 	
 			row = pstmt.executeUpdate(); 

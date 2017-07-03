@@ -31,12 +31,11 @@ public class QnaDelServlet_Action extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-//		HttpSession session = request.getSession();
-//		int idx = (Integer) null;
-//		if(session.getAttribute("idx") !=null) idx = (Integer) request.getAttribute("idx");
 		
-		int bidx = 0;
+		int bidx = 0, idx = 0;
+		
+		HttpSession session = request.getSession();
+		if(session.getAttribute("idx") !=null) idx = (Integer) request.getAttribute("idx");
 		if(request.getParameter("bidx") != null) bidx = Integer.parseInt(request.getParameter("bidx"));
 		
 		BoardQnaServiceImpl bs = new BoardQnaServiceImpl(); 

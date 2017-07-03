@@ -33,18 +33,15 @@ public class NoticeConServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub	
-//    	HttpSession session =request.getSession();
-//    	int idx = (Integer) null;
-//    	if(session.getAttribute("idx")!=null) idx = (Integer) request.getAttribute("idx");
-    	
-		int bidx = 0;
-		if(request.getParameter("bidx") != null) bidx = Integer.parseInt(request.getParameter("bidx"));
-    	
-    	BoardNoticeServiceImpl bs = new BoardNoticeServiceImpl(); 
-    	ArrayList<BoardVo> alist = new ArrayList<BoardVo>();
 		
-		alist = bs.boardNoticeCon(bidx);	
+    	int bIdx = 0;
+    	
+		if(request.getParameter("bidx") != null) bIdx = Integer.parseInt(request.getParameter("bidx"));
+    	
+		BoardNoticeServiceImpl bs = new BoardNoticeServiceImpl(); 
+    	ArrayList<BoardVo> alist = new ArrayList<BoardVo>();
+    	
+		alist = bs.boardNoticeCon(bIdx);	
 		request.setAttribute("alist", alist);
 		
 		ArrayList<BoardVo> alist2 = (ArrayList<BoardVo>) request.getAttribute("alist");		
@@ -58,7 +55,7 @@ public class NoticeConServlet extends HttpServlet {
 //			
 		}	
 		
-		bs.boardNoticeHit(bidx);			
+		bs.boardNoticeHit(bIdx);			
 		
 		PageRedirect pr = new PageRedirect(false,"/boardNotice/NoticeCon.jsp",request,response);
 	}

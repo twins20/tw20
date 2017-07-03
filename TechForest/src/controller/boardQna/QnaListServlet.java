@@ -34,20 +34,16 @@ public class QnaListServlet extends HttpServlet {
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
+		int idx = 0, bidx = 0;
+		
 		HttpSession session = request.getSession();
-		int idx = (Integer) null;
 		if(session.getAttribute("idx") !=null) idx = (Integer) request.getAttribute("idx");
-		
-		
-		int bidx = 0;
 		if(request.getParameter("bidx") != null) bidx = Integer.parseInt(request.getParameter("bidx"));
 		
 		BoardQnaServiceImpl bs = new BoardQnaServiceImpl(); 
 		ArrayList<BoardVo> list = new ArrayList<BoardVo>();
 		
-		int listCnt = 1;
-		int pageCnt = 1;
-		list = bs.boardQnaList(idx, listCnt, pageCnt); 
+		list = bs.boardQnaList(idx, 10, 1); 
 		
 		request.setAttribute("list", list);
 		list = (ArrayList<BoardVo>) request.getAttribute("list");
@@ -70,7 +66,6 @@ public class QnaListServlet extends HttpServlet {
 		}
 	
 		PageRedirect pr = new PageRedirect(false, "/boardQna/QnaList.jsp", request, response);		
-		
 	}
 
 	/**

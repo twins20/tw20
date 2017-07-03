@@ -22,14 +22,14 @@ public class QnaWriteServlet extends HttpServlet {
        
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
+		int idx = 0;
+		
 		HttpSession session = request.getSession();
-		int idx = (Integer) null;
 		if(session.getAttribute("idx") !=null ) idx = (Integer) request.getAttribute("idx");
 		
 		
 		PageRedirect pr = new PageRedirect(false, "/boardQna/QnaWrite.jsp", request, response);
-
 	}
 
 

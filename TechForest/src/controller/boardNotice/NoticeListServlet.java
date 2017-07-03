@@ -33,18 +33,17 @@ public class NoticeListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-//    	HttpSession session = request.getSession();
-//    	int idx = (Integer) null;
-//    	if(session.getAttribute("idx") !=null) idx = (Integer) request.getAttribute("idx");
-
-		int bidx = 0;
+		
+    	int bidx = 0;
+    	String cate = null;
+    
 		if(request.getParameter("bidx") != null) bidx = Integer.parseInt(request.getParameter("bidx"));
+		if(request.getParameter("cate") != null) cate = request.getParameter("cate");
 
     	BoardNoticeServiceImpl bs = new BoardNoticeServiceImpl(); 
     	ArrayList<BoardVo> list = new ArrayList<BoardVo>();
 
-    	list = bs.boardNoticeList(bidx, 1, 1);
+    	list = bs.boardNoticeList(bidx, 10, 1);
     	
     	request.setAttribute("list", list);		
 		
@@ -58,12 +57,9 @@ public class NoticeListServlet extends HttpServlet {
 		
 		}
 		
-		
-		String cate = "공지사항";
-		
 		ArrayList<BoardVo> blist = new ArrayList<BoardVo>();
 		
-		blist = bs.boardNoticeListCate(cate, 1, 1);		
+		blist = bs.boardNoticeListCate(cate, 10, 1);		
 		request.setAttribute("blist", blist);
 		
 		ArrayList<BoardVo> list3 = (ArrayList<BoardVo>) request.getAttribute("blist");

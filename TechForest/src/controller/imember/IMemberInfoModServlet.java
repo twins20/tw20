@@ -58,7 +58,7 @@ public class IMemberInfoModServlet extends HttpServlet {
 		}else{
 			
 			MemberVo vo = new MemberVo();
-			vo = si.IMemberInfoCon(idx, 10, 1);
+			vo = si.IMemberInfoCon(idx);
 			
 			request.setAttribute("vo", vo);
 			

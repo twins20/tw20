@@ -33,10 +33,9 @@ public class QnaConServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-
 
 		int bidx = 0;
+		
 		if(request.getParameter("bidx") != null) bidx = Integer.parseInt(request.getParameter("bidx"));
 		
 		BoardQnaServiceImpl bs = new BoardQnaServiceImpl(); 		
@@ -81,7 +80,6 @@ public class QnaConServlet extends HttpServlet {
 		}	
 
 		PageRedirect pr = new PageRedirect(false, "/boardQna/QnaCon.jsp", request, response);
-
 	}
 
 	/**

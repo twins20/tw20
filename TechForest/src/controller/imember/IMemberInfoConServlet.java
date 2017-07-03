@@ -38,7 +38,7 @@ public class IMemberInfoConServlet extends HttpServlet {
 		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
 		
 		IMemberServiceImpl si = new IMemberServiceImpl(); 
-		MemberVo vo = si.IMemberInfoCon(idx, 10, 1); 
+		MemberVo vo = si.IMemberInfoCon(idx); 
 		
 		request.setAttribute("vo", vo); 
 		request.setAttribute("idx", idx);

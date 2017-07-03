@@ -27,9 +27,9 @@ public class BoardFaqServiceImpl {
 				+	"FROM TF_BOARD_FAQ "
 				+	"ORDER BY BIDX DESC ";		
 			
-			this.sql = new PagingQ().pagingStr(sql, listCnt, pageCnt);
+			this.sql = new PagingQ().pagingStr(this.sql, listCnt, pageCnt);
 			
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(this.sql);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()){
@@ -71,7 +71,7 @@ public class BoardFaqServiceImpl {
 			
 			this.sql = new PagingQ().pagingStr(this.sql, listCnt, pageCnt);
 			
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(this.sql);
 			pstmt.setString(1, cate);
 			rs = pstmt.executeQuery();
 	
@@ -106,6 +106,7 @@ public class BoardFaqServiceImpl {
 		ArrayList<BoardVo> alist = new ArrayList<BoardVo>();
 		
 		try{
+			
 			this.sql = "SELECT CATE, TITLE, CONTENTS, HIT, INSDATE "
 				+	"FROM TF_BOARD_FAQ "
 				+	"WHERE BIDX = ?";
@@ -142,6 +143,7 @@ public class BoardFaqServiceImpl {
 		int row = 0;		
 		
 		try{
+			
 			this.sql = "UPDATE TF_BOARD_FAQ "
 				+ 	"SET HIT = HIT + 1 "
 				+ 	"WHERE BIDX = ?";

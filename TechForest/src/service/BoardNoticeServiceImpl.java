@@ -25,12 +25,12 @@ public class BoardNoticeServiceImpl {
 		try{
 			
 			this.sql = "SELECT BIDX, TITLE, INSDATE, HIT "
-				+	"FROM TF_BOARD_NOTICE "
-				+	"WHERE BIDX =? ";
+				+		"FROM TF_BOARD_NOTICE "
+				+		"WHERE BIDX = ? ";
 			
-			this.sql = new PagingQ().pagingStr(this.sql, 1, 1);
+			this.sql = new PagingQ().pagingStr(this.sql, listCnt, pageCnt);
 			
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(this.sql);
 			pstmt.setInt(1, bidx);
 			rs = pstmt.executeQuery();
 			
@@ -66,14 +66,15 @@ public class BoardNoticeServiceImpl {
 		try{
 			
 			this.sql = "SELECT BIDX, CATE, TITLE, HIT, INSDATE "
-				+	"FROM TF_BOARD_NOTICE "
-				+	"WHERE VIEWSTAT = 1 "
-				+		"AND  CATE = ? "
-				+	"ORDER BY BIDX DESC ";
-			this.sql = new PagingQ().pagingStr(this.sql, 1, 1);
+				+		"FROM TF_BOARD_NOTICE "
+				+		"WHERE VIEWSTAT = 1 "
+				+			"AND  CATE = ? "
+				+		"ORDER BY BIDX DESC ";
+			
+			this.sql = new PagingQ().pagingStr(this.sql, listCnt, pageCnt);
 						
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1,"공지사항");
+			pstmt = con.prepareStatement(this.sql);
+			pstmt.setString(1,cate);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()){
@@ -109,10 +110,10 @@ public class BoardNoticeServiceImpl {
 		try{
 			
 			this.sql = "SELECT CATE, TITLE, CONTENTS, HIT, INSDATE "
-				+	"FROM TF_BOARD_NOTICE "
-				+	"WHERE BIDX = ? ";
+				+		"FROM TF_BOARD_NOTICE "
+				+		"WHERE BIDX = ? ";
 			
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(this.sql);
 			pstmt.setInt(1, bidx);
 			rs = pstmt.executeQuery();
 			
@@ -147,11 +148,11 @@ public class BoardNoticeServiceImpl {
 		
 		try{
 			
-			this.sql="UPDATE TF_BOARD_NOTICE "
-				+	"SET HIT = HIT + 1"
-				+	"WHERE BIDX = ?";
+			this.sql = "UPDATE TF_BOARD_NOTICE "
+				+		"SET HIT = HIT + 1 "
+				+		"WHERE BIDX = ?";
 			
-			pstmt=con.prepareStatement(sql);
+			pstmt=con.prepareStatement(this.sql);
 			pstmt.setInt(1, bidx);
 			row = pstmt.executeUpdate();
 									

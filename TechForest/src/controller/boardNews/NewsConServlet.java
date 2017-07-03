@@ -35,20 +35,20 @@ public class NewsConServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
 		
-		int bidx = (Integer) null;
-		if(session.getAttribute("bidx") !=null) bidx =(Integer) request.getAttribute("bidx");
-		if(request.getParameter("bidx") != null) bidx = Integer.parseInt(request.getParameter("bidx"));
+		int bIdx = 0;
 	
-		BoardNewsServiceImpl bs = new BoardNewsServiceImpl(); 
+		if(request.getParameter("bidx") != null) bIdx = Integer.parseInt(request.getParameter("bidx"));
+ 
 		ArrayList<BoardVo> alist = new ArrayList<BoardVo>(); 
+		BoardNewsServiceImpl bs = new BoardNewsServiceImpl();
 		
-		alist = bs.boardNewsCon(bidx);		
+		alist = bs.boardNewsCon(bIdx);		
+		
 		request.setAttribute("alist", alist);		
 				
 		ArrayList<BoardVo> alist1 = (ArrayList<BoardVo>) request.getAttribute("alist");		
+		
 		for(BoardVo vo : alist1){
 			
 //			System.out.println(vo.getbIdx());
@@ -68,7 +68,7 @@ public class NewsConServlet extends HttpServlet {
 
 		ArrayList<BoardCommVo> blist = new ArrayList<BoardCommVo>();
 
-		blist = bs.boardNewsCommList(bidx, 1, 1);
+		blist = bs.boardNewsCommList(bIdx, 10, 1);
 
 //		request.setAttribute("blist", blist);
 //		
@@ -88,12 +88,12 @@ public class NewsConServlet extends HttpServlet {
 //			
 //		}
 		
-		bs.boardNewsHit(bidx);
+		bs.boardNewsHit(bIdx);
 			
 //		int bidx = 1;
 		ArrayList<ProjectVo> clist = new ArrayList<ProjectVo>();
 		
-		clist = bs.boardNewsProjList(bidx, 1, 1);
+		clist = bs.boardNewsProjList(bIdx, 10, 1);
 //		request.setAttribute("clist", clist);
 //		
 //		ArrayList<ProjectVo> clist2 = (ArrayList<ProjectVo>) request.getAttribute("clist");
@@ -111,7 +111,6 @@ public class NewsConServlet extends HttpServlet {
 		
 	
 		PageRedirect pr = new PageRedirect(false, "/NewsConServlet.do" ,request ,response);
-		
 	}
 
 	/**

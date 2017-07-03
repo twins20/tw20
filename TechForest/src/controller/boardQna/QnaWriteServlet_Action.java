@@ -31,26 +31,16 @@ public class QnaWriteServlet_Action extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
-	    BoardQnaServiceImpl bs = new BoardQnaServiceImpl();
 	   	
-		int idx = 2;
+		int idx = 0, pIdx = 0;
+		String cate = null, title = null, contents = null;
 		
 		HttpSession session = request.getSession();
 		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
-		
-		String cate = null;
 		if(request.getParameter("cate") != null) cate = request.getParameter("cate").trim();  
-		
-	    String title = null;
 		if(request.getParameter("title") != null) title = request.getParameter("title").trim(); 
-	    
-	    String contents = null;
 		if(request.getParameter("contents") != null) contents = request.getParameter("contents").trim(); 
-	    
-	    String extcolumn = null;
-		if(request.getParameter("extcolumn") != null) extcolumn = request.getParameter("extcolumn").trim(); 
+		if(request.getParameter("pidx") != null) pIdx = Integer.parseInt(request.getParameter("pidx").trim()); 
 	    
 	    BoardVo vo = new BoardVo();
 	    
@@ -58,16 +48,16 @@ public class QnaWriteServlet_Action extends HttpServlet {
 	    vo.setCate(cate);
 	    vo.setTitle(title);
 	    vo.setContents(contents);
-//	    vo.setExtColumn(extcolumn);
+	    vo.setpIdx(pIdx);
 	    
 	    int row = 0;
+	    
+	    BoardQnaServiceImpl bs = new BoardQnaServiceImpl();
 	    row = bs.boardQnaWrite(vo); 
 
 //	    System.out.println(row);
 	    
 	    PageRedirect pr = new PageRedirect(true, "/NewsConServlet.do", request, response);
-		
-
 	}
 
 	/**

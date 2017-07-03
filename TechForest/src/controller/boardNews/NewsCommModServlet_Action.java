@@ -33,23 +33,18 @@ public class NewsCommModServlet_Action extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-//		HttpSession session = request.getSession();
-//		int idx = (Integer) null;
-//		if(session.getAttribute("idx") !=null ) idx = (Integer) session.getAttribute("idx");
-		
-		int bidx = 0;
-		if(request.getParameter("bidx") != null) bidx = Integer.parseInt(request.getParameter("bidx"));
-		
-		BoardNewsServiceImpl bs = new BoardNewsServiceImpl();
-		
-		
-		int commidx = 0;
+	
+		int idx = 0, bIdx = 0, commidx = 0;
 		String comments = null;
 		
+		HttpSession session = request.getSession();
+		if(session.getAttribute("idx") !=null ) idx = (Integer) session.getAttribute("idx");
+		if(request.getParameter("bidx") != null) bIdx = Integer.parseInt(request.getParameter("bidx"));
 		if(request.getParameter("commidx") != null) commidx = Integer.parseInt(request.getParameter("commidx").trim());
 		if(request.getParameter("comments") != null) comments = request.getParameter("comments").trim();
 		
+		BoardNewsServiceImpl bs = new BoardNewsServiceImpl();
+
 		BoardCommVo vc = new BoardCommVo();		
 		vc.setCommIdx(commidx);
 		vc.setComments(comments);
