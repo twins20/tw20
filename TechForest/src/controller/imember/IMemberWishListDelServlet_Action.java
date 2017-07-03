@@ -44,7 +44,6 @@ public class IMemberWishListDelServlet_Action extends HttpServlet {
 		row = si.IMemberWishListDel(idx);
 		
 		PageRedirect pr = new PageRedirect(true, "/IMemberWishListServlet.do", request, response);
-		
 	}
 
 	/**

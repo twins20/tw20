@@ -27,12 +27,11 @@ public class IMemberInfoConPwServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		request.setCharacterEncoding("UTF-8");
 		
 		PageRedirect pr = new PageRedirect(false, "/imember/IMemberInfoConPw.jsp", request, response);
-		
 	}
 
 	/**

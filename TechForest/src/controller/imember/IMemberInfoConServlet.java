@@ -30,7 +30,7 @@ public class IMemberInfoConServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		//투자자 회원정보 페이지 
 		int idx = 1;
@@ -53,7 +53,6 @@ public class IMemberInfoConServlet extends HttpServlet {
 		System.out.println(vo.getAddr());
 		
 		PageRedirect pr = new PageRedirect(false, "/imember/IMemberInfoCon.jsp", request, response);
-		
 	}
 
 	/**
