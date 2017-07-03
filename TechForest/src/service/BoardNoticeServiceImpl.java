@@ -43,7 +43,8 @@ public class BoardNoticeServiceImpl {
 				vo.setHit(rs.getInt("hit"));
 				
 				alist.add(vo);
-			}			
+			}
+			
 		}catch(Exception e){
 			System.out.println(e.getMessage());
 		}finally{
@@ -63,6 +64,7 @@ public class BoardNoticeServiceImpl {
 		ArrayList<BoardVo> blist = new ArrayList<BoardVo>();
 		
 		try{
+			
 			this.sql = "SELECT BIDX, CATE, TITLE, HIT, INSDATE "
 				+	"FROM TF_BOARD_NOTICE "
 				+	"WHERE VIEWSTAT = 1 "
@@ -84,13 +86,16 @@ public class BoardNoticeServiceImpl {
 				vo.setInsDate(rs.getString("insdate"));
 				
 				blist.add(vo);
-			}						
+			}
+			
 		}catch(Exception e){
 			System.out.println(e.getMessage());
 		}finally{
 			DBClose.close(con,pstmt,rs);
 		}
+		
 		return blist;
+		
 	}	
 		
 	public ArrayList<BoardVo> boardNoticeCon(int bidx){
@@ -102,6 +107,7 @@ public class BoardNoticeServiceImpl {
 		ArrayList<BoardVo> alist = new ArrayList<BoardVo>();
 		
 		try{
+			
 			this.sql = "SELECT CATE, TITLE, CONTENTS, HIT, INSDATE "
 				+	"FROM TF_BOARD_NOTICE "
 				+	"WHERE BIDX = ? ";
@@ -120,8 +126,8 @@ public class BoardNoticeServiceImpl {
 				vo.setInsDate(rs.getString("insdate"));
 				
 				alist.add(vo);
-			
 			}
+			
 		}catch(Exception e){
 			System.out.println(e.getMessage());
 		}finally{
@@ -140,6 +146,7 @@ public class BoardNoticeServiceImpl {
 		BoardVo vo = null;
 		
 		try{
+			
 			this.sql="UPDATE TF_BOARD_NOTICE "
 				+	"SET HIT = HIT + 1"
 				+	"WHERE BIDX = ?";
@@ -153,8 +160,10 @@ public class BoardNoticeServiceImpl {
 		}finally{
 			DBClose.close(con,pstmt);
 		}
+		
 		return row;
+		
 	}		
 		
 	
-	}
+}

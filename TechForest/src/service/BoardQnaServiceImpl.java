@@ -40,21 +40,21 @@ public class BoardQnaServiceImpl {
 			  
 			while(rs.next()){
 				  
-			  BoardVo vo = new BoardVo();  			  
-			  vo.setrNum(rs.getInt("rnum"));
-			  vo.setbIdx(rs.getInt("bidx"));
-			  vo.setIdx(rs.getInt("idx"));
-			  vo.setpIdx(rs.getInt("pidx"));
-			  vo.setCate(rs.getString("cate"));
-			  vo.setTitle(rs.getString("title"));
-			  vo.setHit(rs.getInt("hit"));
-			  vo.setGood(rs.getInt("good"));
-			  vo.setBad(rs.getInt("bad"));
-			  vo.setCommCnt(rs.getInt("commcnt"));
-			  vo.setInsDate(rs.getString("insdate"));
-			  vo.setModDate(rs.getString("moddate"));
+				BoardVo vo = new BoardVo();  			  
+				vo.setrNum(rs.getInt("rnum"));
+				vo.setbIdx(rs.getInt("bidx"));
+				vo.setIdx(rs.getInt("idx"));
+				vo.setpIdx(rs.getInt("pidx"));
+				vo.setCate(rs.getString("cate"));
+				vo.setTitle(rs.getString("title"));
+				vo.setHit(rs.getInt("hit"));
+				vo.setGood(rs.getInt("good"));
+				vo.setBad(rs.getInt("bad"));
+				vo.setCommCnt(rs.getInt("commcnt"));
+				vo.setInsDate(rs.getString("insdate"));
+				vo.setModDate(rs.getString("moddate"));
 
-			  alist.add(vo);  
+				alist.add(vo);  
 			}	
 			
 		}catch(Exception e){
@@ -65,7 +65,7 @@ public class BoardQnaServiceImpl {
 		  
 		return alist;
 		  
-	  }
+	}
 
 	public int boardQnaWrite(BoardVo vo){
 		  
@@ -86,8 +86,7 @@ public class BoardQnaServiceImpl {
 			  pstmt.setString(4, vo.getTitle());
 //			  pstmt.setString(5, vo.getExtColumn());
 			  		  
-			  row = pstmt.executeUpdate();	  
-			  System.out.println(row);
+			  row = pstmt.executeUpdate();	 
 		  
 		  }catch(Exception e){
 			  System.out.println(e.getMessage());
@@ -101,50 +100,49 @@ public class BoardQnaServiceImpl {
 	  
 	public ArrayList<BoardVo> boardQnaCon(int bidx){
 		
-		  Connection con = dbconnect.getConnection();
-		  PreparedStatement pstmt = null;
-		  ResultSet rs = null;
+		 Connection con = dbconnect.getConnection();
+		 PreparedStatement pstmt = null;
+		 ResultSet rs = null;
 		  
-		  ArrayList<BoardVo> alist = new ArrayList<BoardVo>();
+		 ArrayList<BoardVo> alist = new ArrayList<BoardVo>();
 		  
-		  try{
+		 try{
 			  
-			  this.sql="SELECT * "
-			  	+	"FROM TF_BOARD_QNA "
+			 this.sql="SELECT * "
+				+	"FROM TF_BOARD_QNA "
 			  	+	"WHERE BIDX = ? ";
 			 
-			pstmt=con.prepareStatement(sql);
-			pstmt.setInt(1, bidx);
-			rs=pstmt.executeQuery();
+			 pstmt=con.prepareStatement(sql);
+			 pstmt.setInt(1, bidx);
+			 rs=pstmt.executeQuery();
 			
-			if(rs.next()){
+			 if(rs.next()){
 				
-				BoardVo vo = new BoardVo();
-				vo.setbIdx(rs.getInt("bidx"));
-				vo.setIdx(rs.getInt("idx"));
-				vo.setCate(rs.getString("cate"));
-				vo.setTitle(rs.getString("title"));
-				vo.setContents(rs.getString("contents"));
-				vo.setGood(rs.getInt("good"));
-				vo.setBad(rs.getInt("bad"));
-				vo.setHit(rs.getInt("hit"));
-				vo.setInsDate(rs.getString("insdate"));
-				vo.setModDate(rs.getString("moddate"));
+				 BoardVo vo = new BoardVo();
+				 vo.setbIdx(rs.getInt("bidx"));
+				 vo.setIdx(rs.getInt("idx"));
+				 vo.setCate(rs.getString("cate"));
+				 vo.setTitle(rs.getString("title"));
+				 vo.setContents(rs.getString("contents"));
+				 vo.setGood(rs.getInt("good"));
+				 vo.setBad(rs.getInt("bad"));
+				 vo.setHit(rs.getInt("hit"));
+				 vo.setInsDate(rs.getString("insdate"));
+				 vo.setModDate(rs.getString("moddate"));
 				
-				alist.add(vo);
-			}
+				 alist.add(vo);
+			 }
 			  
-		  }catch(Exception e){
-			  System.out.println(e.getMessage());
-		  }finally{
-			  DBClose.close(con,pstmt,rs);
-		  }
+		 }catch(Exception e){
+			 System.out.println(e.getMessage());
+		 }finally{
+			 DBClose.close(con,pstmt,rs);
+		 }
 		  	
-		  return alist;
+		 return alist;
 		  
 	 }
-
-	  
+  
 	public ArrayList<ProjectVo> boardQnaProjList(int bidx, int listCnt, int pageCnt){
 		  
 		  Connection con = dbconnect.getConnection();
@@ -167,17 +165,17 @@ public class BoardQnaServiceImpl {
 			 		  
 			  while(rs.next()){
 				  
-				ProjectVo vo = new ProjectVo();	
-				vo.setrNum(rs.getInt("rnum"));
-				vo.setpIdx(rs.getInt("pidx"));
-				vo.setIdx(rs.getInt("idx"));
-				vo.setpName(rs.getString("pname"));
-				vo.setpCate(rs.getString("pcate"));
-				vo.setItList(rs.getString("itlist"));
-				vo.setPtFunds(rs.getInt("ptfunds"));
-				vo.setPnFunds(rs.getInt("pnfunds"));
+				  ProjectVo vo = new ProjectVo();	
+				  vo.setrNum(rs.getInt("rnum"));
+				  vo.setpIdx(rs.getInt("pidx"));
+				  vo.setIdx(rs.getInt("idx"));
+				  vo.setpName(rs.getString("pname"));
+				  vo.setpCate(rs.getString("pcate"));
+				  vo.setItList(rs.getString("itlist"));
+				  vo.setPtFunds(rs.getInt("ptfunds"));
+				  vo.setPnFunds(rs.getInt("pnfunds"));
 					
-				alist.add(vo);
+				  alist.add(vo);
 			  }
 					  
 		  }catch(Exception e){
