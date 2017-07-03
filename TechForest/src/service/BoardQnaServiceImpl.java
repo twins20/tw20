@@ -26,13 +26,13 @@ public class BoardQnaServiceImpl {
 		  
 		try{
 			  
-			this.sql=" SELECT * "
-			  	+ 	"FROM TF_BOARD_QNA "
-			  	+ 	"WHERE VIEWSTAT = 1 "
-		 		+ 		"AND BDEPTH = 1 "
-		 		+ 		"AND IDX = ?";	
+			this.sql = "SELECT * "
+			  	+ 		"FROM TF_BOARD_QNA "
+			  	+ 		"WHERE VIEWSTAT = 1 "
+		 		+ 			"AND BDEPTH = 1 "
+		 		+ 			"AND IDX = ?";	
 			  
-			this.sql=new PagingQ().pagingStr(this.sql, 1, 1);
+			this.sql=new PagingQ().pagingStr(this.sql, listCnt, pageCnt);
 			  
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, idx);

@@ -17,7 +17,7 @@ public class AdminServiceImpl {
 	String sql = null;
 	
 	//관리자 인덱스 페이지 충전 대기 리스트
-	public ArrayList<Map<String, Object>> adminIndexPMoneyChkList(){
+	public ArrayList<Map<String, Object>> adminIndexPMoneyChkList(int listCnt, int pageCnt){
 			
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null; 
@@ -33,7 +33,7 @@ public class AdminServiceImpl {
 				+			"AND B.STATUS = 0 "
 				+		"ORDER BY B.MIDX DESC";
 		
-			this.sql = new PagingQ().pagingStr(sql, 10, 1);
+			this.sql = new PagingQ().pagingStr(sql, listCnt, pageCnt);
 			
 			pstmt = con.prepareStatement(this.sql); 
 			rs = pstmt.executeQuery();
@@ -66,7 +66,7 @@ public class AdminServiceImpl {
 	}
 	
 	//관리자 인덱스 페이지 프로젝트 승인 대기 리스트
-	public ArrayList<ProjectVo> adminIndexPProjectChkList(){
+	public ArrayList<ProjectVo> adminIndexPProjectChkList(int listCnt, int pageCnt){
 		
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null; 
@@ -81,7 +81,7 @@ public class AdminServiceImpl {
 				+		"WHERE STATUS = 0 "
 				+		"ORDER BY PIDX DESC";
 		
-			this.sql = new PagingQ().pagingStr(sql, 3, 1);
+			this.sql = new PagingQ().pagingStr(sql, listCnt, pageCnt);
 			
 			pstmt = con.prepareStatement(this.sql); 
 			rs = pstmt.executeQuery();
@@ -106,7 +106,7 @@ public class AdminServiceImpl {
 	}
 	
 	//관리자 인덱스 페이지 사업자 승인 대기 리스트
-	public ArrayList<MemberVo> adminIndexPCmemChkList(){
+	public ArrayList<MemberVo> adminIndexPCmemChkList(int listCnt, int pageCnt){
 		
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null; 
@@ -123,7 +123,7 @@ public class AdminServiceImpl {
 				+			"AND A.TYPE = 'C' "
 				+		"ORDER BY B.CIDX DESC";
 		
-			this.sql = new PagingQ().pagingStr(sql, 10, 1);
+			this.sql = new PagingQ().pagingStr(sql, listCnt, pageCnt);
 			
 			pstmt = con.prepareStatement(this.sql); 
 			rs = pstmt.executeQuery();
@@ -148,7 +148,7 @@ public class AdminServiceImpl {
 	}
 	
 	//관리자 투자자 회원정보 페이지 회원리스트
-	public ArrayList<MemberVo> adminlmemInfoList(){
+	public ArrayList<MemberVo> adminlmemInfoList(int listCnt, int pageCnt){
 		
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null; 
@@ -164,7 +164,7 @@ public class AdminServiceImpl {
 				+			"AND A.TYPE = 'I' "
 				+		"ORDER BY IIDX DESC";
 		
-			this.sql = new PagingQ().pagingStr(sql, 10, 1);
+			this.sql = new PagingQ().pagingStr(sql, listCnt, pageCnt);
 			
 			pstmt = con.prepareStatement(this.sql);						
 			rs = pstmt.executeQuery();			
@@ -229,7 +229,7 @@ public class AdminServiceImpl {
 	}	
 	
 	//관리자 투자자 회원정보 페이지 회원별 충전 기록 리스트
-	public ArrayList<MoneyVo> adminImemInfoMoneyHis(int idx){
+	public ArrayList<MoneyVo> adminImemInfoMoneyHis(int idx, int listCnt, int pageCnt){
 			
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null; 
@@ -244,7 +244,7 @@ public class AdminServiceImpl {
 				+		"WHERE IDX = ? " 	
 				+		"ORDER BY MIDX DESC";
 		
-			this.sql = new PagingQ().pagingStr(sql, 2, 1);
+			this.sql = new PagingQ().pagingStr(sql, listCnt, pageCnt);
 			
 			pstmt = con.prepareStatement(this.sql);							
 			pstmt.setInt(1, idx);				
@@ -270,7 +270,7 @@ public class AdminServiceImpl {
 	}
 	
 	//관리자 투자자 회원정보 페이지 프로젝트 참가 기록 리스트
-	public ArrayList<Map<String, Object>> adminImemInfoProjHis(int idx){
+	public ArrayList<Map<String, Object>> adminImemInfoProjHis(int idx, int listCnt, int pageCnt){
 		
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null; 
@@ -286,7 +286,7 @@ public class AdminServiceImpl {
 				+			"AND B.IDX = ? "
 				+		"ORDER BY B.FIDX DESC";
 		
-			this.sql = new PagingQ().pagingStr(sql, 2, 1);
+			this.sql = new PagingQ().pagingStr(sql, listCnt, pageCnt);
 			
 			pstmt = con.prepareStatement(this.sql); 
 			pstmt.setInt(1, idx);
@@ -321,7 +321,7 @@ public class AdminServiceImpl {
 	}
 	
 	//관리자 투자자 회원정보 페이지 QNA 참가기록 리스트	
-	public ArrayList<Map<String, Object>> adminImemInfoQnaHis(int idx){
+	public ArrayList<Map<String, Object>> adminImemInfoQnaHis(int idx, int listCnt, int pageCnt){
 			
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null; 
@@ -337,7 +337,7 @@ public class AdminServiceImpl {
 				+			"AND A.IDX = ? "
 				+		"ORDER BY B.BIDX DESC";
 		
-			this.sql = new PagingQ().pagingStr(sql, 2, 1);
+			this.sql = new PagingQ().pagingStr(sql, listCnt, pageCnt);
 			
 			pstmt = con.prepareStatement(this.sql); 
 			pstmt.setInt(1, idx);
@@ -370,7 +370,7 @@ public class AdminServiceImpl {
 	}
 	
 	//관리자 머니 충전 기록 리스트  
-	public ArrayList<Map<String, Object>> adminMoneyList(){
+	public ArrayList<Map<String, Object>> adminMoneyList(int listCnt, int pageCnt){
 		
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null; 
@@ -385,7 +385,7 @@ public class AdminServiceImpl {
 				+		"WHERE A.IDX = B.IDX "
 				+		"ORDER BY B.MIDX DESC";
 		
-			this.sql = new PagingQ().pagingStr(sql, 10, 1);
+			this.sql = new PagingQ().pagingStr(sql, listCnt, pageCnt);
 			
 			pstmt = con.prepareStatement(this.sql); 
 			rs = pstmt.executeQuery();
@@ -560,7 +560,7 @@ public class AdminServiceImpl {
 	}
 	
 	//관리자 사업자 회원정보 페이지 회원리스트  
-	public ArrayList<Map<String, Object>> adminCmemInfoList(){
+	public ArrayList<Map<String, Object>> adminCmemInfoList(int listCnt, int pageCnt){
 		
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null; 
@@ -576,7 +576,7 @@ public class AdminServiceImpl {
 				+			"AND A.TYPE = 'C' "
 				+		"ORDER BY A.IDX DESC";
 		
-			this.sql = new PagingQ().pagingStr(sql, 10, 1);
+			this.sql = new PagingQ().pagingStr(sql, listCnt, pageCnt);
 			
 			pstmt = con.prepareStatement(this.sql); 
 			rs = pstmt.executeQuery();
@@ -728,7 +728,7 @@ public class AdminServiceImpl {
 		}
 	
 	//관리자 사업자 회원정보 페이지 지난 프로젝트 리스트
-	public ArrayList<ProjectVo> adminCmemInfoProjHis(int idx){
+	public ArrayList<ProjectVo> adminCmemInfoProjHis(int idx, int listCnt, int pageCnt){
 		
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null; 
@@ -744,7 +744,7 @@ public class AdminServiceImpl {
 				+			"AND IDX = ? "
 				+		"ORDER BY PIDX DESC";
 			
-			this.sql = new PagingQ().pagingStr(sql, 2, 1);
+			this.sql = new PagingQ().pagingStr(sql, listCnt, pageCnt);
 			
 			pstmt = con.prepareStatement(this.sql); 
 			pstmt.setInt(1, idx);	
@@ -771,7 +771,7 @@ public class AdminServiceImpl {
 	}
 	
 	//관리자 사업자 회원정보 페이지 진행중 프로젝트 투자 회원리스트
-	public ArrayList<Map<String, Object>> adminCmemInfoProjFundHis(int idx){
+	public ArrayList<Map<String, Object>> adminCmemInfoProjFundHis(int idx, int listCnt, int pageCnt){
 		
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null; 
@@ -788,7 +788,7 @@ public class AdminServiceImpl {
 			
 			//테스트 전 프로젝트 테이블에서 status값 확인, 한 idx당 status값이 1개만 존재해야됨
 			
-			this.sql = new PagingQ().pagingStr(sql, 5, 1);
+			this.sql = new PagingQ().pagingStr(sql, listCnt, pageCnt);
 			
 			pstmt = con.prepareStatement(this.sql); 
 			pstmt.setInt(1, idx);
@@ -822,7 +822,7 @@ public class AdminServiceImpl {
 	}
 	
 	//관리자 사업자 회원정보 페이지 뉴스 리스트
-	public ArrayList<Map<String, Object>> adminCmemInfoProjNewsHis(int idx){
+	public ArrayList<Map<String, Object>> adminCmemInfoProjNewsHis(int idx, int listCnt, int pageCnt){
 			
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null; 
@@ -839,7 +839,7 @@ public class AdminServiceImpl {
 				+			"AND B.IDX = ? "
 				+		"ORDER BY OBIDX DESC, RBIDX ASC";
 			
-			this.sql = new PagingQ().pagingStr(sql, 3, 1);
+			this.sql = new PagingQ().pagingStr(sql, listCnt, pageCnt);
 			
 			pstmt = con.prepareStatement(this.sql); 
 			pstmt.setInt(1, idx);	
@@ -871,7 +871,7 @@ public class AdminServiceImpl {
 	}
 	
 	//관리자 사업자 회원정보 페이지 QNA 리스트
-	public ArrayList<BoardVo> adminCmemInfoProjQna(int idx){
+	public ArrayList<BoardVo> adminCmemInfoProjQna(int idx, int listCnt, int pageCnt){
 		
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null; 
@@ -888,7 +888,7 @@ public class AdminServiceImpl {
 				+			"AND B.IDX = ? "
 				+		"ORDER BY A.OBIDX DESC, A.RBIDX ASC";
 			
-			this.sql = new PagingQ().pagingStr(sql, 3, 1);
+			this.sql = new PagingQ().pagingStr(sql, listCnt, pageCnt);
 			
 			pstmt = con.prepareStatement(this.sql); 
 			pstmt.setInt(1, idx);	
@@ -925,7 +925,7 @@ public class AdminServiceImpl {
 	}
 	
 	//관리자 사업자 등록 승인 리스트
-	public ArrayList<MemberVo> adminCmemChkList(){
+	public ArrayList<MemberVo> adminCmemChkList(int listCnt, int pageCnt){
 			
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null; 
@@ -942,7 +942,7 @@ public class AdminServiceImpl {
 				+			"AND STATUS > 0 "
 				+		"ORDER BY B.CIDX DESC";
 		
-			this.sql = new PagingQ().pagingStr(sql, 10, 1);
+			this.sql = new PagingQ().pagingStr(sql, listCnt, pageCnt);
 			
 			pstmt = con.prepareStatement(this.sql); 
 			rs = pstmt.executeQuery();
@@ -1018,7 +1018,7 @@ public class AdminServiceImpl {
 	}
 	
 	//관리자 프로젝트 등록 승인 리스트 
-	public ArrayList<ProjectVo> adminProjChkList(){
+	public ArrayList<ProjectVo> adminProjChkList(int listCnt, int pageCnt){
 			
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null; 
@@ -1032,7 +1032,7 @@ public class AdminServiceImpl {
 				+		"FROM TF_PROJECT_LIST "
 				+		"ORDER BY PIDX DESC";
 		
-			this.sql = new PagingQ().pagingStr(sql, 10, 1);
+			this.sql = new PagingQ().pagingStr(sql, listCnt, pageCnt);
 			
 			pstmt = con.prepareStatement(this.sql); 
 			rs = pstmt.executeQuery();
@@ -1174,7 +1174,7 @@ public class AdminServiceImpl {
 	}
 	
 	//관리자 고객센터 페이지 QNA리스트 
-	public ArrayList<BoardVo> adminBoardQnaList(){
+	public ArrayList<BoardVo> adminBoardQnaList(int listCnt, int pageCnt){
 		
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null; 
@@ -1188,7 +1188,7 @@ public class AdminServiceImpl {
 				+		"WHERE VIEWSTAT = 1 "
 				+		"ORDER BY OBIDX DESC, RBIDX ASC";
 		
-			this.sql = new PagingQ().pagingStr(sql, 5, 1);
+			this.sql = new PagingQ().pagingStr(sql, listCnt, pageCnt);
 			
 			pstmt = con.prepareStatement(this.sql); 
 			rs = pstmt.executeQuery();
@@ -1379,7 +1379,7 @@ public class AdminServiceImpl {
 	}
 	
 	//관리자 고객센터 페이지 FAQ 리스트 
-	public ArrayList<BoardVo> adminBoardFaqList(){
+	public ArrayList<BoardVo> adminBoardFaqList(int listCnt, int pageCnt){
 		
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null; 
@@ -1394,7 +1394,7 @@ public class AdminServiceImpl {
 				+		"WHERE VIEWSTAT = 1 "
 				+		"ORDER BY OBIDX DESC, RBIDX ASC";
 		
-			this.sql = new PagingQ().pagingStr(sql, 5, 1);
+			this.sql = new PagingQ().pagingStr(sql, listCnt, pageCnt);
 			
 			pstmt = con.prepareStatement(this.sql); 
 			rs = pstmt.executeQuery();
@@ -1577,7 +1577,7 @@ public class AdminServiceImpl {
 	}
 
 	//관리자 고객센터 페이지 전체 공지사항 리스트 
-	public ArrayList<BoardVo> adminBoardNoticeList(){
+	public ArrayList<BoardVo> adminBoardNoticeList(int listCnt, int pageCnt){
 		
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null; 
@@ -1592,7 +1592,7 @@ public class AdminServiceImpl {
 				+		"WHERE VIEWSTAT = 1 "
 				+		"ORDER BY OBIDX DESC, RBIDX ASC";
 		
-			this.sql = new PagingQ().pagingStr(sql, 5, 1);
+			this.sql = new PagingQ().pagingStr(sql, listCnt, pageCnt);
 			
 			pstmt = con.prepareStatement(this.sql); 
 			rs = pstmt.executeQuery();
@@ -1758,7 +1758,7 @@ public class AdminServiceImpl {
 	}
 	
 	//관리자 뉴스관리 페이지 뉴스 리스트  
-	public ArrayList<BoardVo> adminBoardNewsList(){
+	public ArrayList<BoardVo> adminBoardNewsList(int listCnt, int pageCnt){
 		
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null; 
@@ -1773,7 +1773,7 @@ public class AdminServiceImpl {
 				+		"WHERE VIEWSTAT = 1 "
 				+		"ORDER BY OBIDX DESC, RBIDX ASC";
 		
-			this.sql = new PagingQ().pagingStr(sql, 5, 1);
+			this.sql = new PagingQ().pagingStr(sql, listCnt, pageCnt);
 			
 			pstmt = con.prepareStatement(this.sql); 
 			rs = pstmt.executeQuery();
@@ -1807,7 +1807,7 @@ public class AdminServiceImpl {
 	}
 	
 	//관리자 뉴스관리 페이지 뉴스 상세내용  
-	public ArrayList<Map<String, Object>> adminBoardNewsCon(int bIdx){
+	public ArrayList<Map<String, Object>> adminBoardNewsCon(int bIdx, int listCnt, int pageCnt){
 		
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null; 
@@ -1822,7 +1822,7 @@ public class AdminServiceImpl {
 				 +		"WHERE A.PIDX = B.PIDX "
 				 +			"AND A.BIDX = ?";	
 		
-			this.sql = new PagingQ().pagingStr(sql, 10, 1);
+			this.sql = new PagingQ().pagingStr(sql, listCnt, pageCnt);
 			
 			pstmt = con.prepareStatement(this.sql); 
 			pstmt.setInt(1, bIdx);			
@@ -1957,7 +1957,7 @@ public class AdminServiceImpl {
 	}
 
 	//관리자 메모리스트 확인 
-		public ArrayList<MemoVo> adminBoardMemoList(int idx){
+		public ArrayList<MemoVo> adminBoardMemoList(int idx, int listCnt, int pageCnt){
 			
 			Connection con = dbconnect.getConnection(); 
 			PreparedStatement pstmt = null; 
@@ -1972,7 +1972,7 @@ public class AdminServiceImpl {
 					+		"WHERE RECVIDX = ? "
 					+		"ORDER BY MEMOIDX DESC";	
 			
-				this.sql = new PagingQ().pagingStr(sql, 10, 1);
+				this.sql = new PagingQ().pagingStr(sql, listCnt, pageCnt);
 				
 				pstmt = con.prepareStatement(this.sql); 
 				pstmt.setInt(1, idx);
