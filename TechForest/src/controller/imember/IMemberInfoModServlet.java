@@ -40,13 +40,13 @@ public class IMemberInfoModServlet extends HttpServlet {
 		int idx = Integer.parseInt(request.getParameter("idx"));
 		if(request.getParameter("pw") != null) pw = request.getParameter("pw").trim();
 
-		IMemberServiceImpl si = new IMemberServiceImpl();
 		MemberVo InputMV = new MemberVo();
 		InputMV.setIdx(idx);
 		InputMV.setPw(pw);
 		
 		int row = 0;
-			
+		
+		IMemberServiceImpl si = new IMemberServiceImpl();
 		row = si.IMemberInfoIdPwChk(InputMV);
 		
 //		System.out.println(row);

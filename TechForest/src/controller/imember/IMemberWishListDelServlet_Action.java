@@ -36,11 +36,11 @@ public class IMemberWishListDelServlet_Action extends HttpServlet {
 		HttpSession session = request.getSession();
 		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx"); 
 		
-		IMemberServiceImpl si = new IMemberServiceImpl();
 		WishVo vo = new WishVo(); 
 		
 		int row = 0;
 		
+		IMemberServiceImpl si = new IMemberServiceImpl();
 		row = si.IMemberWishListDel(idx);
 		
 		PageRedirect pr = new PageRedirect(true, "/IMemberWishListServlet.do", request, response);

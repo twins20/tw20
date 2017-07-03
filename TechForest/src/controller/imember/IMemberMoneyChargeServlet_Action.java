@@ -37,14 +37,14 @@ public class IMemberMoneyChargeServlet_Action extends HttpServlet {
 		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
 	
 		String contents = null; 
-		int chgmoney = 0;
+		int chgMoney = 0;
 		
 		if(request.getParameter("contents") != null) contents = request.getParameter("contents").trim();
-		if(request.getParameter("chgmoney") != null) chgmoney = Integer.parseInt(request.getParameter("chgmoney").trim());
+		if(request.getParameter("chgmoney") != null) chgMoney = Integer.parseInt(request.getParameter("chgmoney").trim());
 		
 		IMemberServiceImpl si = new IMemberServiceImpl();
 		MoneyVo vo = new MoneyVo();
-		vo.setChgMoney(chgmoney);
+		vo.setChgMoney(chgMoney);
 		vo.setContents(contents);
 		vo.setIdx(idx);
 		

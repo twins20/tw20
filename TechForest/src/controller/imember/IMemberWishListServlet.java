@@ -38,9 +38,9 @@ public class IMemberWishListServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
 	
-		IMemberServiceImpl si = new IMemberServiceImpl();
 		ArrayList<ProjectVo> alist = new ArrayList<ProjectVo>();
 		
+		IMemberServiceImpl si = new IMemberServiceImpl();
 		alist = si.IMemberWishList(idx, 10, 1);
 		
 //		request.setAttribute("alist", alist);

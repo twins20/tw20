@@ -38,8 +38,10 @@ public class IMemberMoneyHisServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
 		
+		ArrayList<MoneyVo> alist = new ArrayList<MoneyVo>();
+		
 		IMemberServiceImpl si = new IMemberServiceImpl();
-		ArrayList<MoneyVo> alist = si.IMemberMoneyHisList(idx);
+		alist = si.IMemberMoneyHisList(idx);
 		
 		request.setAttribute("alist", alist);
 		

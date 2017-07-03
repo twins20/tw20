@@ -50,25 +50,25 @@ public class IMemberFundListServlet extends HttpServlet {
 		IMemberServiceImpl si = new IMemberServiceImpl();
 		pList = si.IMemberFundList(idx);
 		
-//		for(ProjectVo vo : pList){
-//			
-//			Map<String,Object> data = new HashMap<String,Object>();	
-//			
-//			fList = si.IMemberFundStatus(vo.getpIdx());
-//			
-//			data.put("fList",fList);
-//			data.put("pVo", vo);
-//			
-//			dataList.add(data);	
-//			
-//		}
-//	
-//		request.setAttribute("dataList", dataList);
-//		
-//		dataList = (ArrayList<Map<String, Object>>) request.getAttribute("dataList");
-//		
-//		for(Map<String, Object> tmpData : dataList){
-//			ProjectVo tmpPVo = (ProjectVo) tmpData.get("pVo");
+		for(ProjectVo vo : pList){
+			
+			Map<String,Object> data = new HashMap<String,Object>();	
+			
+			fList = si.IMemberFundStatus(vo.getpIdx());
+			
+			data.put("fList",fList);
+			data.put("pVo", vo);
+			
+			dataList.add(data);	
+			
+		}
+	
+		request.setAttribute("dataList", dataList);
+		
+		dataList = (ArrayList<Map<String, Object>>) request.getAttribute("dataList");
+		
+		for(Map<String, Object> tmpData : dataList){
+			ProjectVo tmpPVo = (ProjectVo) tmpData.get("pVo");
 //			
 //			System.out.println(tmpPVo.getpIdx());
 //			System.out.println(tmpPVo.getpName());
@@ -77,9 +77,9 @@ public class IMemberFundListServlet extends HttpServlet {
 //			
 //			System.out.println("-----------------------------------------------------------------------------------");
 //		
-//			ArrayList<FundVo> tmpFVo = (ArrayList<FundVo>) tmpData.get("fList");
-//			
-//			for(FundVo tmpFVoSub : tmpFVo){
+			ArrayList<FundVo> tmpFVo = (ArrayList<FundVo>) tmpData.get("fList");
+			
+			for(FundVo tmpFVoSub : tmpFVo){
 //			
 //			System.out.println(tmpFVoSub.getfIdx());
 //			System.out.println(tmpFVoSub.getInFunds());
@@ -89,9 +89,9 @@ public class IMemberFundListServlet extends HttpServlet {
 //			
 //			System.out.println("///////////////////////////////////////////////////////////////////////////////////");	
 //			
-//			}
-//	
-//		}
+			}
+	
+		}
 		
 		PageRedirect pr = new PageRedirect(false, "/imember/IMemberFundList.jsp", request, response);
 	}

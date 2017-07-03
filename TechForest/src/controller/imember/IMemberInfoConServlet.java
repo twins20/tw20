@@ -40,12 +40,12 @@ public class IMemberInfoConServlet extends HttpServlet {
 		IMemberServiceImpl si = new IMemberServiceImpl(); 
 		MemberVo vo = si.IMemberInfoCon(idx, 10, 1); 
 		
-//		request.setAttribute("vo", vo); 
-//		request.setAttribute("idx", idx);
-//		
-//		vo = (MemberVo)request.getAttribute("vo");
-//		idx = (Integer)request.getAttribute("idx");
-//		
+		request.setAttribute("vo", vo); 
+		request.setAttribute("idx", idx);
+		
+		vo = (MemberVo)request.getAttribute("vo");
+		idx = (Integer)request.getAttribute("idx");
+		
 //		System.out.println(vo.getId());
 //		System.out.println(vo.getName()); 
 //		System.out.println(vo.getNick()); 
