@@ -41,7 +41,7 @@ public class BoardNewsServiceImpl {
 			while(rs.next()){
 				
 				BoardVo vo = new BoardVo();
-//				vo.setrNum(rs.getInt("rnum"));
+				vo.setrNum(rs.getInt("rnum"));
 				vo.setbIdx(rs.getInt("bidx"));
 				vo.setIdx(rs.getInt("idx"));
 				vo.setCate(rs.getString("cate"));
@@ -52,7 +52,7 @@ public class BoardNewsServiceImpl {
 				vo.setCommCnt(rs.getInt("commcnt"));
 				vo.setInsDate(rs.getString("insdate"));
 				vo.setModDate(rs.getString("moddate"));
-//				vo.setExtColumn(rs.getString("extcolumn"));
+				vo.setpIdx(rs.getInt("pidx"));
 								
 				alist.add(vo);				
 			}
@@ -257,8 +257,8 @@ public class BoardNewsServiceImpl {
 		try{			
 			
 			this.sql = " UPDATE TF_BOARD_COMM_NEWS "
-				+	" SET COMMENTS =?, MODDATE =SYSDATE "
-				+	" WHERE COMMIDX =? ";
+				+	" SET COMMENTS = ?, MODDATE = SYSDATE "
+				+	" WHERE COMMIDX = ? ";
 			
 			pstmt = con.prepareStatement(sql);			
 			pstmt.setString(1, vc.getComments());
@@ -330,7 +330,7 @@ public class BoardNewsServiceImpl {
 			
 			this.sql = "UPDATE TF_BOARD_NEWS "
 				+ 	"SET HIT = HIT +1 "
-				+ 	"WHERE BIDX =?";
+				+ 	"WHERE BIDX = ?";
 					
 			pstmt = con.prepareStatement(sql);		
 			pstmt.setInt(1, bidx);		
@@ -356,7 +356,7 @@ public class BoardNewsServiceImpl {
 			  
 			  this.sql="UPDATE TF_BOARD_COMM_NEWS "
 		  	 	  +	  "SET VIEWSTAT = 0 "
-		  	  	  +   "WHERE BIDX = ? ";
+		  	  	  +   "WHERE BIDX = ?";
 			   
 			  pstmt = con.prepareStatement(sql);
 			  pstmt.setInt(1, bidx);
