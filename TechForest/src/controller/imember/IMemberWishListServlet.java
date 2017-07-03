@@ -34,7 +34,7 @@ public class IMemberWishListServlet extends HttpServlet {
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int idx = 1;
+		int idx = 0;
 		HttpSession session = request.getSession();
 		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
 	
@@ -43,18 +43,18 @@ public class IMemberWishListServlet extends HttpServlet {
 		
 		alist = si.IMemberWishList(idx, 10, 1);
 		
-		request.setAttribute("alist", alist);
-		
-		alist = (ArrayList<ProjectVo>) request.getAttribute("alist");
-		
-		for(ProjectVo vo : alist){
-			
-		System.out.println(vo.getpIdx());
-		System.out.println(vo.getpName());	
-		System.out.println(vo.getPnFunds());
-		System.out.println(vo.getPtFunds());
-		System.out.println(vo.getPnFunds() / vo.getPtFunds() * 100);
-		}
+//		request.setAttribute("alist", alist);
+//		
+//		alist = (ArrayList<ProjectVo>) request.getAttribute("alist");
+//		
+//		for(ProjectVo vo : alist){
+//			
+//		System.out.println(vo.getpIdx());
+//		System.out.println(vo.getpName());	
+//		System.out.println(vo.getPnFunds());
+//		System.out.println(vo.getPtFunds());
+//		System.out.println(vo.getPnFunds() / vo.getPtFunds() * 100);
+//		}
 		
 		PageRedirect pr = new PageRedirect(false, "/imember/IMemberWishList.jsp", request, response);
 	}

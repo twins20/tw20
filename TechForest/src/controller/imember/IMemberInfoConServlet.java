@@ -33,24 +33,24 @@ public class IMemberInfoConServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		//투자자 회원정보 페이지 
-		int idx = 1;
+		int idx = 0;
 		HttpSession session = request.getSession();
 		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
 		
 		IMemberServiceImpl si = new IMemberServiceImpl(); 
 		MemberVo vo = si.IMemberInfoCon(idx, 10, 1); 
 		
-		request.setAttribute("vo", vo); 
-		request.setAttribute("idx", idx);
-		
-		vo = (MemberVo)request.getAttribute("vo");
-		idx = (Integer)request.getAttribute("idx");
-		
-		System.out.println(vo.getId());
-		System.out.println(vo.getName()); 
-		System.out.println(vo.getNick()); 
-		System.out.println(vo.getPhone());
-		System.out.println(vo.getAddr());
+//		request.setAttribute("vo", vo); 
+//		request.setAttribute("idx", idx);
+//		
+//		vo = (MemberVo)request.getAttribute("vo");
+//		idx = (Integer)request.getAttribute("idx");
+//		
+//		System.out.println(vo.getId());
+//		System.out.println(vo.getName()); 
+//		System.out.println(vo.getNick()); 
+//		System.out.println(vo.getPhone());
+//		System.out.println(vo.getAddr());
 		
 		PageRedirect pr = new PageRedirect(false, "/imember/IMemberInfoCon.jsp", request, response);
 	}

@@ -34,7 +34,7 @@ public class IMemberMoneyHisServlet extends HttpServlet {
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int idx = 1;
+		int idx = 0;
 		HttpSession session = request.getSession();
 		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
 		
@@ -56,10 +56,10 @@ public class IMemberMoneyHisServlet extends HttpServlet {
 				status = "취소";
 			}
 			
-			System.out.println(vo.getmIdx());
-			System.out.println(vo.getChgMoney());
-			System.out.println(vo.getInsDate());
-			System.out.println(status);
+//			System.out.println(vo.getmIdx());
+//			System.out.println(vo.getChgMoney());
+//			System.out.println(vo.getInsDate());
+//			System.out.println(status);
 			
 		}
 		

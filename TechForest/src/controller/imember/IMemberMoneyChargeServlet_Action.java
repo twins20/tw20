@@ -32,7 +32,7 @@ public class IMemberMoneyChargeServlet_Action extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int idx = 1;
+		int idx = 0;
 		HttpSession session = request.getSession();
 		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
 	
@@ -52,7 +52,7 @@ public class IMemberMoneyChargeServlet_Action extends HttpServlet {
 		
 		row = si.IMemberMoneyCharge(vo);
 		
-		System.out.println(row);
+//		System.out.println(row);
 		
 		PageRedirect pr = new PageRedirect(true, "/IMemberMonyHisServlet.do", request, response);
 	}

@@ -35,21 +35,21 @@ public class IMemberInfoModServlet extends HttpServlet {
     	//투자자 회원정보 아이디,비밀번호 체크 페이지 
 //		HttpSession session = request.getSession();
 //		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
-		String password = null;
+		String pw= null;
 
 		int idx = Integer.parseInt(request.getParameter("idx"));
-		if(request.getParameter("password") != null) password = request.getParameter("password").trim();
+		if(request.getParameter("pw") != null) pw = request.getParameter("pw").trim();
 
 		IMemberServiceImpl si = new IMemberServiceImpl();
 		MemberVo InputMV = new MemberVo();
 		InputMV.setIdx(idx);
-		InputMV.setPw(password);
+		InputMV.setPw(pw);
 		
 		int row = 0;
 			
 		row = si.IMemberInfoIdPwChk(InputMV);
 		
-		System.out.println(row);
+//		System.out.println(row);
 		
 		if(row == 0){
 		
@@ -64,14 +64,14 @@ public class IMemberInfoModServlet extends HttpServlet {
 			
 			vo = (MemberVo) request.getAttribute("vo");
 			
-			System.out.println(vo.getIdx());
-			System.out.println(vo.getId());
-			System.out.println(vo.getName());
-			System.out.println(vo.getNick());
-			System.out.println(vo.getPhone());
-			System.out.println(vo.getAddr());
-			System.out.println(vo.getStatus());
-			System.out.println(vo.getType());
+//			System.out.println(vo.getIdx());
+//			System.out.println(vo.getId());
+//			System.out.println(vo.getName());
+//			System.out.println(vo.getNick());
+//			System.out.println(vo.getPhone());
+//			System.out.println(vo.getAddr());
+//			System.out.println(vo.getStatus());
+//			System.out.println(vo.getType());
 			
 			PageRedirect pr = new PageRedirect(false, "/imember/IMemberInfoMod.jsp", request, response);
 		}

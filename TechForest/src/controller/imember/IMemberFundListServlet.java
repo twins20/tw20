@@ -38,7 +38,7 @@ public class IMemberFundListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		//투자자 프로젝트 투자 리스트, 인포그래프
-		int idx = 1;
+		int idx = 0;
 		HttpSession session = request.getSession();
 		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
 		
@@ -50,48 +50,48 @@ public class IMemberFundListServlet extends HttpServlet {
 		IMemberServiceImpl si = new IMemberServiceImpl();
 		pList = si.IMemberFundList(idx);
 		
-		for(ProjectVo vo : pList){
-			
-			Map<String,Object> data = new HashMap<String,Object>();	
-			
-			fList = si.IMemberFundStatus(vo.getpIdx());
-			
-			data.put("fList",fList);
-			data.put("pVo", vo);
-			
-			dataList.add(data);	
-			
-		}
-	
-		request.setAttribute("dataList", dataList);
-		
-		dataList = (ArrayList<Map<String, Object>>) request.getAttribute("dataList");
-		
-		for(Map<String, Object> tmpData : dataList){
-			ProjectVo tmpPVo = (ProjectVo) tmpData.get("pVo");
-			
-			System.out.println(tmpPVo.getpIdx());
-			System.out.println(tmpPVo.getpName());
-			System.out.println(tmpPVo.getPtFunds());
-			System.out.println(tmpPVo.getPnFunds());
-			
-			System.out.println("-----------------------------------------------------------------------------------");
-		
-			ArrayList<FundVo> tmpFVo = (ArrayList<FundVo>) tmpData.get("fList");
-			
-			for(FundVo tmpFVoSub : tmpFVo){
-			
-			System.out.println(tmpFVoSub.getfIdx());
-			System.out.println(tmpFVoSub.getInFunds());
-			System.out.println(tmpFVoSub.getbFunds());
-			System.out.println(tmpFVoSub.getaFunds());
-			System.out.println(tmpFVoSub.getInsDate());				
-			
-			System.out.println("///////////////////////////////////////////////////////////////////////////////////");	
-			
-			}
-	
-		}
+//		for(ProjectVo vo : pList){
+//			
+//			Map<String,Object> data = new HashMap<String,Object>();	
+//			
+//			fList = si.IMemberFundStatus(vo.getpIdx());
+//			
+//			data.put("fList",fList);
+//			data.put("pVo", vo);
+//			
+//			dataList.add(data);	
+//			
+//		}
+//	
+//		request.setAttribute("dataList", dataList);
+//		
+//		dataList = (ArrayList<Map<String, Object>>) request.getAttribute("dataList");
+//		
+//		for(Map<String, Object> tmpData : dataList){
+//			ProjectVo tmpPVo = (ProjectVo) tmpData.get("pVo");
+//			
+//			System.out.println(tmpPVo.getpIdx());
+//			System.out.println(tmpPVo.getpName());
+//			System.out.println(tmpPVo.getPtFunds());
+//			System.out.println(tmpPVo.getPnFunds());
+//			
+//			System.out.println("-----------------------------------------------------------------------------------");
+//		
+//			ArrayList<FundVo> tmpFVo = (ArrayList<FundVo>) tmpData.get("fList");
+//			
+//			for(FundVo tmpFVoSub : tmpFVo){
+//			
+//			System.out.println(tmpFVoSub.getfIdx());
+//			System.out.println(tmpFVoSub.getInFunds());
+//			System.out.println(tmpFVoSub.getbFunds());
+//			System.out.println(tmpFVoSub.getaFunds());
+//			System.out.println(tmpFVoSub.getInsDate());				
+//			
+//			System.out.println("///////////////////////////////////////////////////////////////////////////////////");	
+//			
+//			}
+//	
+//		}
 		
 		PageRedirect pr = new PageRedirect(false, "/imember/IMemberFundList.jsp", request, response);
 	}
