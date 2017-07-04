@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!-- attribute 시작 -->
+<!-- Attribute start -->
 
-<!-- attribute 끝 -->
+<!-- Attribute end -->
 <%@ include file="/header.jsp" %> 
-<!-- 메인 시작 -->
+<!-- main start -->
 
 
 
@@ -16,5 +16,5 @@
 
 	
 
-<!-- 메인 끝 -->
+<!-- main end -->
 <%@ include file="/footer.jsp" %>
