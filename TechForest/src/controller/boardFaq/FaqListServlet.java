@@ -49,8 +49,8 @@ public class FaqListServlet extends HttpServlet {
 		
 		request.setAttribute("list", alist);
 	
-		ArrayList<BoardVo> list2 = (ArrayList<BoardVo>) request.getAttribute("list");
-		for(BoardVo vo : list2){
+//		ArrayList<BoardVo> list2 = (ArrayList<BoardVo>) request.getAttribute("list");
+//		for(BoardVo vo : list2){
 			
 //			System.out.println(vo.getbIdx());
 //			System.out.println(vo.getCate());
@@ -58,16 +58,16 @@ public class FaqListServlet extends HttpServlet {
 //			System.out.println(vo.getHit());
 //			System.out.println(vo.getInsDate());
 		
-		}
+//		}
 		
-		ArrayList<BoardVo> blist = new ArrayList<BoardVo>();
-		blist = bs.boardListCate(cate, 10, 1);
+		alist = bs.boardListCate(cate, 10, 1);
 		
-		request.setAttribute("blist", blist);	
+		request.setAttribute("list", alist);	
 		
 		ArrayList<BoardVo> blist2 = (ArrayList<BoardVo>) request.getAttribute("list");
 		for(BoardVo vo : blist2) {
 			
+//			System.out.println(vo.getrNum());
 //			System.out.println(vo.getbIdx());
 //			System.out.println(vo.getCate());
 //			System.out.println(vo.getTitle());

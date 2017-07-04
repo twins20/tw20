@@ -29,7 +29,7 @@ public class AdminFaqListServlet extends HttpServlet {
 		//관리자 고객센터 페이지 FAQ 리스트 
 		 ArrayList<BoardVo> alist = new  ArrayList<BoardVo>();
 		 
-		alist = as.adminBoardFaqList();
+		alist = as.adminBoardFaqList(10,1);
 		request.setAttribute("alist", alist);
 		
 //		ArrayList<BoardVo> alist1 = (ArrayList<BoardVo>) request.getAttribute("alist");

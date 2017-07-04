@@ -78,6 +78,7 @@ public class BoardFaqServiceImpl {
 			while(rs.next()){
 				
 				BoardVo vo = new BoardVo();
+				vo.setrNum(rs.getInt("rnum"));
 				vo.setbIdx(rs.getInt("bidx"));
 				vo.setCate(rs.getString("cate"));
 				vo.setTitle(rs.getString("title"));

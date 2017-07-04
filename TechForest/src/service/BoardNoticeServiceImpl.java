@@ -144,7 +144,6 @@ public class BoardNoticeServiceImpl {
 		Connection con = dbconnect.getConnection();
 		PreparedStatement pstmt = null;
 		int row = 0;
-		BoardVo vo = null;
 		
 		try{
 			

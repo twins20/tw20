@@ -79,7 +79,6 @@ public class BoardQnaServiceImpl {
 			  	+		"VALUES (SEQ_TF_BIDX_QNA.NEXTVAL, ?, ?, ?, ?, 0, 0, 0, SEQ_TF_BIDX_QNA.CURRVAL, 1, 1, 1, 0, SYSDATE, SYSDATE, ?)";
 		 
 			  pstmt=con.prepareStatement(this.sql);
-			  
 			  pstmt.setInt(1, vo.getIdx());
 			  pstmt.setString(2, vo.getCate());
 			  pstmt.setString(3, vo.getContents());
@@ -196,12 +195,11 @@ public class BoardQnaServiceImpl {
 		  
 		  try{
 			  
-			  this.sql="UPDATE TF_BOARD_QNA "
+			  this.sql = "UPDATE TF_BOARD_QNA "
 				  +	  	 "SET TITLE = ?, CONTENTS = ?, MODDATE = SYSDATE "
 			  	  +	  	 "WHERE BIDX = ? ";
 			  		  
 			  pstmt=con.prepareStatement(this.sql);
-			 
 			  pstmt.setString(1, vo.getTitle());
 			  pstmt.setString(2, vo.getContents());
 			  pstmt.setInt(3, vo.getbIdx());
