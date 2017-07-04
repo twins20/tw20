@@ -67,7 +67,6 @@ public class NewsConServlet extends HttpServlet {
 		
 
 		ArrayList<BoardCommVo> blist = new ArrayList<BoardCommVo>();
-
 		blist = bs.boardNewsCommList(bIdx, 10, 1);
 
 //		request.setAttribute("blist", blist);

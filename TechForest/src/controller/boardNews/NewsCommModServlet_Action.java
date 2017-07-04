@@ -42,8 +42,6 @@ public class NewsCommModServlet_Action extends HttpServlet {
 		if(request.getParameter("bidx") != null) bIdx = Integer.parseInt(request.getParameter("bidx"));
 		if(request.getParameter("commidx") != null) commidx = Integer.parseInt(request.getParameter("commidx").trim());
 		if(request.getParameter("comments") != null) comments = request.getParameter("comments").trim();
-		
-		BoardNewsServiceImpl bs = new BoardNewsServiceImpl();
 
 		BoardCommVo vc = new BoardCommVo();		
 		vc.setCommIdx(commidx);
@@ -51,10 +49,10 @@ public class NewsCommModServlet_Action extends HttpServlet {
 		
 		int row = 0;
 		
+		BoardNewsServiceImpl bs = new BoardNewsServiceImpl();
 		row = bs.boardNewsCommWriteCntMod(vc);
 				
-		PageRedirect pr = new PageRedirect(true,"/NewsListServlet.do", request, response);
-		
+		PageRedirect pr = new PageRedirect(true,"/NewsListServlet.do", request, response);		
 	}
 
 	/**
