@@ -32,32 +32,31 @@ public class IMemberInfoModServlet extends HttpServlet {
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 					
-    	//투자자 회원정보 아이디,비밀번호 체크 페이지 
-//		HttpSession session = request.getSession();
-//		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
-		String pw= null;
-
-		int idx = Integer.parseInt(request.getParameter("idx"));
+		int idx = 0;
+		HttpSession session = request.getSession();
+		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
+		
+		String pw = null;
 		if(request.getParameter("pw") != null) pw = request.getParameter("pw").trim();
 
 		MemberVo InputMV = new MemberVo();
 		InputMV.setIdx(idx);
 		InputMV.setPw(pw);
 		
+		MemberVo vo = new MemberVo();
 		int row = 0;
 		
 		IMemberServiceImpl si = new IMemberServiceImpl();
-		row = si.IMemberInfoIdPwChk(InputMV);
+		row = si.IMemberInfoModChk(InputMV);
 		
 //		System.out.println(row);
 		
 		if(row == 0){
 		
-			PageRedirect pr = new PageRedirect(false, "/imember/IMemberInfoCon.jsp", request, response);
+			PageRedirect pr = new PageRedirect(true, "/IMemberInfoCon.do", request, response);
 		
 		}else{
 			
-			MemberVo vo = new MemberVo();
 			vo = si.IMemberInfoCon(idx);
 			
 			request.setAttribute("vo", vo);
