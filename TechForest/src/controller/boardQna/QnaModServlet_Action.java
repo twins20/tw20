@@ -35,11 +35,13 @@ public class QnaModServlet_Action extends HttpServlet {
 		
 		
 		
-		int idx = 0, bIdx = 0;
-		String title = null, contents = null;
-		
+		int idx = 0;
 		HttpSession session = request.getSession();
 		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
+		
+		int bIdx = 0;
+		String title = null, contents = null;
+		
 		if(request.getParameter("bidx") != null) bIdx = Integer.parseInt(request.getParameter("bidx").trim());
 		if(request.getParameter("title") != null) title = request.getParameter("title").trim();
 		if(request.getParameter("contents") != null) contents = request.getParameter("contents").trim();

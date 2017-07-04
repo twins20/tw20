@@ -61,23 +61,22 @@ public class QnaConServlet extends HttpServlet {
 			
 		}
 		
-		ArrayList<ProjectVo> blist = new ArrayList<ProjectVo>();
+		ProjectVo vo = new ProjectVo();
 	
-		blist = bs.boardQnaProjList(bidx, 1, 1);
-		request.setAttribute("blist", blist);
+		vo = bs.boardQnaProjList(bidx);
+		request.setAttribute("vo", vo);
 		
-		ArrayList<ProjectVo> blist2 = (ArrayList<ProjectVo>) request.getAttribute("blist");
-		for(ProjectVo vo : blist2){
-									
-//			System.out.println(vo.getpIdx());
-//			System.out.println(vo.getIdx());
-//			System.out.println(vo.getpName());
-//			System.out.println(vo.getpCate());
-//			System.out.println(vo.getItList1());
-//			System.out.println(vo.getPtFunds());
-//			System.out.println(vo.getPnFunds());
+		vo = (ProjectVo) request.getAttribute("vo");
+						
+			System.out.println(vo.getpIdx());
+			System.out.println(vo.getIdx());
+			System.out.println(vo.getpName());
+			System.out.println(vo.getpCate());
+			System.out.println(vo.getItList());
+			System.out.println(vo.getPtFunds());
+			System.out.println(vo.getPnFunds());
 		
-		}	
+	
 
 		PageRedirect pr = new PageRedirect(false, "/boardQna/QnaCon.jsp", request, response);
 	}

@@ -34,11 +34,13 @@ public class NewsCommModServlet_Action extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-		int idx = 0, bIdx = 0, commidx = 0;
-		String comments = null;
-		
+		int idx = 0;
 		HttpSession session = request.getSession();
 		if(session.getAttribute("idx") !=null ) idx = (Integer) session.getAttribute("idx");
+		
+		int bIdx = 0, commidx = 0;
+		String comments = null;
+		
 		if(request.getParameter("bidx") != null) bIdx = Integer.parseInt(request.getParameter("bidx"));
 		if(request.getParameter("commidx") != null) commidx = Integer.parseInt(request.getParameter("commidx").trim());
 		if(request.getParameter("comments") != null) comments = request.getParameter("comments").trim();

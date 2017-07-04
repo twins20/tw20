@@ -142,29 +142,26 @@ public class BoardQnaServiceImpl {
 		  
 	 }
   
-	public ArrayList<ProjectVo> boardQnaProjList(int bidx, int listCnt, int pageCnt){
+	public ProjectVo boardQnaProjList(int bidx){
 		  
 		  Connection con = dbconnect.getConnection();
 		  PreparedStatement pstmt = null;
 		  ResultSet rs = null;
 		  
-		  ArrayList<ProjectVo> alist = new ArrayList<ProjectVo>();
+		  ProjectVo vo = new ProjectVo();
 		  
 		  try{
 			  
 			  this.sql="SELECT * "
 			  	  +	 	 "FROM TF_PROJECT_LIST	"
 			  	  +	 	 "WHERE PIDX = (SELECT PIDX FROM TF_BOARD_QNA WHERE BIDX = ? )";
-			 
-			  this.sql=new PagingQ().pagingStr(this.sql, listCnt, pageCnt);
 			  
 			  pstmt = con.prepareStatement(this.sql);
 			  pstmt.setInt(1, bidx);
 			  rs = pstmt.executeQuery();
 			 		  
-			  while(rs.next()){
-				  
-				  ProjectVo vo = new ProjectVo();	
+			  if(rs.next()){
+	
 				  vo.setrNum(rs.getInt("rnum"));
 				  vo.setpIdx(rs.getInt("pidx"));
 				  vo.setIdx(rs.getInt("idx"));
@@ -174,7 +171,6 @@ public class BoardQnaServiceImpl {
 				  vo.setPtFunds(rs.getInt("ptfunds"));
 				  vo.setPnFunds(rs.getInt("pnfunds"));
 					
-				  alist.add(vo);
 			  }
 					  
 		  }catch(Exception e){
@@ -183,7 +179,7 @@ public class BoardQnaServiceImpl {
 			  DBClose.close(con,pstmt,rs);
 		  }
 		  
-		  return alist;
+		  return vo;
 		  
 	  }
 	  

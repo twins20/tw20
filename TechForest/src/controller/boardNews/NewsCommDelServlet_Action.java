@@ -31,10 +31,12 @@ public class NewsCommDelServlet_Action extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int idx = 0, bIdx = 0;
-		
+		int idx = 0;
 		HttpSession session =request.getSession();
 		if(session.getAttribute("idx") !=null) idx = (Integer) session.getAttribute("idx");
+		
+		int bIdx = 0;
+		
 		if(request.getParameter("bidx") != null) bIdx = Integer.parseInt(request.getParameter("bidx"));
 		
 		BoardNewsServiceImpl bs = new BoardNewsServiceImpl();				

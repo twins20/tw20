@@ -26,7 +26,6 @@ public class QnaModServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		int idx = 0;
-	
 		HttpSession session = request.getSession();
 		if(session.getAttribute("idx") !=null) idx = (Integer) request.getAttribute("idx");
 		

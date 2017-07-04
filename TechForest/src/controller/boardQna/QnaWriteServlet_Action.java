@@ -32,15 +32,17 @@ public class QnaWriteServlet_Action extends HttpServlet {
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	   	
-		int idx = 0, pIdx = 0;
-		String cate = null, title = null, contents = null;
-		
+		int idx = 0;
 		HttpSession session = request.getSession();
 		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
+		
+		int pIdx = 0;
+		String cate = null, title = null, contents = null;
+		
+		if(request.getParameter("pidx") != null) pIdx = Integer.parseInt(request.getParameter("pidx").trim());
 		if(request.getParameter("cate") != null) cate = request.getParameter("cate").trim();  
 		if(request.getParameter("title") != null) title = request.getParameter("title").trim(); 
-		if(request.getParameter("contents") != null) contents = request.getParameter("contents").trim(); 
-		if(request.getParameter("pidx") != null) pIdx = Integer.parseInt(request.getParameter("pidx").trim()); 
+		if(request.getParameter("contents") != null) contents = request.getParameter("contents").trim();  
 	    
 	    BoardVo vo = new BoardVo();
 	    
