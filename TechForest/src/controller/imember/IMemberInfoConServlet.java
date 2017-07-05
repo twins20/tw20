@@ -32,8 +32,7 @@ public class IMemberInfoConServlet extends HttpServlet {
 	 */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//투자자 회원정보 페이지 
-		int idx = 0;
+		int idx = 1;
 		HttpSession session = request.getSession();
 		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
 		
@@ -41,11 +40,9 @@ public class IMemberInfoConServlet extends HttpServlet {
 		MemberVo vo = si.IMemberInfoCon(idx); 
 		
 		request.setAttribute("vo", vo); 
-		request.setAttribute("idx", idx);
-		
-		vo = (MemberVo)request.getAttribute("vo");
-		idx = (Integer)request.getAttribute("idx");
-		
+//		
+//		vo = (MemberVo)request.getAttribute("vo");
+//		
 //		System.out.println(vo.getId());
 //		System.out.println(vo.getName()); 
 //		System.out.println(vo.getNick()); 

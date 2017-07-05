@@ -36,9 +36,8 @@ public class IMemberIndexPServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		//투자자 인덱스 프로젝트 리스트  
-		int idx = 0;
+
+		int idx = 1;
 		HttpSession session = request.getSession();
 		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
 		
@@ -51,43 +50,6 @@ public class IMemberIndexPServlet extends HttpServlet {
 		
 		request.setAttribute("plist", plist);			
 		request.setAttribute("qlist", qlist);
-		
-		ArrayList<Map<String,Object>> plist1 = (ArrayList<Map<String,Object>>) request.getAttribute("plist");
-		
-		for(Map<String, Object> plist2 : plist1){
-			
-		ProjectVo pvo = (ProjectVo) plist2.get("vo");
-		FundVo fvo = (FundVo) plist2.get("vo2");
-		
-//		System.out.println(pvo.getrNum());
-//		System.out.println(pvo.getIdx());
-//		System.out.println(pvo.getpName());
-//		System.out.println(pvo.getpCate());
-//		System.out.println(pvo.getpGrade());
-//		System.out.println(fvo.getStatus());
-//		System.out.println(pvo.getPnFunds() / pvo.getPtFunds() * 100);
-		
-		}
-		
-		ArrayList<BoardVo> qlist1 = (ArrayList<BoardVo>) request.getAttribute("qlist");
-		
-		String status = null;
-		for(BoardVo bvo : qlist1){ 
-			if(bvo.getbDepth() > 1){
-				status = "답변완료";
-			}else{
-				status = "답변대기";
-		}
-			
-//		System.out.println(bvo.getrNum());
-//		System.out.println(bvo.getbIdx());
-//		System.out.println(bvo.getCate());
-//		System.out.println(bvo.getTitle());
-//		System.out.println(status);
-//		System.out.println(bvo.getInsDate());
-//		System.out.println(bvo.getHit());	
-		
-		}
 		
 		PageRedirect pr = new PageRedirect(false, "/imember/IMemberIndexP.jsp", request, response);	
 	}
