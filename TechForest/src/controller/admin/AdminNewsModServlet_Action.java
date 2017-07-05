@@ -57,7 +57,7 @@ public class AdminNewsModServlet_Action extends HttpServlet {
 			
 //			System.out.println("수정성공");
 			ArrayList<Map<String, Object>> vo = new ArrayList<Map<String, Object>>();
-			vo = as.adminBoardNewsCon(bIdx);			
+			vo = as.adminBoardNewsCon(bIdx, 10, 1);			
 			request.setAttribute("vo", vo);
 			
 //			vo = (ArrayList<Map<String, Object>>) request.getAttribute("vo");

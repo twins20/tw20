@@ -30,7 +30,7 @@ public class AdminProjChkListServlet extends HttpServlet {
 		//관리자 프로젝트 등록 승인 리스트 
 		ArrayList<ProjectVo> alist = new ArrayList<ProjectVo>();
 				
-			alist = as.adminIndexPProjectChkList();
+			alist = as.adminIndexPProjectChkList(10, 1);
 			request.setAttribute("alist", alist);
 			
 //			ArrayList<ProjectVo> alist1 = (ArrayList<ProjectVo>) request.getAttribute("alist");

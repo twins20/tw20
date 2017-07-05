@@ -31,7 +31,7 @@ public class AdminNoticeListSevlet extends HttpServlet {
 		//관리자 고객센터 페이지 전체 공지사항 리스트  
 		 ArrayList<BoardVo> alist = new  ArrayList<BoardVo>();
 		 
-		alist = as.adminBoardNoticeList();
+		alist = as.adminBoardNoticeList(10, 1);
 		request.setAttribute("alist", alist);
 		
 //		ArrayList<BoardVo> alist1 = (ArrayList<BoardVo>) request.getAttribute("alist");

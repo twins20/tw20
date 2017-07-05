@@ -40,17 +40,17 @@ public class AdminImemInfoConServlet extends HttpServlet {
 	
 		//관리자 투자자 회원정보 페이지 회원별 충전 기록
 		ArrayList<MoneyVo> blist = new ArrayList<MoneyVo>();		
-			blist = as.adminImemInfoMoneyHis(idx);
+			blist = as.adminImemInfoMoneyHis(idx, 10, 1);
 			request.setAttribute("blist", blist);
 			
 		//관리자 투자자 회원정보 페이지 프로젝트 참가 기록 리스트
 		ArrayList<Map<String, Object>> clist = new ArrayList<Map<String, Object>>();		
-			clist =  as.adminImemInfoProjHis(idx);		
+			clist =  as.adminImemInfoProjHis(idx, 10, 1);		
 			request.setAttribute("clist", clist);		
 		
 		//관리자 투자자 회원정보 페이지 QNA 참가기록 리스트		
 		ArrayList<Map<String, Object>> dlist = new ArrayList<Map<String, Object>>();				
-			dlist =  as.adminImemInfoQnaHis(idx);		
+			dlist =  as.adminImemInfoQnaHis(idx, 10, 1);		
 			request.setAttribute("dlist", dlist);	
 				
 //		ArrayList<MemberVo> alist1 = (ArrayList<MemberVo>) request.getAttribute("alist");
