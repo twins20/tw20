@@ -102,13 +102,14 @@ footer {
 	width: 1100px;
 	padding: 20px;
 	margin: 0 auto;
-	background: rgba(0,0,0,0.05);
-	border-top: 1px solid #555;
+	background: rgba(0,0,0,0.85);
+	color: #ddd;
 }
 .fundAlert{
 	padding: 20px;
 	margin: 0 auto;
 	background: #fff;
+	color: #000;
 }
 .fundAlert .fundAlertTitle{
 	margin-left: 150px;
@@ -129,7 +130,8 @@ footer {
 	float: left;
 	width: 200px;
 	padding: 20px;
-	background: rgba(0,0,0,0.1);
+	background: rgba(0,0,0,0.2);
+	border: 1px solid #444;
 }
 .siteMap .subMap {
 	float: left;
