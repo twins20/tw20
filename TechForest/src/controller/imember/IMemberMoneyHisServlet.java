@@ -17,7 +17,7 @@ import service.MoneyVo;
 /**
  * Servlet implementation class IMemberMoneyHisServlets
  */
-@WebServlet("/IMemberMoneyHisServlets")
+@WebServlet("/IMemberMoneyHisServlet")
 public class IMemberMoneyHisServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -34,36 +34,18 @@ public class IMemberMoneyHisServlet extends HttpServlet {
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int idx = 0;
+		int idx = 1;
 		HttpSession session = request.getSession();
 		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
 		
 		ArrayList<MoneyVo> alist = new ArrayList<MoneyVo>();
 		
 		IMemberServiceImpl si = new IMemberServiceImpl();
-		alist = si.IMemberMoneyHisList(idx);
+		alist = si.IMemberMoneyHisList(idx, 10, 1);
 		
 		request.setAttribute("alist", alist);
-		
-		alist = (ArrayList<MoneyVo>) request.getAttribute("alist");
-		
-		for(MoneyVo vo : alist){
-			
-		String status = null;
-			if(vo.getStatus() == 0){
-				status = "신청";
-			}else if(vo.getStatus() == 1){
-				status = "완료";
-			}else if(vo.getStatus() == 2){
-				status = "취소";
-			}
-			
-//			System.out.println(vo.getmIdx());
-//			System.out.println(vo.getChgMoney());
-//			System.out.println(vo.getInsDate());
-//			System.out.println(status);
-			
-		}
+		request.setAttribute("idx", idx);
+		System.out.println("ddd");
 		
 		PageRedirect pr = new PageRedirect(false, "/imember/IMemberMoneyHis.jsp", request, response);	
 	}

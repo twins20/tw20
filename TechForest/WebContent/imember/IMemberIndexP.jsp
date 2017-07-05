@@ -1,15 +1,18 @@
-<!-- <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> -->
+<%@ page language="java" contentType="text/html; charset=UTF-8" 
+	pageEncoding="UTF-8"%> 
+<!-- Attribute start -->
 <%@ page import="java.util.*" %>
 <%@ page import="service.IMemberServiceImpl" %>
 <%@ page import="service.ProjectVo" %>
 <%@ page import="service.FundVo" %>
 <%@ page import="service.BoardVo" %>
-<%@ include file="/header.jsp" %> 
-<!-- 메인 시작 -->
 <% 
-	ArrayList<Map<String,Object>> plist1 = (ArrayList<Map<String,Object>>) request.getAttribute("plist");
-	ArrayList<BoardVo> qlist1 = (ArrayList<BoardVo>) request.getAttribute("qlist");
+	ArrayList<Map<String,Object>> plist = (ArrayList<Map<String,Object>>) request.getAttribute("plist");
+	ArrayList<BoardVo> qlist = (ArrayList<BoardVo>) request.getAttribute("qlist");
 %>
+<!-- Attribute end -->
+<%@ include file="/header.jsp" %> 
+<!-- main start -->
 
 	<h3> 참가 프로젝트 </h3>
 	<table class="table table-striped table-bordered table-hover">
@@ -21,7 +24,7 @@
 	<td>목표달성률</td>
 	</tr>
 <%
-	for(Map<String, Object> plist2 : plist1){
+	for(Map<String, Object> plist2 : plist){
 		
 		ProjectVo pvo = (ProjectVo) plist2.get("vo");
 		FundVo fvo = (FundVo) plist2.get("vo2");
@@ -50,7 +53,7 @@
 	</tr>
 <%
 	String status = null;
-	for(BoardVo bvo : qlist1){ 
+	for(BoardVo bvo : qlist){ 
 		if(bvo.getbDepth() > 1){
 			status = "답변완료";
 		}else{
@@ -68,5 +71,5 @@
 	} 
 %>
 	</table>
-<!-- 메인 끝 -->
+<!-- main end -->
 <%@ include file="/footer.jsp" %>

@@ -2,6 +2,7 @@ package service;
 
 public class MoneyVo {
 	
+	private int rNum;
 	private int mIdx;
 	private int idx;
 	private String contents;
@@ -14,6 +15,12 @@ public class MoneyVo {
 	private String modDate;
 	private String chkAdmin;
 	
+	public int getrNum() {
+		return rNum;
+	}
+	public void setrNum(int rNum) {
+		this.rNum = rNum;
+	}
 	public int getmIdx() {
 		return mIdx;
 	}
@@ -80,5 +87,5 @@ public class MoneyVo {
 	public void setChkAdmin(String chkAdmin) {
 		this.chkAdmin = chkAdmin;
 	}
-	
+		
 }

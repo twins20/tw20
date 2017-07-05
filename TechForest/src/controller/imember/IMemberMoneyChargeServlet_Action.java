@@ -2,6 +2,7 @@ package controller.imember;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +19,7 @@ import service.MoneyVo;
 @WebServlet("/IMemberMoneyChargeServlet_Action")
 public class IMemberMoneyChargeServlet_Action extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -32,29 +33,34 @@ public class IMemberMoneyChargeServlet_Action extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+//		int idx = 0;
+//		HttpSession session = request.getSession();
+//		if(session.getAttribute("idx") != null) idx = (int) request.getAttribute("idx");
+
 		int idx = 0;
-		HttpSession session = request.getSession();
-		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
-	
-		String contents = null; 
-		int chgMoney = 0;
+		if(request.getParameter("idx") != null) idx = Integer.parseInt(request.getParameter("idx"));
 		
-		if(request.getParameter("contents") != null) contents = request.getParameter("contents").trim();
+		String contents = "";
+		int chgMoney = 0;
+		if (request.getParameter("contents") != null) contents = request.getParameter("contents").trim();
 		if(request.getParameter("chgmoney") != null) chgMoney = Integer.parseInt(request.getParameter("chgmoney").trim());
 		
-		IMemberServiceImpl si = new IMemberServiceImpl();
+		MoneyVo InputMV = new MoneyVo();
 		MoneyVo vo = new MoneyVo();
-		vo.setChgMoney(chgMoney);
-		vo.setContents(contents);
-		vo.setIdx(idx);
+		InputMV.setChgMoney(chgMoney);
+		InputMV.setContents(contents);
+		InputMV.setIdx(idx);
 		
 		int row = 0;
 		
-		row = si.IMemberMoneyCharge(vo);
+		IMemberServiceImpl si = new IMemberServiceImpl();
+		row = si.IMemberMoneyCharge(InputMV);
 		
-//		System.out.println(row);
+		if (row == 1){
+			
+			PageRedirect pr = new PageRedirect(true, "/IMemberMoneyHis.do", request, response);
+		}
 		
-		PageRedirect pr = new PageRedirect(true, "/IMemberMonyHisServlet.do", request, response);
 	}
 
 	/**

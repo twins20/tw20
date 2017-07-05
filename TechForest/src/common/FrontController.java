@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import controller.imember.IMemberMoneyHisServlet;
 import controller.project.*;
 import service.*;
 
@@ -548,7 +549,6 @@ public class FrontController extends HttpServlet {
 		}
 		
 		PageRedirect pr = new PageRedirect(false, view, request, response);
-		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

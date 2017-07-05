@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/header.jsp" %> 
-<!-- 메인 시작 -->
-<%@ page import = "service.MemberVo" %>
+<!-- Attribute start -->
+<%@ page import="service.MemberVo" %>
 <%
 	MemberVo vo = (MemberVo)request.getAttribute("vo");
 %>
+<!-- Attribute end -->
+<%@ include file="/header.jsp" %> 
+<!-- main start -->
 
 	<form class="form-horizontal IMemberList">
   		<div class="form-group">
@@ -41,5 +43,6 @@
   	</form>
   	
   	<center><a class="btn btn-default" href="/IMemberIn" role="button">정보 수정</a></center>
-  	<!-- 메인 끝 -->
+  	
+  	<!-- main end -->
 <%@ include file="/footer.jsp" %>

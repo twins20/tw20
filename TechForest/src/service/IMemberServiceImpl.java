@@ -227,7 +227,7 @@ public class IMemberServiceImpl {
 		
 	}
 	
-	public ArrayList<MoneyVo> IMemberMoneyHisList(int idx){
+	public ArrayList<MoneyVo> IMemberMoneyHisList(int idx, int listCnt, int pageCnt){
 			
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null;  
@@ -236,9 +236,11 @@ public class IMemberServiceImpl {
 			
 		try { 
 			
-			this.sql = "SELECT *"
+			this.sql = "SELECT * "
 				+ 		"FROM TF_MONEY_HIS "
 				+ 		"WHERE IDX = ?";	
+			
+			this.sql = new PagingQ().pagingStr(this.sql, listCnt, pageCnt);
 			
 			pstmt = con.prepareStatement(this.sql); 
 			pstmt.setInt(1, idx);
@@ -247,6 +249,7 @@ public class IMemberServiceImpl {
 			while(rs.next()) {  
 				
 				MoneyVo vo = new MoneyVo();
+				vo.setrNum(rs.getInt("rnum"));
 				vo.setmIdx(rs.getInt("midx"));
 				vo.setIdx(rs.getInt("idx"));
 				vo.setContents(rs.getString("contents"));
