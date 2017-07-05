@@ -1,0 +1,16 @@
+@charset "EUC-KR";
+
+.bodyMain .IMemberList {
+	width: 500px;
+	margin: 0 auto;
+	vertical-align: middle;
+}
+
+.bodyMain .imemberModify {
+	margin: 0 auto;
+	text-align: center;
+}
+
+.bodyMain .form-inline {
+	text-align: center;
+}

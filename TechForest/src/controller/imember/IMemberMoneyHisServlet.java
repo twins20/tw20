@@ -45,7 +45,6 @@ public class IMemberMoneyHisServlet extends HttpServlet {
 		
 		request.setAttribute("alist", alist);
 		request.setAttribute("idx", idx);
-		System.out.println("ddd");
 		
 		PageRedirect pr = new PageRedirect(false, "/imember/IMemberMoneyHis.jsp", request, response);	
 	}

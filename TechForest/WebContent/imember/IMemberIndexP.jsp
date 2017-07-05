@@ -71,5 +71,6 @@
 	} 
 %>
 	</table>
+	
 <!-- main end -->
 <%@ include file="/footer.jsp" %>

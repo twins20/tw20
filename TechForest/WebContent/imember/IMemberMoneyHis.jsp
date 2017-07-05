@@ -77,5 +77,6 @@
    		계좌번호와 예금주를 정확히 확인 후 입금해 주세요.
    	</strong>
    	</p>
+   	
 <!-- main end -->
 <%@ include file="/footer.jsp" %>
