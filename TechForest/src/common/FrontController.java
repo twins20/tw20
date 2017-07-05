@@ -485,63 +485,63 @@ public class FrontController extends HttpServlet {
 			
 			this.view = "/IMemberWishListDelServlet_Action";
 //---------------------------------------------------뉴스----------------------------------------------------------//		
-		}else if(command.equals("/NewsListServlet.do")){ 
+		}else if(command.equals("/NewsList.do")){ 
 				
 			this.view = "/NewsListServlet";
 		
-		}else if(command.equals("/NewsConServlet.do")){
+		}else if(command.equals("/NewsCon.do")){
 			
 			this.view = "/NewsConServlet";
 		
-		}else if(command.equals("/NewsCommWriteServlet_Action.do")){
+		}else if(command.equals("/NewsCommWrite_Action.do")){
 			
 			this.view = "/NewsCommWriteServlet_Action";
 		
-		}else if(command.equals("/NewsCommModServlet_Action.do")){
+		}else if(command.equals("/NewsCommMod_Action.do")){
 			
 			this.view = "/NewsCommModServlet_Action";
 		
-		}else if(command.equals("/NewsCommDelServlet_Action.do")){
+		}else if(command.equals("/NewsCommDel_Action.do")){
 			
 			this.view = "/NewsCommDelServlet_Action";
 		
-		}else if(command.equals("/NewsSubCommWriteServlet.do")){
+		}else if(command.equals("/NewsSubCommWrite.do")){
 			
 			this.view = "/NewsSubCommWriteServlet_Action";
 //---------------------------------------------------QNA----------------------------------------------------------//		
-		}else if(command.equals("/QnaListServlet.do")){
+		}else if(command.equals("/QnaList.do")){
 			
 			this.view = "/QnaListServlet";
 			
-		}else if(command.equals("/QnaConServlet.do")){
+		}else if(command.equals("/QnaCon.do")){
 			
 			this.view = "/QnaConServlet";
 			
-		}else if(command.equals("/QnaWriteServlet_Action.do")){
+		}else if(command.equals("/QnaWrite_Action.do")){
 			
 			this.view = "/QnaWriteServlet";
 			
-		}else if(command.equals("/QnaModServlet_Action.do")){
+		}else if(command.equals("/QnaMod_Action.do")){
 			
 			this.view = "/QnaModServlet_Action";
 			
-		}else if(command.equals("/QnaDelServlet_Action.do")){
+		}else if(command.equals("/QnaDel_Action.do")){
 			
 			this.view = "/QnaDelServlet_Action";
 //--------------------------------------------------공지사항--------------------------------------------------------//		
-		}else if(command.equals("/NoticeListServlet.do")){
+		}else if(command.equals("/NoticeList.do")){
 			
 			this.view = "/NoticeListServlet";
 		
-		}else if(command.equals("/NoticeConServlet.do")){
+		}else if(command.equals("/NoticeCon.do")){
 			
 			this.view = "/NoticeConServlet";
 //---------------------------------------------------FAQ----------------------------------------------------------//			
-		}else if(command.equals("/FaqListServlet.do")){
+		}else if(command.equals("/FaqList.do")){
 			
 			this.view = "/FaqListServlet";
 			
-		}else if(command.equals("/FaqConServlet.do")){
+		}else if(command.equals("/FaqCon.do")){
 			
 			this.view = "/FaqConServlet";
 			

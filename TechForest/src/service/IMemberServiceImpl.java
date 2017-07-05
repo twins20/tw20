@@ -13,7 +13,6 @@ public class IMemberServiceImpl {
 	DBConnect dbconnect = new DBConnect(); 
 	String sql=""; 
 	
-	//투자자 인덱스 프로젝트 리스트 페이지
 	public ArrayList<Map<String,Object>> IMemberIndexPProjectList(int idx, int listCnt, int nowPage){
 		
 		Connection con = dbconnect.getConnection(); 
@@ -24,7 +23,7 @@ public class IMemberServiceImpl {
 		
 		try { 
 			
-			this.sql = "SELECT A.PIDX, A.IDX, A.PNAME, A.PCATE, A.PGRADE, A.PNFUNDS, A.PTFUNDS, B.STATUS "
+			this.sql = "SELECT A.PIDX, A.IDX, A.PNAME, A.PCATE, A.PGRADE, A.PNFUNDS, A.PTFUNDS, B.INFUNDS, B.INSDATE "
 				+		"FROM TF_PROJECT_LIST A, TF_FUND_HIS B "
 				+		"WHERE A.PIDX = B.PIDX "
 				+			"AND B.STATUS = 1 "
@@ -51,8 +50,9 @@ public class IMemberServiceImpl {
 				pvo.setPtFunds(rs.getInt("ptfunds"));
 			
 				FundVo fvo = new FundVo();
-				fvo.setStatus(rs.getInt("status"));
-			
+				fvo.setInFunds(rs.getInt("infunds"));
+				fvo.setInsDate(rs.getString("insdate"));
+				
 				data.put("vo", pvo);
 				data.put("vo2", fvo);
 				
@@ -69,7 +69,6 @@ public class IMemberServiceImpl {
 		
 	}
 	
-	//투자자 인덱스 qna리스트 페이지
 	public ArrayList<BoardVo> IMemberIndexPQnaList(int idx, int listCnt, int pageCnt){
 		
 		Connection con = dbconnect.getConnection(); 
@@ -110,16 +109,14 @@ public class IMemberServiceImpl {
 			
 		}catch(Exception e) {
 			System.out.println(e.getMessage());
-		}finally { // 무조건 한 번은 실행
-			DBClose.close(con,pstmt,rs); //dbclose 클래스에 있는 close를 불러와서 con pstmt rs를 닫아줍니다.
+		}finally { 
+			DBClose.close(con,pstmt,rs); 
 		}
 		
 		return alist;
 		
 	}
 			
-	
-	//투자자 회원정보 페이지 
 	public MemberVo IMemberInfoCon(int idx){
 		
 		Connection con = dbconnect.getConnection(); 
@@ -162,8 +159,7 @@ public class IMemberServiceImpl {
 		
 	}
 	
-	//투자자 회원정보 아이디,비밀번호 체크 
-	public int IMemberInfoIdPwChk(MemberVo InputMV){
+	public int IMemberInfoModChk(MemberVo InputMV){
 			
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null;  
@@ -199,7 +195,6 @@ public class IMemberServiceImpl {
 		
 	}
 	
-	//투자자 회원정보 수정버튼
 	public int IMemInfoModAction(MemberVo InputMV, int idx){
 		
 		Connection con = dbconnect.getConnection(); 
@@ -232,7 +227,6 @@ public class IMemberServiceImpl {
 		
 	}
 	
-	//투자자 충전 및 금액조회 리스트
 	public ArrayList<MoneyVo> IMemberMoneyHisList(int idx){
 			
 		Connection con = dbconnect.getConnection(); 
@@ -279,7 +273,6 @@ public class IMemberServiceImpl {
 		
 	}
 	
-	//투자자 충전 신청
 	public int IMemberMoneyCharge(MoneyVo InputMV){
 
 		Connection con = dbconnect.getConnection();  
@@ -310,7 +303,6 @@ public class IMemberServiceImpl {
 		
 	} 
 	
-	//투자자 프로젝트 투자 리스트
 	public ArrayList<ProjectVo> IMemberFundList(int idx){
 			
 		Connection con = dbconnect.getConnection(); 
@@ -354,7 +346,6 @@ public class IMemberServiceImpl {
 		
 	}
 	
-	//투자자 프로젝트 투자 리스트 인포그래프
 	public ArrayList<FundVo> IMemberFundStatus(int pidx){
 		
 		Connection con = dbconnect.getConnection(); 
@@ -395,7 +386,6 @@ public class IMemberServiceImpl {
 		
 	}
 	
-	//투자자 위시리스트 리스트 페이지
 	public ArrayList<ProjectVo> IMemberWishList(int idx, int listCnt, int nowPage){
 		
 		Connection con = dbconnect.getConnection(); 
@@ -442,7 +432,6 @@ public class IMemberServiceImpl {
 		
 	}
 	
-	//투자자 위시리스트 삭제
 	public int IMemberWishListDel(int idx){
 
 		Connection con = dbconnect.getConnection();  
