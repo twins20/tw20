@@ -31,7 +31,7 @@ public class AdminQnaListServlet extends HttpServlet {
 		//관리자 고객센터 페이지 QNA리스트 
 		 ArrayList<BoardVo> alist = new  ArrayList<BoardVo>();
 		 
-		alist = as.adminBoardQnaList();
+		alist = as.adminBoardQnaList(10, 1);
 		request.setAttribute("alist", alist);
 		
 //		ArrayList<BoardVo> alist1 = (ArrayList<BoardVo>) request.getAttribute("alist");

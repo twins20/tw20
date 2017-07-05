@@ -36,7 +36,7 @@ public class AdminNewsConServlet extends HttpServlet {
 		
 		//관리자 뉴스관리 페이지 뉴스 상세내용  
 		ArrayList<Map<String, Object>> alist = new ArrayList<Map<String, Object>>();
-		alist = as.adminBoardNewsCon(bIdx);		
+		alist = as.adminBoardNewsCon(bIdx, 10, 1);		
 		request.setAttribute("alist", alist);	
 		
 //		ArrayList<Map<String, Object>> alist1 = (ArrayList<Map<String, Object>>) request.getAttribute("alist");

@@ -36,23 +36,23 @@ public class AdminIndexServlet extends HttpServlet {
 		//회원 충전 대기 리스트
 		ArrayList<Map<String, Object>> alist = new ArrayList<Map<String, Object>>();
 					
-		alist =  as.adminIndexPMoneyChkList();		
+		alist =  as.adminIndexPMoneyChkList(10, 1);		
 		request.setAttribute("alist", alist);
 		
 		//프로젝트 승인 대기 리스트
 		ArrayList<ProjectVo> blist = new ArrayList<ProjectVo>();
 		
-		blist = as.adminIndexPProjectChkList();
+		blist = as.adminIndexPProjectChkList(10, 1);
 		request.setAttribute("blist", blist);
 				
 		//사업자 승인 대기 리스트
 		ArrayList<MemberVo> clist = new ArrayList<MemberVo>();
 		
-		clist = as.adminIndexPCmemChkList();
+		clist = as.adminIndexPCmemChkList(10, 1);
 		request.setAttribute("clist", clist);	
 		
-//		ArrayList<Map<String, Object>> alist1 = (ArrayList<Map<String, Object>>) request.getAttribute("alist"); 
-//		
+		ArrayList<Map<String, Object>> alist1 = (ArrayList<Map<String, Object>>) request.getAttribute("alist"); 
+		
 //		for(Map<String, Object> hashmap : alist1){
 //			
 //			MemberVo mbv = (MemberVo) hashmap.get("mbv");

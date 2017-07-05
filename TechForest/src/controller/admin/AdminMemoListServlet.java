@@ -36,7 +36,7 @@ public class AdminMemoListServlet extends HttpServlet {
 		HttpSession session = request.getSession();		
 		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");		
 		
-		alist = as.adminBoardMemoList(idx);
+		alist = as.adminBoardMemoList(idx, 10, 1);
 		request.setAttribute("alist", alist);
 		
 //		ArrayList<MemoVo> alist1 = (ArrayList<MemoVo>) request.getAttribute("alist");

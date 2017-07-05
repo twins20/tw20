@@ -28,7 +28,7 @@ public class AdminCmemChkListServlet extends HttpServlet {
 		
 		//관리자 사업자 등록 승인 리스트
 		ArrayList<MemberVo> alist = new ArrayList<MemberVo>();
-		alist = as.adminCmemChkList();
+		alist = as.adminCmemChkList(10, 1);
 		request.setAttribute("alist", alist);
 		
 //		ArrayList<MemberVo> alist1 = (ArrayList<MemberVo>) request.getAttribute("alist");

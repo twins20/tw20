@@ -30,7 +30,7 @@ public class AdminImemInfoListServlet extends HttpServlet {
 		//관리자 투자자 회원정보 페이지 회원리스트
 		ArrayList<MemberVo> alist = new ArrayList<MemberVo>();		
 					
-			alist = as.adminlmemInfoList();
+			alist = as.adminlmemInfoList(10, 1);
 			request.setAttribute("alist", alist);
 			
 //		ArrayList<MemberVo> alist1 = (ArrayList<MemberVo>) request.getAttribute("alist");

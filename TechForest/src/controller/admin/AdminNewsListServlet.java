@@ -28,7 +28,7 @@ public class AdminNewsListServlet extends HttpServlet {
 		//관리자 뉴스관리 페이지 뉴스 리스트  
 		ArrayList<BoardVo> alist = new  ArrayList<BoardVo>();
 		 
-		alist = as.adminBoardNewsList();
+		alist = as.adminBoardNewsList(10, 1);
 		request.setAttribute("alist", alist);
 		
 //		ArrayList<BoardVo> alist1 = (ArrayList<BoardVo>) request.getAttribute("alist");		

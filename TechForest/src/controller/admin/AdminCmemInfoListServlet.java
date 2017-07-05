@@ -31,7 +31,7 @@ public class AdminCmemInfoListServlet extends HttpServlet {
 		
 		//관리자 사업자 회원정보 페이지 회원리스트  
 		ArrayList<Map<String, Object>> alist = new ArrayList<Map<String, Object>>();					
-		alist =  as.adminCmemInfoList();		
+		alist =  as.adminCmemInfoList(10, 1);		
 		request.setAttribute("alist", alist);
 				
 //		ArrayList<Map<String, Object>> alist1 = (ArrayList<Map<String, Object>>) request.getAttribute("alist"); 

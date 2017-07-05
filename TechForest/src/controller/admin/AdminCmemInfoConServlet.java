@@ -51,22 +51,22 @@ public class AdminCmemInfoConServlet extends HttpServlet {
 		
 		//관리자 사업자 회원정보 페이지 지난 프로젝트 리스트 
 		ArrayList<ProjectVo> dlist = new ArrayList<ProjectVo>();
-		dlist = as.adminCmemInfoProjHis(idx);
+		dlist = as.adminCmemInfoProjHis(idx, 10, 1);
 		request.setAttribute("dlist", dlist);
 		
 		//관리자 사업자 회원정보 페이지 진행중 프로젝트 투자 회원리스트
 		ArrayList<Map<String, Object>> elist = new ArrayList<Map<String, Object>>();		
-		elist =  as.adminCmemInfoProjFundHis(idx);		
+		elist =  as.adminCmemInfoProjFundHis(idx, 10, 1);		
 		request.setAttribute("elist", elist);
 		
 		//관리자 사업자 회원정보 페이지 뉴스 리스트		
 		ArrayList<Map<String, Object>> flist = new ArrayList<Map<String, Object>>();		
-		flist =  as.adminCmemInfoProjNewsHis(idx);		
+		flist =  as.adminCmemInfoProjNewsHis(idx, 10, 1);		
 		request.setAttribute("flist", flist);
 		
 		//관리자 사업자 회원정보 페이지 QNA 리스트
 		ArrayList<BoardVo> glist = new ArrayList<BoardVo>();
-		glist = as.adminCmemInfoProjQna(idx);
+		glist = as.adminCmemInfoProjQna(idx, 10, 1);
 		request.setAttribute("glist", glist);
 		
 //		ArrayList<MemberVo> alist1 = (ArrayList<MemberVo>) request.getAttribute("alist");

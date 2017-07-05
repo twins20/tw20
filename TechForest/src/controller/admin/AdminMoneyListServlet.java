@@ -32,7 +32,7 @@ public class AdminMoneyListServlet extends HttpServlet {
 		//관리자 머니 충전 기록 리스트
 		ArrayList<Map<String, Object>> alist = new ArrayList<Map<String, Object>>();
 		
-		alist =  as.adminIndexPMoneyChkList();		
+		alist =  as.adminIndexPMoneyChkList(10, 1);		
 		request.setAttribute("alist", alist);
 				
 //		ArrayList<Map<String, Object>> alist1 = (ArrayList<Map<String, Object>>) request.getAttribute("alist"); 
