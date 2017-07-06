@@ -23,7 +23,7 @@ public class MemberServiceImpl {
 		try {
 			
 			this.sql = "INSERT INTO TF_MEMBER(IDX,ID,PW,NAME,NICK,PHONE,ADDR,STATUS,TYPE,INSDATE) "
-				+	"VALUES(SEQ_TF_IDX.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE) "; 
+				+	"VALUES(SEQ_TF_IDX.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE)"; 
 		
 			pstmt = con.prepareStatement(this.sql);
 			pstmt.setString(1, vo.getId());
