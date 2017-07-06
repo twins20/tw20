@@ -2,6 +2,7 @@ package service;
 
 public class ItemVo {
 	
+	private int rNum;
 	private int itIdx;
 	private int pIdx;
 	private String itName;
@@ -11,6 +12,12 @@ public class ItemVo {
 	private int itSCnt;
 	private int status;
 	
+	public int getrNum() {
+		return rNum;
+	}
+	public void setrNum(int rNum) {
+		this.rNum = rNum;
+	}
 	public int getItIdx() {
 		return itIdx;
 	}

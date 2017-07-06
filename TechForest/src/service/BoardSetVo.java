@@ -2,6 +2,7 @@ package service;
 
 public class BoardSetVo {
 	
+	private int rNum;
 	private int bsIdx;
 	private String bName;
 	private String bNamekr;
@@ -24,11 +25,13 @@ public class BoardSetVo {
 	private String grantAD;
 	private int cateChk;
 	private String cateList;
-	private int replyChk;
-	private int commChk;
-	private int status;
-	private String insDate;
 	
+	public int getrNum() {
+		return rNum;
+	}
+	public void setrNum(int rNum) {
+		this.rNum = rNum;
+	}
 	public int getBsIdx() {
 		return bsIdx;
 	}
@@ -185,5 +188,9 @@ public class BoardSetVo {
 	public void setInsDate(String insDate) {
 		this.insDate = insDate;
 	}
+	private int replyChk;
+	private int commChk;
+	private int status;
+	private String insDate;
 	
 }

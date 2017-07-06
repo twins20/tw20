@@ -2,6 +2,7 @@ package service;
 
 public class MemberVo {
 
+	private int rNum;
 	private int idx;
 	private String id;
 	private String pw;
@@ -26,6 +27,12 @@ public class MemberVo {
 	private String ipAddr;
 	private int logStatus;
 	
+	public int getrNum() {
+		return rNum;
+	}
+	public void setrNum(int rNum) {
+		this.rNum = rNum;
+	}
 	public int getIdx() {
 		return idx;
 	}

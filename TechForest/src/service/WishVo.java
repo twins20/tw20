@@ -2,6 +2,7 @@ package service;
 
 public class WishVo {
 	
+	private int rNum;
 	private int wIdx;
 	private int idx;
 	private int pIdx;
@@ -9,6 +10,12 @@ public class WishVo {
 	private int viewStat;
 	private int insDate;
 	
+	public int getrNum() {
+		return rNum;
+	}
+	public void setrNum(int rNum) {
+		this.rNum = rNum;
+	}
 	public int getwIdx() {
 		return wIdx;
 	}

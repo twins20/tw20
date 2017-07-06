@@ -2,6 +2,7 @@ package service;
 
 public class ProjectCommVo {
 	
+	private int rNum;
 	private int pCommIdx;
  	private int pIdx;
  	private int idx;
@@ -15,7 +16,13 @@ public class ProjectCommVo {
  	private String insDate;
  	private String modDate;
 	
- 	public int getpCommIdx() {
+ 	public int getrNum() {
+		return rNum;
+	}
+	public void setrNum(int rNum) {
+		this.rNum = rNum;
+	}
+	public int getpCommIdx() {
 		return pCommIdx;
 	}
 	public void setpCommIdx(int pCommIdx) {

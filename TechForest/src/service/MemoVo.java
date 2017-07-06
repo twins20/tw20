@@ -2,6 +2,7 @@ package service;
 
 public class MemoVo {
 
+	private int rNum;
 	private int memoIdx;
 	private int sendIdx;
 	private int recvIdx;
@@ -10,6 +11,12 @@ public class MemoVo {
 	private String insDate;
 	private String modDate;
 	
+	public int getrNum() {
+		return rNum;
+	}
+	public void setrNum(int rNum) {
+		this.rNum = rNum;
+	}
 	public int getMemoIdx() {
 		return memoIdx;
 	}

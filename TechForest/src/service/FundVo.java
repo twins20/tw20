@@ -2,6 +2,7 @@ package service;
 
 public class FundVo {
 	
+	private int rNum;
 	private int fIdx;
 	private int pIdx;
 	private int itIdx;
@@ -12,6 +13,12 @@ public class FundVo {
 	private int status;
 	private String insDate;
 	
+	public int getrNum() {
+		return rNum;
+	}
+	public void setrNum(int rNum) {
+		this.rNum = rNum;
+	}
 	public int getfIdx() {
 		return fIdx;
 	}
