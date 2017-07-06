@@ -45,7 +45,7 @@ public class CMemberIndexPServlet extends HttpServlet {
 		CMemberServiceImpl cs = new CMemberServiceImpl();
 		vo = cs.cMemIndexProjNowList(idx);
 		commList = cs.cMemIndexCommList(idx, 10, 1);
-		newsList = cs.cMemIndeNewsList(idx, 10, 1);
+		newsList = cs.cMemIndexNewsList(idx, 10, 1);
 		
 		request.setAttribute("vo", vo);
 		request.setAttribute("commList", commList);

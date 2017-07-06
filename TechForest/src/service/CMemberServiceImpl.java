@@ -14,6 +14,7 @@ public class CMemberServiceImpl {
 
 	DBConnect dbconnect = new DBConnect();
 	String sql = null;
+	CMemberServiceSql cMemberSql = new CMemberServiceSql();
 	
 	public ProjectVo cMemIndexProjNowList(int idx){
 		
@@ -25,10 +26,12 @@ public class CMemberServiceImpl {
 
 		try { 
 			
-			this.sql = "SELECT PIDX, IDX, PNAME, PCATE, PTFUNDS, PNFUNDS, PGRADE, STATUS "
-				+	"FROM TF_PROJECT_LIST "
-				+	"WHERE STATUS = 1 "
-				+		"AND IDX = ?";
+			this.sql = cMemberSql.getcMemIndexProjNowList();
+			
+//			this.sql = "SELECT PIDX, IDX, PNAME, PCATE, PTFUNDS, PNFUNDS, PGRADE, STATUS "
+//				+	"FROM TF_PROJECT_LIST "
+//				+	"WHERE STATUS = 1 "
+//				+		"AND IDX = ?";
 		
 //			this.sql = new PagingQ().pagingStr(sql, 10, 1);
 			
@@ -69,11 +72,13 @@ public class CMemberServiceImpl {
 
 		try { 
 			
-			this.sql = "SELECT * "
-				+	"FROM TF_PROJECT_COMM "
-				+	"WHERE VIEWSTAT = 1 "
-				+		"AND PIDX = (SELECT PIDX FROM TF_PROJECT_LIST WHERE STATUS = 1 AND IDX = ?) "
-				+	"ORDER BY OPCOMMIDX DESC, RPCOMMIDX ASC";
+			this.sql = cMemberSql.getcMemIndexCommList();
+			
+//			this.sql = "SELECT * "
+//				+	"FROM TF_PROJECT_COMM "
+//				+	"WHERE VIEWSTAT = 1 "
+//				+		"AND PIDX = (SELECT PIDX FROM TF_PROJECT_LIST WHERE STATUS = 1 AND IDX = ?) "
+//				+	"ORDER BY OPCOMMIDX DESC, RPCOMMIDX ASC";
 		
 			this.sql = new PagingQ().pagingStr(this.sql, listCnt, pageCnt);
 			
@@ -106,7 +111,7 @@ public class CMemberServiceImpl {
 		
 	}
 	
-	public ArrayList<BoardVo> cMemIndeNewsList(int idx, int listCnt, int pageCnt){
+	public ArrayList<BoardVo> cMemIndexNewsList(int idx, int listCnt, int pageCnt){
 		
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null; 
@@ -115,13 +120,15 @@ public class CMemberServiceImpl {
 		ArrayList<BoardVo> alist = new ArrayList<BoardVo>(); 
 
 		try { 
+
+			this.sql = cMemberSql.getcMemIndexNewsList();
 			
-			this.sql = "SELECT B.* "
-				+	"FROM TF_PROJECT_LIST A, TF_BOARD_NEWS B "
-				+	"WHERE B.VIEWSTAT = 1 "
-				+		"AND A.PIDX = B.PIDX "
-				+		"AND A.IDX = ? "
-				+	"ORDER BY B.OBIDX DESC, B.RBIDX ASC";
+//			this.sql = "SELECT B.* "
+//				+	"FROM TF_PROJECT_LIST A, TF_BOARD_NEWS B "
+//				+	"WHERE B.VIEWSTAT = 1 "
+//				+		"AND A.PIDX = B.PIDX "
+//				+		"AND A.IDX = ? "
+//				+	"ORDER BY B.OBIDX DESC, B.RBIDX ASC";
 		
 			this.sql = new PagingQ().pagingStr(this.sql, listCnt, pageCnt);
 			
@@ -166,11 +173,13 @@ public class CMemberServiceImpl {
 		MemberVo vo = new MemberVo(); 
 
 		try { 
+
+			this.sql = cMemberSql.getcMemInfoCon();
 			
-			this.sql = "SELECT A.*, B.* "
-					+	"FROM TF_MEMBER A, TF_CMEMBER_EXT B "
-					+	"WHERE A.IDX = B.IDX "
-					+	"AND A.IDX = ?";
+//			this.sql = "SELECT A.*, B.* "
+//					+	"FROM TF_MEMBER A, TF_CMEMBER_EXT B "
+//					+	"WHERE A.IDX = B.IDX "
+//					+	"AND A.IDX = ?";
 		
 //			this.sql = new PagingQ().pagingStr(this.sql, listCnt, pageCnt);
 			
@@ -214,11 +223,13 @@ public class CMemberServiceImpl {
 		int row = 0;
 		
 		try { 
+
+			this.sql = cMemberSql.getcMemInfoModChk();
 			
-			this.sql = "SELECT COUNT(*) "
-				+	"FROM TF_MEMBER "
-				+	"WHERE IDX = ? "
-				+		"AND PW = ?";
+//			this.sql = "SELECT COUNT(*) "
+//				+	"FROM TF_MEMBER "
+//				+	"WHERE IDX = ? "
+//				+		"AND PW = ?";
 		
 //			this.sql = new PagingQ().pagingStr(this.sql, listCnt, pageCnt);
 			
@@ -250,10 +261,12 @@ public class CMemberServiceImpl {
 		int row = 0;
 		
 		try { 
+
+			this.sql = cMemberSql.getcMemInfoMod();
 			
-			this.sql = "UPDATE TF_MEMBER "
-				+	"SET PW = ?, NICK = ?, PHONE = ?, ADDR = ?, MODDATE = SYSDATE "
-				+	"WHERE IDX = ?";
+//			this.sql = "UPDATE TF_MEMBER "
+//				+	"SET PW = ?, NICK = ?, PHONE = ?, ADDR = ?, MODDATE = SYSDATE "
+//				+	"WHERE IDX = ?";
 			
 			pstmt = con.prepareStatement(this.sql);
 			pstmt.setString(1, inputMV.getPw());
@@ -283,9 +296,11 @@ public class CMemberServiceImpl {
 		
 		try { 
 			
-			this.sql = "SELECT COUNT(*) "
-				+	"FROM TF_CMEMBER_EXT "
-				+	"WHERE IDX = ?";
+			this.sql = cMemberSql.getcMemInfoExtWriteChk();
+			
+//			this.sql = "SELECT COUNT(*) "
+//				+	"FROM TF_CMEMBER_EXT "
+//				+	"WHERE IDX = ?";
 		
 			pstmt = con.prepareStatement(this.sql);
 			pstmt.setInt(1, idx);
@@ -315,8 +330,10 @@ public class CMemberServiceImpl {
 		
 		try { 
 			
-			this.sql = "INSERT INTO TF_CMEMBER_EXT (CIDX, IDX, COMPANY, CNUMBER, CADDR) "
-				+	"VALUES (SEQ_TF_CIDX.NEXTVAL, ?, ?, ?, ?)";
+			this.sql = cMemberSql.getcMemInfoExtWrite();
+			
+//			this.sql = "INSERT INTO TF_CMEMBER_EXT (CIDX, IDX, COMPANY, CNUMBER, CADDR) "
+//				+	"VALUES (SEQ_TF_CIDX.NEXTVAL, ?, ?, ?, ?)";
 			
 			pstmt = con.prepareStatement(this.sql);
 			pstmt.setInt(1, inputMV.getIdx());
@@ -345,12 +362,14 @@ public class CMemberServiceImpl {
 		
 		try { 
 			
-			this.sql = "SELECT DISTINCT(A.NICK), A.IDX "
-				+	"FROM TF_MEMBER A, TF_PROJECT_LIST B, TF_FUND_HIS C "
-				+	"WHERE B.PIDX = C.PIDX "
-				+		"AND A.IDX = C.IDX "
-				+		"AND B.PIDX = ? "
-				+	"ORDER BY A.IDX ASC";
+			this.sql = cMemberSql.getcMemMemoWriteIMemList();
+			
+//			this.sql = "SELECT DISTINCT(A.NICK), A.IDX "
+//				+	"FROM TF_MEMBER A, TF_PROJECT_LIST B, TF_FUND_HIS C "
+//				+	"WHERE B.PIDX = C.PIDX "
+//				+		"AND A.IDX = C.IDX "
+//				+		"AND B.PIDX = ? "
+//				+	"ORDER BY A.IDX ASC";
 			
 			this.sql = new PagingQ().pagingStr(sql, listCnt, pageCnt);
 			
@@ -385,8 +404,10 @@ public class CMemberServiceImpl {
 		
 		try { 
 			
-			this.sql = "INSERT INTO TF_MEMO_LIST(MEMOIDX, SENDIDX, RECVIDX, CONTENTS, STATUS, INSDATE) "
-				+	"VALUES(SEQ_TF_MEMOIDX.NEXTVAL, ?, ?, ?, 0, SYSDATE)";
+			this.sql = cMemberSql.getcMemMemoWrite();
+			
+//			this.sql = "INSERT INTO TF_MEMO_LIST(MEMOIDX, SENDIDX, RECVIDX, CONTENTS, STATUS, INSDATE) "
+//				+	"VALUES(SEQ_TF_MEMOIDX.NEXTVAL, ?, ?, ?, 0, SYSDATE)";
 								
 			pstmt = con.prepareStatement(this.sql);
 			pstmt.setInt(1, inputMV.getSendIdx());
@@ -413,12 +434,14 @@ public class CMemberServiceImpl {
 		ArrayList<MemoVo> alist = new ArrayList<MemoVo>();
 		
 		try { 
+
+			this.sql = cMemberSql.getcMemMemoSendList();
 			
-			this.sql = "SELECT * "
-				+	"FROM TF_MEMO_LIST "
-				+	"WHERE SENDIDX = ? "
-				+		"AND (STATUS = 0 OR STATUS = 2) "
-				+	"ORDER BY MEMOIDX DESC";
+//			this.sql = "SELECT * "
+//				+	"FROM TF_MEMO_LIST "
+//				+	"WHERE SENDIDX = ? "
+//				+		"AND (STATUS = 0 OR STATUS = 2) "
+//				+	"ORDER BY MEMOIDX DESC";
 
 			this.sql = new PagingQ().pagingStr(this.sql, listCnt, pageCnt);
 			
@@ -455,10 +478,12 @@ public class CMemberServiceImpl {
 				
 		try { 
 			
-			this.sql = "UPDATE TF_MEMO_LIST "
-				+	"SET STATUS = STATUS + 1 "
-				+	"WHERE (STATUS = 0 OR STATUS = 2) "
-				+		"AND MEMOIDX = ?";
+			this.sql = cMemberSql.getcMemMemoDel();
+			
+//			this.sql = "UPDATE TF_MEMO_LIST "
+//				+	"SET STATUS = STATUS + 1 "
+//				+	"WHERE (STATUS = 0 OR STATUS = 2) "
+//				+		"AND MEMOIDX = ?";
 		
 			pstmt = con.prepareStatement(this.sql);
 			pstmt.setInt(1, memoIdx);
@@ -477,20 +502,15 @@ public class CMemberServiceImpl {
 	public ArrayList<BoardVo> cMemNewsList(int idx, int listCnt, int pageCnt){
 		
 		Connection con = dbconnect.getConnection(); 
-		PreparedStatement pstmt = null; 
+		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
 		ArrayList<BoardVo> alist = new ArrayList<BoardVo>();
 		
 		try { 
 			
-			this.sql = "SELECT B.* "
-				+	"FROM TF_PROJECT_LIST A, TF_BOARD_NEWS B "
-				+	"WHERE B.VIEWSTAT = 1 "
-				+		"AND A.PIDX = B.PIDX "
-				+		"AND A.IDX = ? "
-				+	"ORDER BY B.OBIDX DESC, B.RBIDX ASC";
-
+			this.sql = cMemberSql.getcMemNewsList();
+			
 			this.sql = new PagingQ().pagingStr(this.sql, listCnt, pageCnt);
 			
 			pstmt = con.prepareStatement(this.sql);
@@ -513,7 +533,6 @@ public class CMemberServiceImpl {
 				vo.setObIdx(rs.getInt("obidx"));
 				vo.setInsDate(rs.getString("insdate"));
 				
-								
 				alist.add(vo);
 			}
 			
@@ -527,6 +546,37 @@ public class CMemberServiceImpl {
 		
 	}
 	
+	public int cMemNewsListTtCnt(int idx){
+		
+		Connection con = dbconnect.getConnection(); 
+		PreparedStatement pstmt = null;
+		int row = 0;
+		ResultSet rs = null;
+				
+		try { 
+			
+			this.sql = cMemberSql.getcMemNewsList();
+			
+			this.sql = new PagingQ().pagingCnt(this.sql);
+			
+			pstmt = con.prepareStatement(this.sql);
+			pstmt.setInt(1, idx);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				row = rs.getInt(1);
+			}
+	
+		}catch(Exception e) { 
+			System.out.println(e.getMessage());
+		}finally { 
+			DBClose.close(con,pstmt,rs); 
+		}
+	
+		return row;
+		
+	}
+	
 	public Map<String, Object> cMemNewsCon(int bidx){
 		
 		Connection con = dbconnect.getConnection(); 
@@ -537,10 +587,12 @@ public class CMemberServiceImpl {
 		
 		try { 
 			
-			this.sql = "SELECT A.*, B.PIDX, B.PNAME, B.PNFUNDS, B.PGRADE, B.STATUS "
-				+	"FROM TF_BOARD_NEWS A, TF_PROJECT_LIST B "
-				+	"WHERE A.PIDX = B.PIDX "
-				+		"AND A.BIDX = ?";
+			this.sql = cMemberSql.getcMemNewsCon();
+			
+//			this.sql = "SELECT A.*, B.PIDX, B.PNAME, B.PNFUNDS, B.PGRADE, B.STATUS "
+//				+	"FROM TF_BOARD_NEWS A, TF_PROJECT_LIST B "
+//				+	"WHERE A.PIDX = B.PIDX "
+//				+		"AND A.BIDX = ?";
 
 //			this.sql = new PagingQ().pagingStr(this.sql, listCnt, pageCnt);
 			
@@ -591,9 +643,11 @@ public class CMemberServiceImpl {
 		
 		try { 
 			
-			this.sql = "UPDATE TF_BOARD_NEWS "
-				+	"SET CATE = (SELECT PCATE FROM TF_PROJECT_LIST WHERE PIDX = ?), TITLE = ?, CONTENTS = ?, MODDATE = SYSDATE, PIDX = ? "
-				+	"WHERE BIDX = ?";
+			this.sql = cMemberSql.getcMemNewsMod();
+			
+//			this.sql = "UPDATE TF_BOARD_NEWS "
+//				+	"SET CATE = (SELECT PCATE FROM TF_PROJECT_LIST WHERE PIDX = ?), TITLE = ?, CONTENTS = ?, MODDATE = SYSDATE, PIDX = ? "
+//				+	"WHERE BIDX = ?";
 								
 			pstmt = con.prepareStatement(this.sql);
 			pstmt.setInt(1, inputBV.getpIdx());
@@ -623,11 +677,13 @@ public class CMemberServiceImpl {
 		ProjectVo vo = new ProjectVo();
 		
 		try { 
+
+			this.sql = cMemberSql.getcMemNewsWriteProjNow();
 			
-			this.sql = "SELECT PIDX, IDX, PNAME, PCATE, PTFUNDS, PNFUNDS, PGRADE, STATUS "
-				+	"FROM TF_PROJECT_LIST "
-				+	"WHERE STATUS = 1 "
-				+		"AND IDX = ?";
+//			this.sql = "SELECT PIDX, IDX, PNAME, PCATE, PTFUNDS, PNFUNDS, PGRADE, STATUS "
+//				+	"FROM TF_PROJECT_LIST "
+//				+	"WHERE STATUS = 1 "
+//				+		"AND IDX = ?";
 								
 //			this.sql = new PagingQ().pagingStr(this.sql, listCnt, pageCnt);
 			
@@ -665,8 +721,10 @@ public class CMemberServiceImpl {
 		
 		try { 
 			
-			this.sql = "INSERT INTO TF_BOARD_NEWS (BIDX, IDX, CATE, TITLE, CONTENTS, HIT, GOOD, BAD, OBIDX, RBIDX, BDEPTH, COMMCNT, VIEWSTAT, INSDATE, MODDATE, PIDX) "
-				+	"VALUES (SEQ_TF_BIDX_NEWS.NEXTVAL, ?, (SELECT PCATE FROM TF_PROJECT_LIST WHERE PIDX = ?), ?, ?, 0, 0, 0, SEQ_TF_BIDX_NEWS.CURRVAL, 1, 1, 0, 1, SYSDATE, SYSDATE, ?)";
+			this.sql = cMemberSql.getcMemNewsWrite();
+			
+//			this.sql = "INSERT INTO TF_BOARD_NEWS (BIDX, IDX, CATE, TITLE, CONTENTS, HIT, GOOD, BAD, OBIDX, RBIDX, BDEPTH, COMMCNT, VIEWSTAT, INSDATE, MODDATE, PIDX) "
+//				+	"VALUES (SEQ_TF_BIDX_NEWS.NEXTVAL, ?, (SELECT PCATE FROM TF_PROJECT_LIST WHERE PIDX = ?), ?, ?, 0, 0, 0, SEQ_TF_BIDX_NEWS.CURRVAL, 1, 1, 0, 1, SYSDATE, SYSDATE, ?)";
 			
 			pstmt = con.prepareStatement(this.sql);
 			pstmt.setInt(1, inputBV.getIdx());
@@ -695,9 +753,11 @@ public class CMemberServiceImpl {
 		
 		try { 
 			
-			this.sql = "UPDATE TF_BOARD_NEWS "
-				+	"SET VIEWSTAT = 0, MODDATE = SYSDATE "
-				+ 	"WHERE BIDX = ?";
+			this.sql = cMemberSql.getcMemNewsDel();
+			
+//			this.sql = "UPDATE TF_BOARD_NEWS "
+//				+	"SET VIEWSTAT = 0, MODDATE = SYSDATE "
+//				+ 	"WHERE BIDX = ?";
 			
 			pstmt = con.prepareStatement(this.sql);
 			pstmt.setInt(1, bIdx);
@@ -724,10 +784,12 @@ public class CMemberServiceImpl {
 		
 		try { 
 			
-			this.sql = "SELECT PIDX, IDX, PNAME, PCATE, PTFUNDS, PNFUNDS, PGRADE, STATUS "
-				+	"FROM TF_PROJECT_LIST "
-				+	"WHERE STATUS = 1 "
-				+		"AND IDX = ?";
+			this.sql = cMemberSql.getcMemProjNowList();
+			
+//			this.sql = "SELECT PIDX, IDX, PNAME, PCATE, PTFUNDS, PNFUNDS, PGRADE, STATUS "
+//				+	"FROM TF_PROJECT_LIST "
+//				+	"WHERE STATUS = 1 "
+//				+		"AND IDX = ?";
 								
 //			this.sql = new PagingQ().pagingStr(this.sql, listCnt, pageCnt);
 			
@@ -766,11 +828,13 @@ public class CMemberServiceImpl {
 		ArrayList<ProjectVo> alist = new ArrayList<ProjectVo>();
 			
 		try { 
+
+			this.sql = cMemberSql.getcMemProjHisList();
 			
-			this.sql = "SELECT PIDX, IDX, PNAME, PCATE, PTFUNDS, PNFUNDS, PGRADE, STATUS "
-				+	"FROM TF_PROJECT_LIST "
-				+	"WHERE STATUS > 3 "
-				+		"AND IDX = ?";
+//			this.sql = "SELECT PIDX, IDX, PNAME, PCATE, PTFUNDS, PNFUNDS, PGRADE, STATUS "
+//				+	"FROM TF_PROJECT_LIST "
+//				+	"WHERE STATUS > 3 "
+//				+		"AND IDX = ?";
 								
 			this.sql = new PagingQ().pagingStr(this.sql, listCnt, pageCnt);
 			
@@ -1023,11 +1087,13 @@ public class CMemberServiceImpl {
 		ProjectVo vo = new ProjectVo();
 		
 		try { 
+
+			this.sql = cMemberSql.getcMemProjApplyConProj();
 			
-			this.sql = "SELECT PIDX, IDX, PNAME, PCATE, CONTENTS, ITLIST, ITLISTCNT, PTFUNDS, PEDATE, PCDATE "
-				+	"FROM TF_PROJECT_LIST "
-				+	"WHERE IDX = ? "
-				+		"AND STATUS = 0 ";
+//			this.sql = "SELECT PIDX, IDX, PNAME, PCATE, CONTENTS, ITLIST, ITLISTCNT, PTFUNDS, PEDATE, PCDATE "
+//				+	"FROM TF_PROJECT_LIST "
+//				+	"WHERE IDX = ? "
+//				+		"AND STATUS = 0 ";
 								
 //			this.sql = new PagingQ().pagingStr(this.sql, listCnt, pageCnt);
 			
@@ -1069,9 +1135,11 @@ public class CMemberServiceImpl {
 		
 		try { 
 			
-			this.sql = "SELECT ITIDX, ITNAME, ITPRICE, CONTENTS, ITTCNT "
-				+	"FROM TF_ITEM_LIST "
-				+	"WHERE PIDX = ?";
+			this.sql = cMemberSql.getcMemProjApplyConItem();
+			
+//			this.sql = "SELECT ITIDX, ITNAME, ITPRICE, CONTENTS, ITTCNT "
+//				+	"FROM TF_ITEM_LIST "
+//				+	"WHERE PIDX = ?";
 								
 //			this.sql = new PagingQ().pagingStr(this.sql, listCnt, pageCnt);
 			
@@ -1114,9 +1182,11 @@ public class CMemberServiceImpl {
 			
 			con.setAutoCommit(false);
 			
-			this.sql = "UPDATE TF_PROJECT_LIST "
-				+	"SET PNAME = ?, CONTENTS = ?, ITLIST = ?, ITLISTCNT = ?, MODDATE = SYSDATE "
-				+	"WHERE PIDX = ?";
+			this.sql = cMemberSql.getcMemProjApplyModTransaction_1();
+			
+//			this.sql = "UPDATE TF_PROJECT_LIST "
+//				+	"SET PNAME = ?, CONTENTS = ?, ITLIST = ?, ITLISTCNT = ?, MODDATE = SYSDATE "
+//				+	"WHERE PIDX = ?";
 				
 			pstmt = con.prepareStatement(this.sql);
 			pstmt.setString(1, inputPV.getpName());
@@ -1126,10 +1196,12 @@ public class CMemberServiceImpl {
 			pstmt.setInt(5, inputPV.getpIdx());
 			row += pstmt.executeUpdate();
 			
-			this.sql = "UPDATE TF_ITEM_LIST "
-				+	"SET ITNAME = ?, ITPRICE = ?, CONTENTS = ?, ITTCNT = ? "
-				+	"WHERE ITIDX = ?"
-				+ 		"AND PIDX = ?";
+			this.sql = cMemberSql.getcMemProjApplyModTransaction_2();
+			
+//			this.sql = "UPDATE TF_ITEM_LIST "
+//				+	"SET ITNAME = ?, ITPRICE = ?, CONTENTS = ?, ITTCNT = ? "
+//				+	"WHERE ITIDX = ?"
+//				+ 		"AND PIDX = ?";
 			
 			for(int itCnt = 0; itCnt < itData.size(); itCnt++){
 				pstmt = con.prepareStatement(this.sql);
@@ -1173,9 +1245,11 @@ public class CMemberServiceImpl {
 		
 		try { 
 			
-			this.sql = "UPDATE TF_PROJECT_LIST "
-				+	"SET PNAME = ?, CONTENTS = ?, ITLIST = ?, ITLISTCNT = ?, MODDATE = SYSDATE "
-				+	"WHERE PIDX = ?";
+			this.sql = cMemberSql.getcMemProjApplyModProj();
+			
+//			this.sql = "UPDATE TF_PROJECT_LIST "
+//				+	"SET PNAME = ?, CONTENTS = ?, ITLIST = ?, ITLISTCNT = ?, MODDATE = SYSDATE "
+//				+	"WHERE PIDX = ?";
 				
 			pstmt = con.prepareStatement(this.sql);
 			pstmt.setString(1, inputPV.getpName());
@@ -1205,10 +1279,12 @@ public class CMemberServiceImpl {
 			
 			con.setAutoCommit(false);
 			
-			this.sql = "UPDATE TF_ITEM_LIST "
-				+	"SET ITNAME = ?, ITPRICE = ?, CONTENTS = ?, ITTCNT = ? "
-				+	"WHERE ITIDX = ? "
-				+		"AND PIDX = ?";
+			this.sql = cMemberSql.getcMemProjApplyModItem();
+			
+//			this.sql = "UPDATE TF_ITEM_LIST "
+//				+	"SET ITNAME = ?, ITPRICE = ?, CONTENTS = ?, ITTCNT = ? "
+//				+	"WHERE ITIDX = ? "
+//				+		"AND PIDX = ?";
 			
 			for(int itCnt = 0; itCnt < itData.size(); itCnt++){
 				pstmt = con.prepareStatement(this.sql);
@@ -1254,10 +1330,12 @@ public class CMemberServiceImpl {
 		
 		try { 
 			
-			this.sql = "SELECT PIDX, IDX, PNAME, PCATE, CONTENTS, ITLIST, ITLISTCNT, PTFUNDS, PEDATE, PCDATE "
-				+	"FROM TF_PROJECT_LIST "
-				+	"WHERE IDX = ? "
-				+		"AND STATUS = 0 ";
+			this.sql = cMemberSql.getcMemProjApplyItemPlusConProj();
+			
+//			this.sql = "SELECT PIDX, IDX, PNAME, PCATE, CONTENTS, ITLIST, ITLISTCNT, PTFUNDS, PEDATE, PCDATE "
+//				+	"FROM TF_PROJECT_LIST "
+//				+	"WHERE IDX = ? "
+//				+		"AND STATUS = 0 ";
 								
 //			this.sql = new PagingQ().pagingStr(this.sql, listCnt, pageCnt);
 			
@@ -1299,9 +1377,11 @@ public class CMemberServiceImpl {
 		
 		try { 
 			
-			this.sql = "SELECT ITIDX, ITNAME, ITPRICE, CONTENTS, ITTCNT "
-				+	"FROM TF_ITEM_LIST "
-				+	"WHERE PIDX = ?";
+			this.sql = cMemberSql.getcMemProjApplyItemPlusConItem();
+			
+//			this.sql = "SELECT ITIDX, ITNAME, ITPRICE, CONTENTS, ITTCNT "
+//				+	"FROM TF_ITEM_LIST "
+//				+	"WHERE PIDX = ?";
 								
 //			this.sql = new PagingQ().pagingStr(this.sql, listCnt, pageCnt);
 			
@@ -1349,7 +1429,10 @@ public class CMemberServiceImpl {
 				
 				ItemVo vo = alist.get(itCnt);
 								
-				this.sql = "SELECT SEQ_TF_ITIDX.NEXTVAL FROM DUAL";
+				this.sql = cMemberSql.getcMemProjApplyItemPlus_1();
+				
+//				this.sql = "SELECT SEQ_TF_ITIDX.NEXTVAL FROM DUAL";
+				
 				pstmt = con.prepareStatement(this.sql);
 				rs = pstmt.executeQuery();
 				
@@ -1360,8 +1443,10 @@ public class CMemberServiceImpl {
 				tmpItList += tmpItIdxSeq;
 				if(itCnt != (alist.size() - 1)) tmpItList += "|";
 				
-				this.sql = "INSERT INTO TF_ITEM_LIST (ITIDX, PIDX, ITNAME, ITPRICE, CONTENTS, ITTCNT, ITSCNT, STATUS) "
-					+	"VALUES (?, ?, ?, ?, ?, ?, 0, 0)";
+				this.sql = cMemberSql.getcMemProjApplyItemPlus_2();
+				
+//				this.sql = "INSERT INTO TF_ITEM_LIST (ITIDX, PIDX, ITNAME, ITPRICE, CONTENTS, ITTCNT, ITSCNT, STATUS) "
+//					+	"VALUES (?, ?, ?, ?, ?, ?, 0, 0)";
 				
 				pstmt = con.prepareStatement(this.sql);
 				pstmt.setInt(1, tmpItIdxSeq);
@@ -1373,12 +1458,14 @@ public class CMemberServiceImpl {
 				row += pstmt.executeUpdate();
 
 			}
+		
+			this.sql = cMemberSql.getcMemProjApplyItemPlus_3();
 			
-			this.sql = "UPDATE TF_PROJECT_LIST "
-				+	"SET "
-				+		"ITLIST = ITLIST || ?, "
-				+		"ITLISTCNT = ITLISTCNT + ? "
-				+	"WHERE PIDX = ?";
+//			this.sql = "UPDATE TF_PROJECT_LIST "
+//				+	"SET "
+//				+		"ITLIST = ITLIST || ?, "
+//				+		"ITLISTCNT = ITLISTCNT + ? "
+//				+	"WHERE PIDX = ?";
 				
 			pstmt = con.prepareStatement(this.sql);
 			pstmt.setString(1, tmpItList);
@@ -1419,11 +1506,13 @@ public class CMemberServiceImpl {
 		
 		try { 
 			
-			this.sql = "SELECT A.PIDX, A.PNAME, B.BIDX, B.IDX, B.CATE, B.TITLE, B.HIT, B.GOOD, B.BAD, B.COMMCNT, B.OBIDX, B.INSDATE, B.PIDX, (SELECT MAX(BDEPTH) FROM TF_BOARD_QNA WHERE BIDX = B.BIDX) STATUS "
-				+	"FROM TF_PROJECT_LIST A, TF_BOARD_QNA B "
-				+	"WHERE A.PIDX = B.PIDX "
-				+		"AND A.IDX = ? "
-				+	"ORDER BY B.OBIDX DESC, B.RBIDX ASC";
+			this.sql = cMemberSql.getcMemQnaList();
+			
+//			this.sql = "SELECT A.PIDX, A.PNAME, B.BIDX, B.IDX, B.CATE, B.TITLE, B.HIT, B.GOOD, B.BAD, B.COMMCNT, B.OBIDX, B.INSDATE, B.PIDX, (SELECT MAX(BDEPTH) FROM TF_BOARD_QNA WHERE BIDX = B.BIDX) STATUS "
+//				+	"FROM TF_PROJECT_LIST A, TF_BOARD_QNA B "
+//				+	"WHERE A.PIDX = B.PIDX "
+//				+		"AND A.IDX = ? "
+//				+	"ORDER BY B.OBIDX DESC, B.RBIDX ASC";
 
 			this.sql = new PagingQ().pagingStr(this.sql, listCnt, pageCnt);
 			
@@ -1481,10 +1570,12 @@ public class CMemberServiceImpl {
 		
 		try { 
 			
-			this.sql = "SELECT A.*, B.PIDX, B.PNAME, B.PNFUNDS, B.PGRADE, B.STATUS "
-				+	"FROM TF_BOARD_QNA A, TF_PROJECT_LIST B "
-				+	"WHERE A.PIDX = B.PIDX "
-				+		"AND A.BIDX = ?";
+			this.sql = cMemberSql.getcMemQnaCon();
+			
+//			this.sql = "SELECT A.*, B.PIDX, B.PNAME, B.PNFUNDS, B.PGRADE, B.STATUS "
+//				+	"FROM TF_BOARD_QNA A, TF_PROJECT_LIST B "
+//				+	"WHERE A.PIDX = B.PIDX "
+//				+		"AND A.BIDX = ?";
 
 			pstmt = con.prepareStatement(this.sql);
 			pstmt.setInt(1, bidx);
@@ -1535,35 +1626,39 @@ public class CMemberServiceImpl {
 			
 			con.setAutoCommit(false);
 			
-			this.sql = "UPDATE TF_BOARD_QNA "
-				+	"SET RBIDX = RBIDX + 1 "
-				+	"WHERE OBIDX = (SELECT OBIDX FROM TF_BOARD_QNA WHERE BIDX = ?) "
-				+		"AND RBIDX > (SELECT RBIDX FROM TF_BOARD_QNA WHERE BIDX = ?)";
+			this.sql = cMemberSql.getcMemQnaWrite_1();
+			
+//			this.sql = "UPDATE TF_BOARD_QNA "
+//				+	"SET RBIDX = RBIDX + 1 "
+//				+	"WHERE OBIDX = (SELECT OBIDX FROM TF_BOARD_QNA WHERE BIDX = ?) "
+//				+		"AND RBIDX > (SELECT RBIDX FROM TF_BOARD_QNA WHERE BIDX = ?)";
 
 			pstmt = con.prepareStatement(this.sql);
 			pstmt.setInt(1, inputBV.getObIdx());
 			pstmt.setInt(2, inputBV.getObIdx());
 			row += pstmt.executeUpdate();
 			
-			this.sql = "INSERT INTO TF_BOARD_QNA (BIDX, IDX, CATE, TITLE, CONTENTS, HIT, GOOD, BAD, OBIDX, RBIDX, BDEPTH, COMMCNT, VIEWSTAT, INSDATE, MODDATE, PIDX) "
-				+	"VALUES ("
-				+		"SEQ_TF_BIDX_QNA.NEXTVAL, "
-				+		"?, " //IDX
-				+		"(SELECT CATE FROM TF_BOARD_QNA WHERE BIDX = ?), " //CATE
-				+		"?, " //TITLE
-				+		"?, " //CONTENTS
-				+		"0, "
-				+		"0, "
-				+		"0, "
-				+		"(SELECT OBIDX FROM TF_BOARD_QNA WHERE BIDX = ?), " //OBIDX
-				+		"(SELECT RBIDX FROM TF_BOARD_QNA WHERE BIDX = ?) + 1, " //RBIDX
-				+		"(SELECT BDEPTH FROM TF_BOARD_QNA WHERE BIDX = ?) + 1, " //BDEPTH
-				+		"0, "
-				+		"1, "
-				+		"SYSDATE, "
-				+		"SYSDATE, "
-				+		"(SELECT PIDX FROM TF_BOARD_QNA WHERE BIDX = ?)" //PIDX
-				+	")";
+			this.sql = cMemberSql.getcMemQnaWrite_2();
+			
+//			this.sql = "INSERT INTO TF_BOARD_QNA (BIDX, IDX, CATE, TITLE, CONTENTS, HIT, GOOD, BAD, OBIDX, RBIDX, BDEPTH, COMMCNT, VIEWSTAT, INSDATE, MODDATE, PIDX) "
+//				+	"VALUES ("
+//				+		"SEQ_TF_BIDX_QNA.NEXTVAL, "
+//				+		"?, " //IDX
+//				+		"(SELECT CATE FROM TF_BOARD_QNA WHERE BIDX = ?), " //CATE
+//				+		"?, " //TITLE
+//				+		"?, " //CONTENTS
+//				+		"0, "
+//				+		"0, "
+//				+		"0, "
+//				+		"(SELECT OBIDX FROM TF_BOARD_QNA WHERE BIDX = ?), " //OBIDX
+//				+		"(SELECT RBIDX FROM TF_BOARD_QNA WHERE BIDX = ?) + 1, " //RBIDX
+//				+		"(SELECT BDEPTH FROM TF_BOARD_QNA WHERE BIDX = ?) + 1, " //BDEPTH
+//				+		"0, "
+//				+		"1, "
+//				+		"SYSDATE, "
+//				+		"SYSDATE, "
+//				+		"(SELECT PIDX FROM TF_BOARD_QNA WHERE BIDX = ?)" //PIDX
+//				+	")";
 
 			pstmt = con.prepareStatement(this.sql);
 			pstmt.setInt(1, inputBV.getIdx());
@@ -1607,9 +1702,11 @@ public class CMemberServiceImpl {
 		
 		try { 
 			
-			this.sql = "UPDATE TF_BOARD_QNA "
-				+	"SET TITLE = ?, CONTENTS = ?, MODDATE = SYSDATE "
-				+	"WHERE BIDX = ?";
+			this.sql = cMemberSql.getcMemQnaMod();
+			
+//			this.sql = "UPDATE TF_BOARD_QNA "
+//				+	"SET TITLE = ?, CONTENTS = ?, MODDATE = SYSDATE "
+//				+	"WHERE BIDX = ?";
 
 			pstmt = con.prepareStatement(this.sql);
 			pstmt.setString(1, inputBV.getTitle());

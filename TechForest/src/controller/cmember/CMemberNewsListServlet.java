@@ -38,14 +38,33 @@ public class CMemberNewsListServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
 		
+		int ttCnt = 0, listCnt = 10, pageCnt = 1;
+		
+		if(request.getParameter("pageCnt") != null) pageCnt = Integer.parseInt(request.getParameter("pageCnt").trim(),10);
+				
 		ArrayList<BoardVo> alist = new ArrayList<BoardVo>();
-	
+		String pageList = null;
+		
 		CMemberServiceImpl cs = new CMemberServiceImpl();
-		alist = cs.cMemNewsList(idx, 10, 1);
+			
+		ttCnt = cs.cMemNewsListTtCnt(idx);
+		pageList = new PagingQ().pagingList(listCnt, pageCnt, ttCnt);
+		String[] tmpPageInfo = pageList.split(" ");
+				
+		alist = cs.cMemNewsList(idx, listCnt, pageCnt);
 		
 		request.setAttribute("alist", alist);
+		request.setAttribute("startPage", tmpPageInfo[0]);
+		request.setAttribute("pageCnt", tmpPageInfo[1]);
+		request.setAttribute("endPage", tmpPageInfo[2]);
 		
 //		alist = (ArrayList<BoardVo>) request.getAttribute("alist"); 
+//		
+//		System.out.println("total count " + ttCnt);
+//		System.out.println("page list " + pageList);
+//		System.out.println("start page " + tmpPageInfo[0]);
+//		System.out.println("now page " + tmpPageInfo[1]);
+//		System.out.println("end page " + tmpPageInfo[2]);
 //		
 //		for(BoardVo vo : alist){
 //			System.out.println(vo.getrNum());
