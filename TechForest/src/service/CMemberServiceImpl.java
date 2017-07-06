@@ -119,7 +119,7 @@ public class CMemberServiceImpl {
 			this.sql = "SELECT B.* "
 				+	"FROM TF_PROJECT_LIST A, TF_BOARD_NEWS B "
 				+	"WHERE B.VIEWSTAT = 1 "
-				+		"AND A.PIDX = B.EXTCOLUMN "
+				+		"AND A.PIDX = B.PIDX "
 				+		"AND A.IDX = ? "
 				+	"ORDER BY B.OBIDX DESC, B.RBIDX ASC";
 		
@@ -1419,9 +1419,9 @@ public class CMemberServiceImpl {
 		
 		try { 
 			
-			this.sql = "SELECT A.PIDX, A.PNAME, B.BIDX, B.IDX, B.CATE, B.TITLE, B.HIT, B.GOOD, B.BAD, B.COMMCNT, B.OBIDX, B.INSDATE, B.EXTCOLUMN, (SELECT MAX(BDEPTH) FROM TF_BOARD_QNA WHERE BIDX = B.BIDX) STATUS "
+			this.sql = "SELECT A.PIDX, A.PNAME, B.BIDX, B.IDX, B.CATE, B.TITLE, B.HIT, B.GOOD, B.BAD, B.COMMCNT, B.OBIDX, B.INSDATE, B.PIDX, (SELECT MAX(BDEPTH) FROM TF_BOARD_QNA WHERE BIDX = B.BIDX) STATUS "
 				+	"FROM TF_PROJECT_LIST A, TF_BOARD_QNA B "
-				+	"WHERE A.PIDX = B.EXTCOLUMN "
+				+	"WHERE A.PIDX = B.PIDX "
 				+		"AND A.IDX = ? "
 				+	"ORDER BY B.OBIDX DESC, B.RBIDX ASC";
 
@@ -1483,7 +1483,7 @@ public class CMemberServiceImpl {
 			
 			this.sql = "SELECT A.*, B.PIDX, B.PNAME, B.PNFUNDS, B.PGRADE, B.STATUS "
 				+	"FROM TF_BOARD_QNA A, TF_PROJECT_LIST B "
-				+	"WHERE A.EXTCOLUMN = B.PIDX "
+				+	"WHERE A.PIDX = B.PIDX "
 				+		"AND A.BIDX = ?";
 
 			pstmt = con.prepareStatement(this.sql);
@@ -1545,7 +1545,7 @@ public class CMemberServiceImpl {
 			pstmt.setInt(2, inputBV.getObIdx());
 			row += pstmt.executeUpdate();
 			
-			this.sql = "INSERT INTO TF_BOARD_QNA (BIDX, IDX, CATE, TITLE, CONTENTS, HIT, GOOD, BAD, OBIDX, RBIDX, BDEPTH, COMMCNT, VIEWSTAT, INSDATE, MODDATE, EXTCOLUMN) "
+			this.sql = "INSERT INTO TF_BOARD_QNA (BIDX, IDX, CATE, TITLE, CONTENTS, HIT, GOOD, BAD, OBIDX, RBIDX, BDEPTH, COMMCNT, VIEWSTAT, INSDATE, MODDATE, PIDX) "
 				+	"VALUES ("
 				+		"SEQ_TF_BIDX_QNA.NEXTVAL, "
 				+		"?, " //IDX
@@ -1562,7 +1562,7 @@ public class CMemberServiceImpl {
 				+		"1, "
 				+		"SYSDATE, "
 				+		"SYSDATE, "
-				+		"(SELECT EXTCOLUMN FROM TF_BOARD_QNA WHERE BIDX = ?)" //EXTCOLUMN
+				+		"(SELECT PIDX FROM TF_BOARD_QNA WHERE BIDX = ?)" //PIDX
 				+	")";
 
 			pstmt = con.prepareStatement(this.sql);
