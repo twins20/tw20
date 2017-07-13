@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+.adminInmemInfoConWrapper .adminIMemberList {
+	width: 500px;
+	margin: 0 auto;
+	vertical-align: middle;
+}
+
+.adminInmemInfoConWrapper .imemberModify {
+	margin: 0 auto;
+	text-align: center;
+}
+
+.adminInmemInfoConWrapper .form-inline {
+	text-align: center;
+}
