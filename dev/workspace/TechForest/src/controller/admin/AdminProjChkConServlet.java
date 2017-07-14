@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import common.PageRedirect;
 import service.AdminServiceImpl;
@@ -29,21 +30,29 @@ public class AdminProjChkConServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-		AdminServiceImpl as = new AdminServiceImpl();	
-		int pIdx = 0;
-		pIdx = Integer.parseInt(request.getParameter("pIdx"));	
+		int sess_idx = 0;
+		HttpSession session = request.getSession();		
+		if(session.getAttribute("idx") != null){
+			sess_idx = (Integer) session.getAttribute("idx");			
+		}		
+		
+		int pIdx = 0;		
+		if(request.getParameter("pIdx") != null){
+			pIdx = Integer.parseInt(request.getParameter("pIdx").trim(),10);
+		}
 		
 		//관리자 프로젝트 등록 승인 내용  
 		ArrayList<Map<String, Object>> alist = new ArrayList<Map<String, Object>>();
 					
-		alist =  as.adminProJChkCon(pIdx);		
+		AdminServiceImpl as = new AdminServiceImpl();	
+		alist = as.adminProJChkCon(pIdx);		
 		request.setAttribute("alist", alist);
 				
 //		ArrayList<Map<String, Object>> alist1 = (ArrayList<Map<String, Object>>) request.getAttribute("alist"); 
 //		
 //		for(Map<String, Object> hashmap : alist1){
 //			
-//			ProjectVo pvo = (ProjectVo) hashmap.get("pvp");						
+//			ProjectVo pvo = (ProjectVo) hashmap.get("pvo");						
 //			System.out.println("프로젝트 승인전 컨텐츠");
 //			System.out.println(pvo.getpName());
 //			System.out.println(pvo.getpCate());
@@ -59,7 +68,7 @@ public class AdminProjChkConServlet extends HttpServlet {
 //			System.out.println(pvo.getPeDate());
 //			System.out.println(pvo.getPcDate());
 //			
-//			ItemVo ivo = (ItemVo) hashmap.get("ivp");
+//			ItemVo ivo = (ItemVo) hashmap.get("ivo");
 //			System.out.println(ivo.getItIdx());
 //			System.out.println(ivo.getItName());
 //			System.out.println(ivo.getItPrice());

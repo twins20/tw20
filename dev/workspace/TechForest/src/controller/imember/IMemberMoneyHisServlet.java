@@ -34,9 +34,11 @@ public class IMemberMoneyHisServlet extends HttpServlet {
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int idx = 1;
+		int idx = 0;
 		HttpSession session = request.getSession();
-		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
+		if(session.getAttribute("idx") != null){
+			idx = (Integer) session.getAttribute("idx");
+		}
 		
 		ArrayList<MoneyVo> alist = new ArrayList<MoneyVo>();
 		

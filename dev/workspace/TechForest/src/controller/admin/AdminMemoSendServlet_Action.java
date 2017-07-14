@@ -25,8 +25,12 @@ public class AdminMemoSendServlet_Action extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		AdminServiceImpl as = new AdminServiceImpl();
-				
+		int sess_idx = 0;
+		HttpSession session = request.getSession();		
+		if(session.getAttribute("idx") != null){
+			sess_idx = (Integer) session.getAttribute("idx");			
+		}	
+						
 		//관리자 메모 작성 액션
 		int row = 0;
 		int sendIdx = 0;
@@ -34,14 +38,20 @@ public class AdminMemoSendServlet_Action extends HttpServlet {
 		
 		String contents = null;
 		
-		HttpSession session = request.getSession();		
-		if(session.getAttribute("idx") != null) sendIdx = (Integer) session.getAttribute("idx");				
-		if(request.getParameter("recvIdx") != null) recvIdx = Integer.parseInt(request.getParameter("recvIdx").trim());
-		if(request.getParameter("contents") != null) contents = request.getParameter("contents").trim();
+		if(request.getParameter("sendIdx") != null){
+			sendIdx = Integer.parseInt(request.getParameter("sendIdx").trim(),10);				
+		}
+		if(request.getParameter("recvIdx") != null){
+			recvIdx = Integer.parseInt(request.getParameter("recvIdx").trim(),10);
+		}
+		if(request.getParameter("contents") != null){
+			contents = request.getParameter("contents").trim();
+		}
 		
 		MemoVo inputMV = new MemoVo();
 		inputMV.setContents(contents);		
-				
+		
+		AdminServiceImpl as = new AdminServiceImpl();		
 		row = as.adminBoardMemoSend(sendIdx, recvIdx, inputMV);
 				
 //		System.out.println(row);		

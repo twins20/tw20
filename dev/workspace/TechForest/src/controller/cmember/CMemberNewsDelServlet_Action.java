@@ -35,14 +35,14 @@ public class CMemberNewsDelServlet_Action extends HttpServlet {
 		
 		int bIdx = 0;
 					
-		if(request.getParameter("bIdx") != null) bIdx = Integer.parseInt(request.getParameter("bIdx").trim(),10);
+		if(request.getParameter("bIdx") != null){
+			bIdx = Integer.parseInt(request.getParameter("bIdx").trim(),10);
+		}
 		
 		int row = 0;
 
 		CMemberServiceImpl cs = new CMemberServiceImpl();
 		row = cs.cMemNewsDel(bIdx);
-		
-//		System.out.println(row);
 		
 		PageRedirect pr = new PageRedirect(true, "/CMemberNewsList.do", request, response);
 	}

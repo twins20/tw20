@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import common.PageRedirect;
 import service.AdminServiceImpl;
@@ -25,16 +26,30 @@ public class AdminQnaModServlet_Action extends HttpServlet {
     }
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		
+		int sess_idx = 0;
+		HttpSession session = request.getSession();		
+		if(session.getAttribute("idx") != null){
+			sess_idx = (Integer) session.getAttribute("idx");			
+		}
 		
 		int bIdx = 0;
 		String cate = null, title = null, contents = null;
 		
-		if(request.getParameter("bidx") != null) bIdx = Integer.parseInt(request.getParameter("bIdx"));
-		if(request.getParameter("cate") != null) cate = request.getParameter("cate");
-		if(request.getParameter("title") != null) title = request.getParameter("title");
-		if(request.getParameter("contents") != null) contents = request.getParameter("contents");
-		
-		AdminServiceImpl as = new AdminServiceImpl();
+		if(request.getParameter("bIdx") != null){
+			bIdx = Integer.parseInt(request.getParameter("bIdx").trim(),10);
+		}
+		if(request.getParameter("cate") != null){
+			cate = request.getParameter("cate");
+		}
+		if(request.getParameter("title") != null){
+			title = request.getParameter("title");
+		}
+		if(request.getParameter("contents") != null){
+			contents = request.getParameter("contents");
+		}
+				
 		BoardVo InputBV = new BoardVo();
 		
 		InputBV.setCate(cate);
@@ -44,26 +59,13 @@ public class AdminQnaModServlet_Action extends HttpServlet {
 		
 		int row = 0;
 		
+		AdminServiceImpl as = new AdminServiceImpl();
 		row = as.adminBoardQnaMod(InputBV);
 		
-//		System.out.println(row);
-		
-		if(row == 0){
-			
-//			System.out.println("수정실패");	
-			PageRedirect pr = new PageRedirect(false, "/admin/AdminQnaMod.jsp", request, response);
-		
-		}else{
-			
-//			System.out.println("수정성공");
-			ArrayList<BoardVo> vo = new ArrayList<BoardVo>();
-			vo = as.adminBoardQnaCon(bIdx);
-			
-			request.setAttribute("vo", vo);
-			
-			vo = (ArrayList<BoardVo>) request.getAttribute("vo");
-			
-			PageRedirect pr = new PageRedirect(true, "/AdminQnaCon.do", request, response);
+		if(row == 0){		
+			PageRedirect pr = new PageRedirect(false, "/admin/AdminQnaMod.jsp", request, response);					
+		}else{					
+			PageRedirect pr = new PageRedirect(true, "/AdminQnaCon.do?bIdx="+bIdx, request, response);			
 		}
 	}
 

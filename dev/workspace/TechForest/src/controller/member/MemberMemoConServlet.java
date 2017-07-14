@@ -36,7 +36,9 @@ public class MemberMemoConServlet extends HttpServlet {
 		
 		int memoIdx = 0;
 			
-		if(request.getParameter("memoIdx") != null) memoIdx = Integer.parseInt(request.getParameter("memoIdx").trim(),10);
+		if(request.getParameter("memoIdx") != null){
+			memoIdx = Integer.parseInt(request.getParameter("memoIdx").trim(),10);
+		}
 						
 		MemoVo vo = new MemoVo();
 		

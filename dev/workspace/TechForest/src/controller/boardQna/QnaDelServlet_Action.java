@@ -32,18 +32,21 @@ public class QnaDelServlet_Action extends HttpServlet {
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int idx = 0;
+		int sess_idx = 0;
 		HttpSession session = request.getSession();
-		if(session.getAttribute("idx") !=null) idx = (Integer) request.getAttribute("idx");
+		if(session.getAttribute("idx") !=null) {
+		sess_idx = (Integer) request.getAttribute("idx");
+		}
 		
 		int bIdx = 0;
-		if(request.getParameter("bidx") != null) bIdx = Integer.parseInt(request.getParameter("bidx"));
+		if(request.getParameter("bidx") != null) {
+			bIdx = Integer.parseInt(request.getParameter("bidx"));
+		}
 		
 		BoardQnaServiceImpl bs = new BoardQnaServiceImpl(); 
-
 		bs.boardQnaDel(bIdx); 
 		
-		PageRedirect pr = new PageRedirect(true,"/QnaListServlet.do",request, response);
+		PageRedirect pr = new PageRedirect(true,"/QnaList.do",request, response);
 	}
 
 	/**

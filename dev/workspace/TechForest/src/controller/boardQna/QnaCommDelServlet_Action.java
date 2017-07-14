@@ -27,7 +27,32 @@ public class QnaCommDelServlet_Action extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//QNA 모듈화 
+		/*
+		int sess_idx = 0;
+		HttpSession session =request.getSession();
+		if(session.getAttribute("idx") != null) {
+		sess_idx = (Integer) session.getAttribute("idx");
+		}
+		
+		int commIdx = 0;
+		
+		if(request.getParameter("commIdx") != null) {
+			commIdx = Integer.parseInt(request.getParameter("commIdx"));
+		}
+		
+		int bIdx = 0;
+		
+		if(request.getParameter("bIdx") != null) {
+			bIdx = Integer.parseInt(request.getParameter("bIdx"));
+		}
+		
+		BoardQnaServiceImpl bs = new BoardQnaServiceImpl();				
+		bs.boardQnaCommDel(commIdx); 	
+				
+		PageRedirect pr = new PageRedirect(true, "/QnaCon.do?bIdx="+bIdx+"", request, response);
+		*/
+		
 	}
 
 	/**

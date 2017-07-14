@@ -34,16 +34,22 @@ public class CMemberMemoWriteServlet_Action extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		int idx = 0;
+		int sess_idx = 0;
 		HttpSession session = request.getSession();
-		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
+		if(session.getAttribute("idx") != null){
+			sess_idx = (Integer) session.getAttribute("idx");
+		}
 		
-		int sendIdx = 0, recvIdx = 0;
+		int param_idx = 0;
+		int sendIdx = sess_idx, recvIdx = param_idx;
 		String contents = null;
-				
-		if(request.getParameter("sendIdx") != null) sendIdx = Integer.parseInt(request.getParameter("sendIdx").trim(),10);
-		if(request.getParameter("recvIdx") != null) recvIdx = Integer.parseInt(request.getParameter("recvIdx").trim(),10);
-		if(request.getParameter("contents") != null) contents = request.getParameter("contents").trim();
+		
+		if(request.getParameter("param_idx") != null){
+			param_idx = Integer.parseInt(request.getParameter("param_idx"));
+		}
+		if(request.getParameter("contents") != null){
+			contents = request.getParameter("contents").trim();
+		}
 
 		MemoVo inputMV = new MemoVo();
 		inputMV.setSendIdx(sendIdx);
@@ -54,8 +60,6 @@ public class CMemberMemoWriteServlet_Action extends HttpServlet {
 		
 		CMemberServiceImpl cs = new CMemberServiceImpl();
 		row = cs.cMemMemoWrite(inputMV);
-		
-//		System.out.println(row);
 		
 		PageRedirect pr = new PageRedirect(true, "/CMemberMemoSendList.do", request, response);
 	}

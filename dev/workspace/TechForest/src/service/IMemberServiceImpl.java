@@ -206,7 +206,7 @@ public class IMemberServiceImpl {
 		try {
 			
 			this.sql = "UPDATE TF_MEMBER "
-				+ 		"SET PW = ?, NICK = ?, PHONE = ?, ADDR = ? "
+				+ 		"SET PW = ?, NICK = ?, PHONE = ?, ADDR = ?, MODDATE = SYSDATE "
 				+ 		"WHERE IDX = ?";
 			
 			pstmt = con.prepareStatement(this.sql);
@@ -287,13 +287,15 @@ public class IMemberServiceImpl {
 			{ 
 			
 			this.sql = "INSERT INTO TF_MONEY_HIS (MIDX, IDX, CONTENTS, CHGMONEY, BMONEY, AMONEY, STATUS, TYPE, INSDATE, MODDATE) "
-				+ 		"VALUES (SEQ_TF_MIDX.NEXTVAL, ?, ?, ?, (SELECT * FROM (SELECT AMONEY FROM TF_MONEY_HIS WHERE IDX = 1 ORDER BY MIDX DESC) WHERE ROWNUM = 1), (SELECT * FROM (SELECT AMONEY FROM TF_MONEY_HIS WHERE IDX = 1 ORDER BY MIDX DESC) WHERE ROWNUM = 1), 0, 0, SYSDATE, SYSDATE)";
+				+ 		"VALUES (SEQ_TF_MIDX.NEXTVAL, ?, ?, ?, (SELECT * FROM (SELECT AMONEY FROM TF_MONEY_HIS WHERE IDX = ? ORDER BY MIDX DESC) WHERE ROWNUM = 1), (SELECT * FROM (SELECT AMONEY FROM TF_MONEY_HIS WHERE IDX = ? ORDER BY MIDX DESC) WHERE ROWNUM = 1), 0, 0, SYSDATE, SYSDATE)";
 			
 			pstmt = con.prepareStatement(this.sql); 
 			
 			pstmt.setInt(1, InputMV.getIdx()); 
 			pstmt.setString(2, InputMV.getContents());
-			pstmt.setInt(3, InputMV.getChgMoney()); 
+			pstmt.setInt(3, InputMV.getChgMoney());
+			pstmt.setInt(4, InputMV.getIdx());
+			pstmt.setInt(5, InputMV.getIdx());
 	
 			row = pstmt.executeUpdate(); 
 									
@@ -396,7 +398,7 @@ public class IMemberServiceImpl {
 		PreparedStatement pstmt = null;  
 		ResultSet rs = null; 
 		
-		ArrayList<ProjectVo> alist = new ArrayList<ProjectVo>(); 
+		ArrayList<ProjectVo> alist = new ArrayList<ProjectVo>();  
 			
 		try { 
 			
@@ -437,7 +439,7 @@ public class IMemberServiceImpl {
 		
 	}
 	
-	public int IMemberWishListDel(int idx){
+	public int IMemberWishListDel(int pidx){
 
 		Connection con = dbconnect.getConnection();  
 		PreparedStatement pstmt = null; 
@@ -448,10 +450,10 @@ public class IMemberServiceImpl {
 			
 			this.sql = "UPDATE TF_WISH_LIST "
 				+ 		"SET VIEWSTAT = 0 "
-				+ 		"WHERE IDX = ?";
+				+ 		"WHERE PIDX = ?";
 			
 			pstmt = con.prepareStatement(this.sql); 
-			pstmt.setInt(1, idx); 
+			pstmt.setInt(1, pidx); 
 	
 			row = pstmt.executeUpdate(); 
 									

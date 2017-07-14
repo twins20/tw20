@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import common.PageRedirect;
 import service.ProjectCommVo;
@@ -35,11 +36,22 @@ public class ProjectConSubCommWriteServlet_Action extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		int pIdx = 0, idx = 0, opCommIdx = 0;
+		int idx = 0;
+		HttpSession session = request.getSession();
+		if(session.getAttribute("idx") != null){
+			idx = (Integer)session.getAttribute("idx");
+		}
+		
+		int pIdx = 0, opCommIdx = 0;
 		String comments = null;
 		int row = 0;
 		
-		if(request.getParameter("opCommIdx") != null) opCommIdx = Integer.parseInt(request.getParameter("opCommIdx").trim(),10);
+		if(request.getParameter("pIdx") != null){
+			pIdx = Integer.parseInt(request.getParameter("pIdx").trim(),10);
+		}
+		if(request.getParameter("opCommIdx") != null){
+			opCommIdx = Integer.parseInt(request.getParameter("opCommIdx").trim(),10);
+		}
 		
 		ProjectCommVo inputPV = new ProjectCommVo();
 		inputPV.setpIdx(pIdx);
@@ -58,7 +70,7 @@ public class ProjectConSubCommWriteServlet_Action extends HttpServlet {
 		
 //		System.out.println(row);
 
-		PageRedirect pr = new PageRedirect(true, "/index.jsp", request, response);
+		PageRedirect pr = new PageRedirect(true, "/ProjCon.do?pIdx="+pIdx+"", request, response);
 	}
 
 	/**

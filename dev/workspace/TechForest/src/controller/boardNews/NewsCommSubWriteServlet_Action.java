@@ -32,10 +32,10 @@ public class NewsCommSubWriteServlet_Action extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		int idx = 0;
+		int sess_idx = 0;
 		HttpSession session = request.getSession();
 		if(session.getAttribute("idx") != null) {
-			idx = (Integer) session.getAttribute("idx");	
+		sess_idx = (Integer) session.getAttribute("idx");	
 		}
 				
 		int bIdx = 0;
@@ -53,18 +53,16 @@ public class NewsCommSubWriteServlet_Action extends HttpServlet {
 		}
 			
 		BoardCommVo vc = new BoardCommVo();
-		vc.setIdx(idx);
+		vc.setIdx(sess_idx);
 		vc.setbIdx(bIdx);
 		vc.setCommIdx(commIdx);	
 		vc.setComments(comments);
 		
-		
 		int row = 0;
-		
 		
 		BoardNewsServiceImpl bs = new BoardNewsServiceImpl();
 		row = bs.boardNewsSubCommWriteTransaction(vc);
-		System.out.println(row);
+		
 		PageRedirect pr = new PageRedirect(true, "/NewsCon.do?bIdx="+bIdx+"&commIdx="+commIdx+"", request, response);
 	}
 

@@ -37,9 +37,11 @@ public class IMemberFundListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int idx = 1;
+		int idx = 0;
 		HttpSession session = request.getSession();
-		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
+		if(session.getAttribute("idx") != null){
+			idx = (Integer) session.getAttribute("idx");
+		}
 		
 		ArrayList<Map<String, Object>> dataList = new ArrayList<Map<String, Object>>();
 		
@@ -63,6 +65,7 @@ public class IMemberFundListServlet extends HttpServlet {
 		}
 	
 		request.setAttribute("dataList", dataList);
+		request.setAttribute("idx", idx);
 		
 		PageRedirect pr = new PageRedirect(false, "/imember/IMemberFundList.jsp", request, response);
 	}

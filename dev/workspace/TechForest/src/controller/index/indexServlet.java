@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import common.PageRedirect;
 
@@ -28,7 +29,15 @@ public class indexServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
+		int sess_idx = 0;
+		HttpSession session = request.getSession();
+		if(session.getAttribute("idx") != null){
+			sess_idx = (Integer) session.getAttribute("idx");
+		}
+		
+		request.setAttribute("sess_idx", sess_idx);
+				
 		PageRedirect pr = new PageRedirect(false, "/index.jsp", request, response);
 	}
 

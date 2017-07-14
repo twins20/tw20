@@ -25,20 +25,26 @@ public class AdminFaqWriteServlet_Action extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int idx = 0;
-		
+		int sess_idx = 0;
 		HttpSession session = request.getSession();		
-		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
-		
+		if(session.getAttribute("idx") != null){
+			sess_idx = (Integer) session.getAttribute("idx");			
+		}
 		
 		String cate = null, title = null, contents = null;
 				
-		if(request.getParameter("cate") != null) cate = request.getParameter("cate").trim();
-		if(request.getParameter("title") != null) title = request.getParameter("title").trim();
-		if(request.getParameter("contents") != null) contents = request.getParameter("contents").trim();
-
+		if(request.getParameter("cate") != null){
+			cate = request.getParameter("cate").trim();
+		}
+		if(request.getParameter("title") != null){
+			title = request.getParameter("title").trim();
+		}
+		if(request.getParameter("contents") != null){
+			contents = request.getParameter("contents").trim();
+		}
+		
 		BoardVo inputBV = new BoardVo();
-		inputBV.setIdx(idx);
+		inputBV.setIdx(sess_idx);
 		inputBV.setCate(cate);
 		inputBV.setTitle(title);
 		inputBV.setContents(contents);

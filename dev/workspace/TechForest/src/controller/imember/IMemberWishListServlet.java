@@ -2,6 +2,7 @@ package controller.imember;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,9 +35,11 @@ public class IMemberWishListServlet extends HttpServlet {
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int idx = 1;
+		int idx = 0;
 		HttpSession session = request.getSession();
-		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
+		if(session.getAttribute("idx") != null){
+			idx = (Integer) session.getAttribute("idx");
+		}
 	
 		ArrayList<ProjectVo> alist = new ArrayList<ProjectVo>();
 		

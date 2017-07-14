@@ -35,20 +35,27 @@ public class IMemberInfoModServlet_Action extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-//		int idx = 0;
-//		HttpSession session = request.getSession();
-//		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
-    	
 		int idx = 0;
-		if(request.getParameter("idx") != null) idx = Integer.parseInt(request.getParameter("idx").trim());
+		HttpSession session = request.getSession();
+		if(session.getAttribute("idx") != null) {
+			idx = (Integer) session.getAttribute("idx");
+		}
 		
 		int phone = 0;
 		String pw = null, nick = null, addr = null; 
 		
-     	if(request.getParameter("pw") != null) pw = request.getParameter("pw").trim();
-    	if(request.getParameter("nick") != null) nick = request.getParameter("nick").trim();
-		if(request.getParameter("phone") != null) phone = Integer.parseInt(request.getParameter("phone").trim(),10);
-		if(request.getParameter("addr") != null) addr = request.getParameter("addr").trim();
+     	if(request.getParameter("pw") != null){
+     		pw = request.getParameter("pw").trim();
+     	}
+    	if(request.getParameter("nick") != null){
+    		nick = request.getParameter("nick").trim();
+    	}
+		if(request.getParameter("phone") != null){
+			phone = Integer.parseInt(request.getParameter("phone").trim(),10);
+		}
+		if(request.getParameter("addr") != null){
+			addr = request.getParameter("addr").trim();
+		}
     	
     	MemberVo inputMV = new MemberVo();
     	inputMV.setPw(pw);
@@ -60,8 +67,6 @@ public class IMemberInfoModServlet_Action extends HttpServlet {
     	
     	IMemberServiceImpl si = new IMemberServiceImpl();
     	row = si.IMemInfoModAction(inputMV, idx);
-    	
-//    	System.out.println(row);
     	   	
     	PageRedirect pr = new PageRedirect(true, "/IMemberInfoCon.do", request, response);
 	}

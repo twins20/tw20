@@ -32,19 +32,23 @@ public class IMemberWishListDelServlet_Action extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-//		int idx = 0;
-//		HttpSession session = request.getSession();
-//		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
-		
 		int idx = 0;
-		if(request.getParameter("idx") != null) idx = Integer.parseInt(request.getParameter("idx"));
+		HttpSession session = request.getSession();
+		if(session.getAttribute("idx") != null){
+			idx = (Integer) session.getAttribute("idx");
+		}
+		
+		int pIdx = 0;
+		if(request.getParameter("pidx") != null){
+			pIdx = Integer.parseInt(request.getParameter("pidx"));
+		}
 		
 		WishVo vo = new WishVo(); 
 		
 		int row = 0;
 		
 		IMemberServiceImpl si = new IMemberServiceImpl();
-		row = si.IMemberWishListDel(idx);
+		row = si.IMemberWishListDel(pIdx);
 		
 		PageRedirect pr = new PageRedirect(true, "/IMemberWishList.do", request, response);
 	}

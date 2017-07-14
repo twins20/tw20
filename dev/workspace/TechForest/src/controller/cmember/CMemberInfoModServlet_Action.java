@@ -34,15 +34,25 @@ public class CMemberInfoModServlet_Action extends HttpServlet {
 		
 		int idx = 0;
 		HttpSession session = request.getSession();
-		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
+		if(session.getAttribute("idx") != null){
+			idx = (Integer) session.getAttribute("idx");
+		}
 		
 		int phone = 0;
 		String pw = null, nick = null, addr = null;
 				
-		if(request.getParameter("pw") != null) pw = request.getParameter("pw").trim();
-		if(request.getParameter("nick") != null) nick = request.getParameter("nick").trim();
-		if(request.getParameter("phone") != null) phone = Integer.parseInt(request.getParameter("phone").trim(),10);
-		if(request.getParameter("addr") != null) addr = request.getParameter("addr").trim();
+		if(request.getParameter("pw") != null){
+			pw = request.getParameter("pw").trim();
+		}
+		if(request.getParameter("nick") != null){
+			nick = request.getParameter("nick").trim();
+		}
+		if(request.getParameter("phone") != null){
+			phone = Integer.parseInt(request.getParameter("phone").trim(),10);
+		}
+		if(request.getParameter("addr") != null){
+			addr = request.getParameter("addr").trim();
+		}
 				
 		MemberVo vo = new MemberVo();
 		vo.setIdx(idx);
@@ -55,8 +65,6 @@ public class CMemberInfoModServlet_Action extends HttpServlet {
 		
 		CMemberServiceImpl cs = new CMemberServiceImpl();
 		row = cs.cMemInfoMod(vo);
-		
-//		System.out.println(row);
 		
 		PageRedirect pr = new PageRedirect(true, "/CMemberInfoCon.do", request, response);
 	}

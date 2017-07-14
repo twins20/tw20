@@ -36,7 +36,9 @@ public class CMemberInfoConServlet extends HttpServlet {
 		
 		int idx = 0;
 		HttpSession session = request.getSession();
-		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
+		if(session.getAttribute("idx") != null){
+			idx = (Integer) session.getAttribute("idx");
+		}
 				
 		MemberVo vo = new MemberVo();
 		

@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import common.*;
 import service.*;
@@ -33,9 +34,11 @@ public class MemberMemoListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		int idx = 0;
-			
-		if(request.getParameter("idx") != null) idx = Integer.parseInt(request.getParameter("idx").trim(),10);
+		int idx = 0;			
+		HttpSession session = request.getSession();
+		if(session.getAttribute("idx") != null){
+			idx = (Integer) session.getAttribute("idx");
+		}
 						
 		ArrayList<MemoVo> alist = new ArrayList<MemoVo>();
 		
@@ -43,16 +46,6 @@ public class MemberMemoListServlet extends HttpServlet {
 		alist = ms.memMemoList(idx, 10, 1);
 		
 		request.setAttribute("alist", alist);
-		
-//		alist = (ArrayList<MemoVo>) request.getAttribute("alist");
-//		
-//		for(MemoVo vo : alist){
-//			System.out.println(vo.getMemoIdx());
-//			System.out.println(vo.getSendIdx());
-//			System.out.println(vo.getRecvIdx());
-//			System.out.println(vo.getContents());
-//			System.out.println(vo.getStatus());
-//		}
 		
 		PageRedirect pr = new PageRedirect(false, "/member/MemberMemoList.jsp", request, response);
 	}

@@ -8,11 +8,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import common.PageRedirect;
+import common.PagingQ;
 import service.AdminServiceImpl;
 import service.BoardVo;
-import service.ProjectVo;
 
 
 @WebServlet("/AdminQnaListServlet")
@@ -26,13 +27,33 @@ public class AdminQnaListServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-		AdminServiceImpl as = new AdminServiceImpl();	
+		int sess_idx = 0;
+		HttpSession session = request.getSession();		
+		if(session.getAttribute("idx") != null){
+			sess_idx = (Integer) session.getAttribute("idx");			
+		}
+			
+		int ttCnt = 0, listCnt = 10, pageCnt = 1;
+		if(request.getParameter("pageCnt") != null){
+			pageCnt = Integer.parseInt(request.getParameter("pageCnt").trim(),10);			
+		}
 		
 		//관리자 고객센터 페이지 QNA리스트 
-		 ArrayList<BoardVo> alist = new  ArrayList<BoardVo>();
+		String pageList = null;
+		ArrayList<BoardVo> alist = new  ArrayList<BoardVo>();
 		 
-		alist = as.adminBoardQnaList(10, 1);
+		AdminServiceImpl as = new AdminServiceImpl();
+		alist =  as.adminBoardQnaList(listCnt, pageCnt);	
+		ttCnt = as.adminBoardQnaListTtCnt();
+		pageList = new PagingQ().pagingList(listCnt, pageCnt, ttCnt);
+		String[] tmpPageInfo = pageList.split(" ");
+		
 		request.setAttribute("alist", alist);
+		request.setAttribute("pageList", pageList);
+		request.setAttribute("startPage", tmpPageInfo[0]);
+		request.setAttribute("pageCnt", tmpPageInfo[1]);
+		request.setAttribute("endPage", tmpPageInfo[2]);
+
 		
 //		ArrayList<BoardVo> alist1 = (ArrayList<BoardVo>) request.getAttribute("alist");
 //		
@@ -51,10 +72,11 @@ public class AdminQnaListServlet extends HttpServlet {
 //			System.out.println(vo.getCommCnt());
 //			System.out.println(vo.getObIdx());
 //			System.out.println(vo.getInsDate());
-//			System.out.println(vo.getModDate());			
+//			System.out.println(vo.getModDate());	
+//			System.out.println(vo.getViewStat());
 //		}
 		
-	 PageRedirect pr = new PageRedirect(false, "/admin/AdminQnaList.jsp", request, response);	
+	 PageRedirect pr = new PageRedirect(false, "/admin/AdminQnaList.jsp", request, response);		 
 	}
 
 	

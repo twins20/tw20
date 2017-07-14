@@ -28,8 +28,8 @@ public class MemberFindPassServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		PageRedirect pr = new PageRedirect(true, "/MemberFindPass.do", request, response);
+		
+		PageRedirect pr = new PageRedirect(false, "/member/MemberFindPass.jsp", request, response);
 	}
 
 	/**

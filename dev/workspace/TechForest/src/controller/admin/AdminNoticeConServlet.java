@@ -9,7 +9,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import common.PageRedirect;
 import service.AdminServiceImpl;
 import service.BoardVo;
 import service.ProjectVo;
@@ -25,14 +27,25 @@ public class AdminNoticeConServlet extends HttpServlet {
     }
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		int sess_idx = 0;
+		HttpSession session = request.getSession();		
+		if(session.getAttribute("idx") != null){
+			sess_idx = (Integer) session.getAttribute("idx");			
+		}	
 		
-		AdminServiceImpl as = new AdminServiceImpl();	
-		int bIdx = Integer.parseInt(request.getParameter("bIdx"));	
-//		int bidx = 1;
-				
+		int bIdx = 0;	
+			
+		if(request.getParameter("bIdx") != null){
+			bIdx = Integer.parseInt(request.getParameter("bIdx").trim(),10);
+		}
+		
 		//관리자 고객센터 페이지 전체 공지사항 상세내용 
 		ArrayList<BoardVo> alist = new ArrayList<BoardVo>();	
+		
+		AdminServiceImpl as = new AdminServiceImpl();	
 		alist = as.adminBoardNoticeCon(bIdx);
+		
 		request.setAttribute("alist", alist);	
 		
 //		ArrayList<BoardVo> alist1 = (ArrayList<BoardVo>) request.getAttribute("alist");
@@ -52,6 +65,8 @@ public class AdminNoticeConServlet extends HttpServlet {
 //			System.out.println(vo.getInsDate());
 //			System.out.println(vo.getModDate());		
 //		}
+		
+		PageRedirect pr = new PageRedirect(false, "/admin/AdminNoticeCon.jsp", request, response);
 	}
 
 	

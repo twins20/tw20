@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import common.PageRedirect;
 import service.AdminServiceImpl;
@@ -25,41 +26,43 @@ public class AdminFaqModServlet_Action extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		int sess_idx = 0;
+		HttpSession session = request.getSession();		
+		if(session.getAttribute("idx") != null){
+			sess_idx = (Integer) session.getAttribute("idx");			
+		}
+		
 		int bIdx = 0;
 		String cate = null, title = null, contents = null;
 		
-		if(request.getParameter("bIdx") != null) bIdx = Integer.parseInt(request.getParameter("bIdx"));
-		if(request.getParameter("cate") != null) cate = request.getParameter("cate");
-		if(request.getParameter("title") != null) title = request.getParameter("title");
-		if(request.getParameter("contents") != null) contents = request.getParameter("contents");
-		
-		AdminServiceImpl as = new AdminServiceImpl();
-		
+		if(request.getParameter("bIdx") != null){
+			bIdx = Integer.parseInt(request.getParameter("bIdx"));
+		}
+		if(request.getParameter("cate") != null){
+			cate = request.getParameter("cate");
+		}
+		if(request.getParameter("title") != null){
+			title = request.getParameter("title");
+		}
+		if(request.getParameter("contents") != null){
+			contents = request.getParameter("contents");
+		}
+				
 		BoardVo InputBV = new BoardVo();		
 		InputBV.setCate(cate);
 		InputBV.setTitle(title);
 		InputBV.setContents(contents);
 		InputBV.setbIdx(bIdx);
 		
-		int row = 0;			
+		int row = 0;	
+		
+		AdminServiceImpl as = new AdminServiceImpl();
 		row = as.adminBoardFaqMod(InputBV);
-		
-		System.out.println(row);
-		
-		if(row == 0){
-			
-			PageRedirect pr = new PageRedirect(false, "/admin/AdminFaqMod.jsp", request, response);
-		
-		}else{
-			
-			ArrayList<BoardVo> vo = new ArrayList<BoardVo>();
-			vo = as.adminBoardFaqCon(bIdx);			
-			request.setAttribute("vo", vo);
-			
-			vo = (ArrayList<BoardVo>) request.getAttribute("vo");
-			
-			PageRedirect pr = new PageRedirect(true, "/AdminFaqCon.do", request, response);
 
+		if(row == 0){			
+			PageRedirect pr = new PageRedirect(false, "/admin/AdminFaqMod.jsp", request, response);		
+		}else{
+			PageRedirect pr = new PageRedirect(true, "/AdminFaqCon.do?bIdx="+bIdx, request, response);
 		}
 	}
 

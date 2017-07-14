@@ -36,45 +36,34 @@ public class FaqListServlet extends HttpServlet {
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int bidx = 0;
+		int sess_idx = 0;
+		HttpSession session = request.getSession();
+		if(session.getAttribute("idx") != null){
+			sess_idx = (Integer) session.getAttribute("idx");
+		}
+		
+		int bIdx = 0;
 		String cate = null;
 		
-		if(request.getParameter("bidx") != null) bidx = Integer.parseInt(request.getParameter("bidx"));
-		if(request.getParameter("cate") !=null)	 cate = request.getParameter("cate");
+		if(request.getParameter("bIdx") != null) {
+			bIdx = Integer.parseInt(request.getParameter("bIdx"));
+		}
+		if(request.getParameter("cate") !=null)	 {
+			cate = request.getParameter("cate");
+		}
 		
 		BoardFaqServiceImpl bs = new BoardFaqServiceImpl();
 		ArrayList<BoardVo> alist = new ArrayList<BoardVo>();
 		
 		alist = bs.boardFaqList(10, 1);
 		
-		request.setAttribute("list", alist);
+		request.setAttribute("alist", alist);
 	
-//		ArrayList<BoardVo> list2 = (ArrayList<BoardVo>) request.getAttribute("list");
-//		for(BoardVo vo : list2){
-			
-//			System.out.println(vo.getbIdx());
-//			System.out.println(vo.getCate());
-//			System.out.println(vo.getTitle());
-//			System.out.println(vo.getHit());
-//			System.out.println(vo.getInsDate());
+
 		
-//		}
+//		alist = bs.boardListCate(cate, 10, 1);
+//		request.setAttribute("list", alist);	
 		
-		alist = bs.boardListCate(cate, 10, 1);
-		
-		request.setAttribute("list", alist);	
-		
-		ArrayList<BoardVo> blist2 = (ArrayList<BoardVo>) request.getAttribute("list");
-		for(BoardVo vo : blist2) {
-			
-//			System.out.println(vo.getrNum());
-//			System.out.println(vo.getbIdx());
-//			System.out.println(vo.getCate());
-//			System.out.println(vo.getTitle());
-//			System.out.println(vo.getHit());
-//			System.out.println(vo.getInsDate());
-			
-		}
 
 		PageRedirect pr = new PageRedirect(false, "boardFaq/FaqList.jsp", request, response);
 	}

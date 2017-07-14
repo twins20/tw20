@@ -34,21 +34,16 @@ public class FrontController extends HttpServlet {
 		String contextPath = request.getContextPath();			
 		String command = uri.substring(contextPath.length());
 		
-//		HttpSession session = request.getSession();
-//		int idx = (Integer) session.getAttribute("idx");
-//		int id = (Integer) session.getAttribute("id");
-//		int status = (Integer) session.getAttribute("status");
-//		int type = (Integer) session.getAttribute("type");
-//		System.out.println(idx);
-//		System.out.println(id);
-//		System.out.println(status);
-//		System.out.println(type);
+		int sess_idx = 0, sess_status = 0;
+		String sess_id = null, sess_type = null;
+	
+		HttpSession session = request.getSession();
+		
+		if(session.getAttribute("idx") != null) sess_idx = (Integer) session.getAttribute("idx");
+		if(session.getAttribute("id") != null) sess_id = (String) session.getAttribute("id");
+		if(session.getAttribute("status") != null) sess_status = (Integer) session.getAttribute("status");
+		if(session.getAttribute("type") != null) sess_type = (String) session.getAttribute("type");
 			
-//			ProjectListByCateServlet ps = new ProjectListByCateServlet();
-//			ps.doPost(request, response);
-
-//			this.isRedirect = false;
-//			this.view = "/project/ProjectListByCate.jsp";
 //--------------------------------------------------인덱스---------------------------------------------------------//
 		if(command.equals("/index.do")){ 
 			
@@ -74,11 +69,11 @@ public class FrontController extends HttpServlet {
 			
 			this.view = "/ProjectPayServlet";
 			
-		}else if(command.equals("/ProjectConCommWrite_Action.do")){
+		}else if(command.equals("/ProjConCommWrite_Action.do")){
 			
 			this.view = "/ProjectConCommWriteServlet_Action";
 			
-		}else if(command.equals("/ProjectConSubCommWrite_Action.do")){
+		}else if(command.equals("/ProjConSubCommWrite_Action.do")){
 			
 			this.view = "/ProjectConSubCommWriteServlet_Action";
 //---------------------------------------------------멤버----------------------------------------------------------//	
@@ -96,7 +91,7 @@ public class FrontController extends HttpServlet {
 			
 		}else if(command.equals("/MemberLogIn_Action.do")){
 			
-			this.view = "/MemberLoginServlet_Action";
+			this.view = "/MemberLogInServlet_Action";
 			
 		}else if(command.equals("/MemberLogOut_Action.do")){
 			
@@ -130,9 +125,9 @@ public class FrontController extends HttpServlet {
 			
 			this.view = "/MemberMemoDelServlet_Action";
 //--------------------------------------------------사업자----------------------------------------------------------//			
-		}else if(command.equals("/CMemberIndex.do")){
+		}else if(command.equals("/CMemberIndexP.do")){
 			
-			this.view = "/CMemberIndexServlet";
+			this.view = "/CMemberIndexPServlet";
 			
 		}else if(command.equals("/CMemberInfoCon.do")){
 			
@@ -240,7 +235,7 @@ public class FrontController extends HttpServlet {
 			
 		}else if(command.equals("/CMemberQnaCon.do")){
 			
-			this.view = "/CMemberQnaCon/CMemberQnaList";
+			this.view = "/CMemberQnaConServlet";
 			
 		}else if(command.equals("/CMemberQnaReplyWrite.do")){
 			
@@ -248,7 +243,7 @@ public class FrontController extends HttpServlet {
 			
 		}else if(command.equals("/CMemberQnaReplyWrite_Action.do")){
 			
-			this.view = "/CMemberQnaReplyWriteServlet";
+			this.view = "/CMemberQnaReplyWriteServlet_Action";
 			
 		}else if(command.equals("/CMemberQnaReplyMod.do")){
 			
@@ -260,191 +255,483 @@ public class FrontController extends HttpServlet {
 //--------------------------------------------------관리자----------------------------------------------------------//			
 		}else if(command.equals("/AdminCmemChkCon.do")){
 
-			this.view = "/AdminCmemChkConServlet";
-		
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminCmemChkConServlet";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminCmemChkConServlet";
+				
 		}else if(command.equals("/AdminCmemChkList.do")){
 			
-			this.view = "/AdminCmemChkListServlet";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminCmemChkListServlet";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminCmemChkListServlet";
 			
 		}else if(command.equals("/AdminCmemChkOk_Action.do")){
 			
-			this.view = "/AdminCmemChkOkServlet_Action";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminCmemChkOkServlet_Action";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminCmemChkOkServlet_Action";
 			
 		}else if(command.equals("/AdminCmemInfoCon.do")){
 			
-			this.view = "/AdminCmemInfoConServlet";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminCmemInfoConServlet";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminCmemInfoConServlet";
 			
 		}else if(command.equals("/AdminCmemInfoList.do")){
 			
-			this.view = "/AdminCmemInfoListServlet";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminCmemInfoListServlet";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminCmemInfoListServlet";
 			
 		}else if(command.equals("/AdminFaqCon.do")){
 			
-			this.view = "/AdminFaqConServlet";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminFaqConServlet";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminFaqConServlet";
 			
 		}else if(command.equals("/AdminFaqDel_Action.do")){
 			
-			this.view = "/AdminFaqDelServlet_Action";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminFaqDelServlet_Action";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminFaqDelServlet_Action";
 			
 		}else if(command.equals("/AdminFaqList.do")){
 			
-			this.view = "/AdminFaqListServlet";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminFaqListServlet";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminFaqListServlet";
 			
 		}else if(command.equals("/AdminFaqMod_Action.do")){
 			
-			this.view = "/AdminFaqModServlet_Action";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminFaqModServlet_Action";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminFaqModServlet_Action";
 			
 		}else if(command.equals("/AdminFaqMod.do")){
 			
-			this.view = "/AdminFaqModServlet";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminFaqModServlet";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminFaqModServlet";
 			
 		}else if(command.equals("/AdminFaqWrite_Action.do")){
 			
-			this.view = "/AdminFaqWriteServlet_Action";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminFaqWriteServlet_Action";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminFaqWriteServlet_Action";
 			
 		}else if(command.equals("/AdminFaqWrite.do")){
 			
-			this.view = "/AdminFaqWriteServlet";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminFaqWriteServlet";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminFaqWriteServlet";
 			
 		}else if(command.equals("/AdminImemInfoCon.do")){
 			
-			this.view = "/AdminImemInfoConServlet";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminImemInfoConServlet";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminImemInfoConServlet";
 			
 		}else if(command.equals("/AdminImemInfoList.do")){
 			
-			this.view = "/AdminImemInfoListServlet";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminImemInfoListServlet";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminImemInfoListServlet";
 			
 		}else if(command.equals("/AdminImemWrite_Action.do")){
 			
-			this.view = "/AdminImemWriteServlet_Action";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminImemWriteServlet_Action";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminImemWriteServlet_Action";
 			
 		}else if(command.equals("/AdminImemWrite.do")){
 			
-			this.view = "/AdminImemWriteServlet";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminImemWriteServlet";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminImemWriteServlet";
 			
 		}else if(command.equals("/AdminIndex.do")){
 			
-			this.view = "/AdminIndexServlet";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminIndexServlet";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminIndexServlet";
 			
 		}else if(command.equals("/AdminMemoList.do")){
 			
-			this.view = "/AdminMemoListServlet";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminMemoListServlet";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminMemoListServlet";
 			
 		}else if(command.equals("/AdminMemoSend_Action.do")){
 			
-			this.view = "/AdminMemoSendServlet_Action";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminMemoSendServlet_Action";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminMemoSendServlet_Action";
 			
 		}else if(command.equals("/AdminMemoSend.do")){
 			
-			this.view = "/AdminMemoSendServlet";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminMemoSendServlet";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminMemoSendServlet";
 			
 		}else if(command.equals("/AdminMoneyChkNOk_Action.do")){
 			
-			this.view = "/AdminMoneyChkNOkServlet_Action";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminMoneyChkNOkServlet_Action";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminMoneyChkNOkServlet_Action";
 			
 		}else if(command.equals("/AdminMoneyChkOk_Action.do")){
 			
-			this.view = "/AdminMoneyChkOkServlet_Action";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminMoneyChkOkServlet_Action";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminMoneyChkOkServlet_Action";
 			
 		}else if(command.equals("/AdminMoneyList.do")){
 			
-			this.view = "/AdminMoneyListServlet";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminMoneyListServlet";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminMoneyListServlet";
 			
 		}else if(command.equals("/AdminNewsCon.do")){
 			
-			this.view = "/AdminNewsConServlet";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminNewsConServlet";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminNewsConServlet";
 			
 		}else if(command.equals("/AdminNewsDel_Action.do")){
 			
-			this.view = "/AdminNewsDelServlet_Action";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminNewsDelServlet_Action";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminNewsDelServlet_Action";
 			
 		}else if(command.equals("/AdminNewsList.do")){
 			
-			this.view = "/AdminNewsListServlet";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminNewsListServlet";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminNewsListServlet";
 			
 		}else if(command.equals("/AdminNewsMod_Action.do")){
 			
-			this.view = "/AdminNewsModServlet_Action";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminNewsModServlet_Action";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminNewsModServlet_Action";
 			
 		}else if(command.equals("/AdminNewsMod.do")){
 			
-			this.view = "/AdminNewsModServlet";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminNewsModServlet";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminNewsModServlet";
 			
 		}else if(command.equals("/AdminNewsWrite_Action.do")){
+			
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminNewsWriteServlet_Action";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
 			
 			this.view = "/AdminNewsWriteServlet_Action";
 			
 		}else if(command.equals("/AdminNewsWrite.do")){
 			
-			this.view = "/AdminNewsWriteServlet";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminNewsWriteServlet";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminNewsWriteServlet";
 			
 		}else if(command.equals("/AdminNoticeCon.do")){
 			
-			this.view = "/AdminNoticeConServlet";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminNoticeConServlet";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminNoticeConServlet";
 			
 		}else if(command.equals("/AdminNoticeDel_Action.do")){
 			
-			this.view = "/AdminNoticeDelServlet_Action";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminNoticeDelServlet_Action";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminNoticeDelServlet_Action";
 			
 		}else if(command.equals("/AdminNoticeList.do")){
 			
-			this.view = "/AdminNoticeListSevlet";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminNoticeListSevlet";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminNoticeListSevlet";
 			
 		}else if(command.equals("/AdminNoticeMod_Action.do")){
 			
-			this.view = "/AdminNoticeModServlet_Action";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminNoticeModServlet_Action";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminNoticeModServlet_Action";
 			
 		}else if(command.equals("/AdminNoticeMod.do")){
 			
-			this.view = "/AdminNoticeModServlet";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminNoticeModServlet";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminNoticeModServlet";
 			
 		}else if(command.equals("/AdminNoticeWrite_Action.do")){
 			
-			this.view = "/AdminNoticeWriteServlet_Action";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminNoticeWriteServlet_Action";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminNoticeWriteServlet_Action";
 			
 		}else if(command.equals("/AdminNoticeWrite.do")){
 			
-			this.view = "/AdminNoticeWriteServlet";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminNoticeWriteServlet";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminNoticeWriteServlet";
 			
 		}else if(command.equals("/AdminProjChkCon.do")){
 			
-			this.view = "/AdminProjChkConServlet";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminProjChkConServlet";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminProjChkConServlet";
 			
 		}else if(command.equals("/AdminProjChkList.do")){
 			
-			this.view = "/AdminProjChkListServlet";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminProjChkListServlet";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminProjChkListServlet";
 			
 		}else if(command.equals("/AdminProjChkOk_Action.do")){
 			
-			this.view = "/AdminProjChkOkServlet_Action";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminProjChkOkServlet_Action";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminProjChkOkServlet_Action";
+			
+		}else if(command.equals("/AdminProjChkNOk_Action.do")){
+			
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminProjChkNOkServlet_Action";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminProjChkNOkServlet_Action";
 			
 		}else if(command.equals("/AdminQnaCon.do")){
 			
-			this.view = "/AdminQnaConServlet";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminQnaConServlet";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminQnaConServlet";
 			
 		}else if(command.equals("/AdminQnaDel_Action.do")){
 			
-			this.view = "/AdminQnaDelServlet_Action";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminQnaDelServlet_Action";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminQnaDelServlet_Action";
 			
 		}else if(command.equals("/AdminQnaList.do")){
 			
-			this.view = "/AdminQnaListServlet";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminQnaListServlet";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminQnaListServlet";
 			
 		}else if(command.equals("/AdminQnaMod_Action.do")){
 			
-			this.view = "/AdminQnaModServlet_Action";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminQnaModServlet_Action";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminQnaModServlet_Action";
 			
 		}else if(command.equals("/AdminQnaMod.do")){
 			
-			this.view = "/AdminQnaModServlet";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminQnaModServlet";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminQnaModServlet";
 			
 		}else if(command.equals("/AdminQnaWrite_Action.do")){
 			
-			this.view = "/AdminQnaWriteServlet_Action";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminQnaWriteServlet_Action";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminQnaWriteServlet_Action";
 			
 		}else if(command.equals("/AdminQnaWrite.do")){
 			
-			this.view = "/AdminQnaWriteServlet";
+			if(sess_idx != 0 && sess_type.equals("A")){
+				this.view = "/AdminQnaWriteServlet";	
+			}else{
+				this.view = "/pageReturnServlet";	
+			}
+			
+//			this.view = "/AdminQnaWriteServlet";
 //--------------------------------------------------투자자----------------------------------------------------------//		
 		}else if(command.equals("/IMemberFundList.do")){
 			
@@ -494,21 +781,96 @@ public class FrontController extends HttpServlet {
 			
 			this.view = "/NewsConServlet";
 		
-		}else if(command.equals("/NewsCommWrite_Action.do")){
+		}else if(command.equals("/NewsWrite.do")){
 			
-			this.view = "/NewsCommWriteServlet_Action";
+			this.view = "/NewsWriteServlet";
+		
+		}else if(command.equals("/NewsWrite_Action.do")){
+			
+			this.view = "/NewsWriteServlet_Action";	
+			
+		}else if(command.equals("/NewsMod.do")){
+			
+			this.view = "/NewsModServlet";
+			
+		}else if(command.equals("/NewsMod_Action.do")){
+			
+			this.view = "/NewsModServlet_Action";
+			
+		}else if(command.equals("/NewsDel_Action.do")){
+			
+			this.view = "/NewsDelServlet_Action";	
+			
+		}else if(command.equals("/NewsCommWrite_Action.do")){
+
+			if(sess_idx != 0 ){				
+				this.view = "/NewsCommWriteServlet_Action";					
+			}else{
+				this.view = "/pageReturnLogInServlet";	
+			}			
+			
+//			this.view = "/NewsCommWriteServlet_Action";
 		
 		}else if(command.equals("/NewsCommMod_Action.do")){
 			
-			this.view = "/NewsCommModServlet_Action";
+			if(sess_idx != 0 ){				
+				this.view = "/NewsCommModServlet_Action";					
+			}else{
+				this.view = "/pageReturnLogInServlet";	
+			}			
+								
+//			this.view = "/NewsCommModServlet_Action";
 		
 		}else if(command.equals("/NewsCommDel_Action.do")){
+
+			if(sess_idx != 0 ){				
+				this.view = "/NewsCommDelServlet_Action";					
+			}else{
+				this.view = "/pageReturnLogInServlet";	
+			}			
 			
-			this.view = "/NewsCommDelServlet_Action";
+//			this.view = "/NewsCommDelServlet_Action";
 		
-		}else if(command.equals("/NewsSubCommWrite.do")){
+		}else if(command.equals("/NewsCommSubWrite_Action.do")){ 
+
+			if(sess_idx != 0 ){				
+				this.view = "/NewsCommSubWriteServlet_Action";					
+			}else{
+				this.view = "/pageReturnLogInServlet";	
+			}			
 			
-			this.view = "/NewsSubCommWriteServlet_Action";
+//			this.view = "/NewsCommSubWriteServlet_Action";
+			
+		}else if(command.equals("/NewsCommSubMod_Action.do")){ 
+			
+			if(sess_idx != 0 ){				
+				this.view = "/NewsCommSubModServlet_Action";					
+			}else{
+				this.view = "/pageReturnLogInServlet";	
+			}				
+			
+//			this.view = "/NewsCommSubModServlet_Action";
+				
+		}else if(command.equals("/NewsCommSubDel_Action.do")){
+
+			if(sess_idx != 0 ){				
+				this.view = "/NewsCommSubDelServlet_Action";					
+			}else{
+				this.view = "/pageReturnLogInServlet";	
+			}			
+					
+//			this.view = "/NewsCommSubDelServlet_Action";
+					
+		}else if(command.equals("/NewsConGoodBad_Action.do")){ 
+			
+			if(sess_idx != 0 ){				
+				this.view = "/NewsConGoodBadServlet_Action";					
+			}else{
+				this.view = "/pageReturnLogInServlet";	
+			}			
+						
+//			this.view = "/NewsConGoodBadServlet_Action";	
+			
 //---------------------------------------------------QNA----------------------------------------------------------//		
 		}else if(command.equals("/QnaList.do")){
 			
@@ -518,9 +880,23 @@ public class FrontController extends HttpServlet {
 			
 			this.view = "/QnaConServlet";
 			
+		}else if(command.equals("/QnaWrite.do")){
+			
+			if(sess_idx != 0 ){				
+				this.view = "/QnaWriteServlet";					
+			}else{
+				this.view = "/pageReturnLogInServlet";	
+			}			
+			
+//			this.view = "/QnaWriteServlet";
+		
 		}else if(command.equals("/QnaWrite_Action.do")){
 			
-			this.view = "/QnaWriteServlet";
+			this.view = "/QnaWriteServlet_Action";	
+			
+		}else if(command.equals("/QnaMod.do")){
+			
+			this.view = "/QnaModServlet";
 			
 		}else if(command.equals("/QnaMod_Action.do")){
 			
@@ -529,6 +905,76 @@ public class FrontController extends HttpServlet {
 		}else if(command.equals("/QnaDel_Action.do")){
 			
 			this.view = "/QnaDelServlet_Action";
+
+		}else if(command.equals("/QnaCommWrite_Action.do")){
+
+			if(sess_idx != 0 ){				
+				this.view = "/QnaCommWriteServlet_Action";					
+			}else{
+				this.view = "/pageReturnLogInServlet";	
+			}			
+			
+//			this.view = "/QnaCommWriteServlet_Action";
+		
+		}else if(command.equals("/QnaCommMod_Action.do")){
+			
+			if(sess_idx != 0 ){				
+				this.view = "/QnaCommModServlet_Action";					
+			}else{
+				this.view = "/pageReturnLogInServlet";	
+			}			
+								
+//			this.view = "/QnaCommModServlet_Action";
+		
+		}else if(command.equals("/QnaCommDel_Action.do")){
+
+			if(sess_idx != 0 ){				
+				this.view = "/QnaCommDelServlet_Action";					
+			}else{
+				this.view = "/pageReturnLogInServlet";	
+			}			
+			
+//			this.view = "/QnaCommDelServlet_Action";
+		
+		}else if(command.equals("/QnaCommSubWrite_Action.do")){ 
+
+			if(sess_idx != 0 ){				
+				this.view = "/QnaCommSubWriteServlet_Action";					
+			}else{
+				this.view = "/pageReturnLogInServlet";	
+			}			
+			
+//			this.view = "/QnaCommSubWriteServlet_Action";
+			
+		}else if(command.equals("/QnaCommSubMod_Action.do")){ 
+			
+			if(sess_idx != 0 ){				
+				this.view = "/QnaCommSubModServlet_Action";					
+			}else{
+				this.view = "/pageReturnLogInServlet";	
+			}				
+			
+//			this.view = "/QnaCommSubModServlet_Action";
+				
+		}else if(command.equals("/QnaCommSubDel_Action.do")){
+
+			if(sess_idx != 0 ){				
+				this.view = "/QnaCommSubDelServlet_Action";					
+			}else{
+				this.view = "/pageReturnLogInServlet";	
+			}			
+					
+//			this.view = "/QnaCommSubDelServlet_Action";
+					
+		}else if(command.equals("/QnaConGoodBad_Action.do")){ 
+			
+			if(sess_idx != 0 ){				
+				this.view = "/QnaConGoodBadServlet_Action";					
+			}else{
+				this.view = "/pageReturnLogInServlet";	
+			}			
+						
+//			this.view = "/QnaConGoodBadServlet_Action";				
 //--------------------------------------------------공지사항--------------------------------------------------------//		
 		}else if(command.equals("/NoticeList.do")){
 			
@@ -537,6 +983,96 @@ public class FrontController extends HttpServlet {
 		}else if(command.equals("/NoticeCon.do")){
 			
 			this.view = "/NoticeConServlet";
+			
+		}else if(command.equals("/NoticeWrite.do")){
+			
+			this.view = "/NoticeWriteServlet";
+		
+		}else if(command.equals("/NoticeWrite_Action.do")){
+			
+			this.view = "/NoticeWriteServlet_Action";	
+			
+		}else if(command.equals("/NoticeMod.do")){
+			
+			this.view = "/NoticeModServlet";
+			
+		}else if(command.equals("/NoticeMod_Action.do")){
+			
+			this.view = "/NoticeModServlet_Action";
+			
+		}else if(command.equals("/NoticeDel_Action.do")){
+			
+			this.view = "/NoticeDelServlet_Action";	
+			
+		}else if(command.equals("/NoticeCommWrite_Action.do")){
+
+			if(sess_idx != 0 ){				
+				this.view = "/NoticeCommWriteServlet_Action";					
+			}else{
+				this.view = "/pageReturnLogInServlet";	
+			}			
+			
+//			this.view = "/NoticeCommWriteServlet_Action";
+		
+		}else if(command.equals("/NoticeCommMod_Action.do")){
+			
+			if(sess_idx != 0 ){				
+				this.view = "/NoticeCommModServlet_Action";					
+			}else{
+				this.view = "/pageReturnLogInServlet";	
+			}			
+								
+//			this.view = "/NoticeCommModServlet_Action";
+		
+		}else if(command.equals("/NoticeCommDel_Action.do")){
+
+			if(sess_idx != 0 ){				
+				this.view = "/NoticeCommDelServlet_Action";					
+			}else{
+				this.view = "/pageReturnLogInServlet";	
+			}			
+			
+//			this.view = "/NoticeCommDelServlet_Action";
+		
+		}else if(command.equals("/NoticeCommSubWrite_Action.do")){ 
+
+			if(sess_idx != 0 ){				
+				this.view = "/NoticeCommSubWriteServlet_Action";					
+			}else{
+				this.view = "/pageReturnLogInServlet";	
+			}			
+			
+//			this.view = "/NoticeCommSubWriteServlet_Action";
+			
+		}else if(command.equals("/NoticeCommSubMod_Action.do")){ 
+			
+			if(sess_idx != 0 ){				
+				this.view = "/NoticeCommSubModServlet_Action";					
+			}else{
+				this.view = "/pageReturnLogInServlet";	
+			}				
+			
+//			this.view = "/NoticeCommSubModServlet_Action";
+				
+		}else if(command.equals("/NoticeCommSubDel_Action.do")){
+
+			if(sess_idx != 0 ){				
+				this.view = "/NoticeCommSubDelServlet_Action";					
+			}else{
+				this.view = "/pageReturnLogInServlet";	
+			}			
+					
+//			this.view = "/NoticeCommSubDelServlet_Action";
+					
+		}else if(command.equals("/NoticeConGoodBad_Action.do")){ 
+			
+			if(sess_idx != 0 ){				
+				this.view = "/NoticeConGoodBadServlet_Action";					
+			}else{
+				this.view = "/pageReturnLogInServlet";	
+			}			
+						
+//			this.view = "/NoticeConGoodBadServlet_Action";				
 //---------------------------------------------------FAQ----------------------------------------------------------//			
 		}else if(command.equals("/FaqList.do")){
 			
@@ -546,7 +1082,97 @@ public class FrontController extends HttpServlet {
 			
 			this.view = "/FaqConServlet";
 			
+		}else if(command.equals("/FaqWrite.do")){
+			
+			this.view = "/FaqWriteServlet";
+		
+		}else if(command.equals("/FaqWrite_Action.do")){
+			
+			this.view = "/FaqWriteServlet_Action";	
+			
+		}else if(command.equals("/FaqMod.do")){
+			
+			this.view = "/FaqModServlet";
+			
+		}else if(command.equals("/FaqMod_Action.do")){
+			
+			this.view = "/FaqModServlet_Action";
+			
+		}else if(command.equals("/FaqDel_Action.do")){
+			
+			this.view = "/FaqDelServlet_Action";	
+			
+		}else if(command.equals("/FaqCommWrite_Action.do")){
+
+			if(sess_idx != 0 ){				
+				this.view = "/FaqCommWriteServlet_Action";					
+			}else{
+				this.view = "/pageReturnLogInServlet";	
+			}			
+			
+//			this.view = "/FaqCommWriteServlet_Action";
+		
+		}else if(command.equals("/FaqCommMod_Action.do")){
+			
+			if(sess_idx != 0 ){				
+				this.view = "/FaqCommModServlet_Action";					
+			}else{
+				this.view = "/pageReturnLogInServlet";	
+			}			
+								
+//			this.view = "/FaqCommModServlet_Action";
+		
+		}else if(command.equals("/FaqCommDel_Action.do")){
+
+			if(sess_idx != 0 ){				
+				this.view = "/FaqCommDelServlet_Action";					
+			}else{
+				this.view = "/pageReturnLogInServlet";	
+			}			
+			
+//			this.view = "/FaqCommDelServlet_Action";
+		
+		}else if(command.equals("/FaqCommSubWrite_Action.do")){ 
+
+			if(sess_idx != 0 ){				
+				this.view = "/FaqCommSubWriteServlet_Action";					
+			}else{
+				this.view = "/pageReturnLogInServlet";	
+			}			
+			
+//			this.view = "/FaqCommSubWriteServlet_Action";
+			
+		}else if(command.equals("/FaqCommSubMod_Action.do")){ 
+			
+			if(sess_idx != 0 ){				
+				this.view = "/FaqCommSubModServlet_Action";					
+			}else{
+				this.view = "/pageReturnLogInServlet";	
+			}				
+			
+//			this.view = "/FaqCommSubModServlet_Action";
+				
+		}else if(command.equals("/FaqCommSubDel_Action.do")){
+
+			if(sess_idx != 0 ){				
+				this.view = "/FaqCommSubDelServlet_Action";					
+			}else{
+				this.view = "/pageReturnLogInServlet";	
+			}			
+					
+//			this.view = "/FaqCommSubDelServlet_Action";
+					
+		}else if(command.equals("/FaqConGoodBad_Action.do")){ 
+			
+			if(sess_idx != 0 ){				
+				this.view = "/FaqConGoodBadServlet_Action";					
+			}else{
+				this.view = "/pageReturnLogInServlet";	
+			}			
+						
+//			this.view = "/FaqConGoodBadServlet_Action";					
 		}
+
 		
 		PageRedirect pr = new PageRedirect(false, view, request, response);
 	}

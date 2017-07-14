@@ -68,6 +68,11 @@ public class CMemberServiceSql {
 					+		"AND (STATUS = 0 OR STATUS = 2) "
 					+	"ORDER BY MEMOIDX DESC";
 	
+	private String cMemMemoCon =
+			"SELECT * "
+					+	"FROM TF_MEMO_LIST "
+					+	"WHERE MEMOIDX = ?";
+	
 	private String cMemMemoDel =
 			"UPDATE TF_MEMO_LIST "
 					+	"SET STATUS = STATUS + 1 "
@@ -179,7 +184,7 @@ public class CMemberServiceSql {
 					+	"WHERE PIDX = ?";
 	
 	private String cMemQnaList =
-			"SELECT A.PIDX, A.PNAME, B.BIDX, B.IDX, B.CATE, B.TITLE, B.HIT, B.GOOD, B.BAD, B.COMMCNT, B.OBIDX, B.INSDATE, B.PIDX, (SELECT MAX(BDEPTH) FROM TF_BOARD_QNA WHERE BIDX = B.BIDX) STATUS "
+			"SELECT A.PIDX, A.PNAME, B.BIDX, B.IDX, B.CATE, B.TITLE, B.HIT, B.GOOD, B.BAD, B.COMMCNT, B.OBIDX, B.INSDATE, (SELECT MAX(BDEPTH) FROM TF_BOARD_QNA WHERE BIDX = B.BIDX) STATUS "
 					+	"FROM TF_PROJECT_LIST A, TF_BOARD_QNA B "
 					+	"WHERE A.PIDX = B.PIDX "
 					+		"AND A.IDX = ? "
@@ -266,7 +271,11 @@ public class CMemberServiceSql {
 	public String getcMemMemoSendList() {
 		return cMemMemoSendList;
 	}
-
+	
+	public String getcMemMemoCon() {
+		return cMemMemoCon;
+	}
+	
 	public String getcMemMemoDel() {
 		return cMemMemoDel;
 	}

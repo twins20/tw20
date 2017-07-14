@@ -37,6 +37,7 @@ public class ProjectServiceImpl {
 			while(rs.next()) { 
 				ProjectVo vo = new ProjectVo(); 
 				
+				vo.setrNum(rs.getInt("rnum"));
 				vo.setpIdx(rs.getInt("pidx"));
 				vo.setIdx(rs.getInt("idx"));
 				vo.setpName(rs.getString("pname"));
@@ -79,7 +80,7 @@ public class ProjectServiceImpl {
 			
 			while(rs.next()) { 
 				ProjectVo vo = new ProjectVo(); 
-				
+				vo.setrNum(rs.getInt("rnum"));
 				vo.setpIdx(rs.getInt("pidx"));
 				vo.setIdx(rs.getInt("idx"));
 				vo.setpName(rs.getString("pname"));
@@ -175,6 +176,47 @@ public class ProjectServiceImpl {
 				vo.setPtFunds(rs.getInt("ptfunds"));
 				vo.setPnFunds(rs.getInt("pnfunds"));
 				vo.setpGrade(rs.getInt("pgrade"));
+			}
+	
+		}catch(Exception e) { 
+			System.out.println(e.getMessage());
+		}finally { 
+			DBClose.close(con,pstmt,rs); 
+		}
+	
+		return vo;
+		
+	}
+	
+	public ItemVo projConItemList(int pIdx){
+		
+		Connection con = dbconnect.getConnection(); 
+		PreparedStatement pstmt = null; 
+		ResultSet rs = null; 
+		
+		ItemVo vo = new ItemVo();
+		
+		try { 
+			
+			this.sql = "SELECT * "
+				+ 	"FROM TF_ITEM_LIST "
+				+ 		"WHERE PIDX = ? "
+				+ 			"AND (STATUS= 0 OR STATUS = 1)";
+		
+			//this.sql = new PagingQ().pagingStr(sql, listCnt, pageCnt);
+			
+			pstmt = con.prepareStatement(this.sql); 
+			pstmt.setInt(1, pIdx);
+			rs = pstmt.executeQuery();
+
+			if(rs.next()) { 
+				vo.setItIdx(rs.getInt("itidx"));
+				vo.setItName(rs.getString("itname"));
+				vo.setItPrice(rs.getInt("itprice"));
+				vo.setContents(rs.getString("contents"));
+				vo.setItTCnt(rs.getInt("ittcnt"));
+				vo.setItSCnt(rs.getInt("itscnt"));
+				vo.setStatus(rs.getInt("status"));
 			}
 	
 		}catch(Exception e) { 
@@ -293,7 +335,8 @@ public class ProjectServiceImpl {
 
 			while(rs.next()) { 
 				
-				BoardVo vo = new BoardVo(); 
+				BoardVo vo = new BoardVo();
+				vo.setrNum(rs.getInt("rnum"));
 				vo.setbIdx(rs.getInt("bidx"));
 				vo.setIdx(rs.getInt("idx"));
 				vo.setpIdx(rs.getInt("pidx"));

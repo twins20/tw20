@@ -36,7 +36,9 @@ public class CMemberMemoSendListServlet extends HttpServlet {
 		
 		int idx = 0;
 		HttpSession session = request.getSession();
-		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
+		if(session.getAttribute("idx") != null){
+			idx = (Integer) session.getAttribute("idx");
+		}
 		
 		ArrayList<MemoVo> alist = new ArrayList<MemoVo>();
 		
@@ -44,15 +46,6 @@ public class CMemberMemoSendListServlet extends HttpServlet {
 		alist = cs.cMemMemoSendList(idx, 10, 1);
 		
 		request.setAttribute("alist", alist);
-		
-//		alist = (ArrayList<MemoVo>) request.getAttribute("alist"); 
-//		
-//		for(MemoVo vo : alist){
-//			System.out.println(vo.getMemoIdx());
-//			System.out.println(vo.getSendIdx());
-//			System.out.println(vo.getRecvIdx());
-//			System.out.println(vo.getContents());
-//		}
 		
 		PageRedirect pr = new PageRedirect(false, "/cmember/CMemberMemoSendList.jsp", request, response);
 	}

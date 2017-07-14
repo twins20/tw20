@@ -35,13 +35,21 @@ public class CMemberInfoExtWriteServlet_Action extends HttpServlet {
 		
 		int idx = 0;
 		HttpSession session = request.getSession();
-		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
+		if(session.getAttribute("idx") != null){
+			idx = (Integer) session.getAttribute("idx");
+		}
 		
 		String company = null, cNumber = null, cAddr = null;
 				
-		if(request.getParameter("company") != null) company = request.getParameter("company").trim();
-		if(request.getParameter("cNumber") != null) cNumber = request.getParameter("cNumber").trim();
-		if(request.getParameter("cAddr") != null) cAddr = request.getParameter("cAddr").trim();
+		if(request.getParameter("company") != null){
+			company = request.getParameter("company").trim();
+		}
+		if(request.getParameter("cNumber") != null){
+			cNumber = request.getParameter("cNumber").trim();
+		}
+		if(request.getParameter("cAddr") != null){
+			cAddr = request.getParameter("cAddr").trim();
+		}
 		
 		MemberVo vo = new MemberVo();
 		vo.setIdx(idx);

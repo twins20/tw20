@@ -35,7 +35,9 @@ public class MemberMemoDelServlet_Action extends HttpServlet {
 		int memoIdx = 0;
 		int row = 0;
 		
-		if(request.getParameter("memoIdx") != null) memoIdx = Integer.parseInt(request.getParameter("memoIdx").trim(),10);
+		if(request.getParameter("memoIdx") != null){
+			memoIdx = Integer.parseInt(request.getParameter("memoIdx").trim(),10);
+		}
 			
 		MemberServiceImpl ms = new MemberServiceImpl();
 		row = ms.memMemoDel(memoIdx);

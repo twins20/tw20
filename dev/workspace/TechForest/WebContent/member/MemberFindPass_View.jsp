@@ -1,12 +1,26 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>Insert title here</title>
-</head>
-<body>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>   
+<!-- Attribute start -->
+<%@ page import="service.MemberVo" %>
+<%
+MemberVo vo = (MemberVo) request.getAttribute("vo");
+%>
+<!-- Attribute end -->
+<%@ include file="/header.jsp" %>
+<!-- 바디	 -->
+<div class="bodyWrapper clearFix">
+<!-- 사이드바	 -->
+<%@ include file="/sideBar/memberSideBar.jsp" %>
+	<div class="bodyMain"> 
+<!-- main start -->
+회원님의 비밀번호는 <%=vo.getPw() %>입니다.
 
-</body>
-</html>
+
+
+
+	
+
+<!-- main end -->
+	</div>
+</div>
+<%@ include file="/footer.jsp" %>

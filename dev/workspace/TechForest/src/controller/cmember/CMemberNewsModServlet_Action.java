@@ -35,25 +35,31 @@ public class CMemberNewsModServlet_Action extends HttpServlet {
 		int bIdx = 0, pIdx = 0;
 		String title = null, contents = null;
 				
-		if(request.getParameter("bIdx") != null) bIdx = Integer.parseInt(request.getParameter("bIdx").trim(),10);
-		if(request.getParameter("title") != null) title = request.getParameter("title").trim();
-		if(request.getParameter("contents") != null) contents = request.getParameter("contents").trim();
-		if(request.getParameter("pidx") != null) pIdx = Integer.parseInt(request.getParameter("pidx").trim());
+		if(request.getParameter("bIdx") != null){
+			bIdx = Integer.parseInt(request.getParameter("bIdx").trim(),10);
+		}
+		if(request.getParameter("pIdx") != null){
+			pIdx = Integer.parseInt(request.getParameter("pIdx").trim());
+		}
+		if(request.getParameter("title") != null){
+			title = request.getParameter("title").trim();
+		}
+		if(request.getParameter("contents") != null){
+			contents = request.getParameter("contents").trim();
+		}
 
 		BoardVo inputBV = new BoardVo();
 		inputBV.setbIdx(bIdx);
+		inputBV.setpIdx(pIdx);
 		inputBV.setTitle(title);
 		inputBV.setContents(contents);
-		inputBV.setpIdx(pIdx);
-				
+
 		int row = 0;
-		
+			
 		CMemberServiceImpl cs = new CMemberServiceImpl();
 		row = cs.cMemNewsMod(inputBV);
-		
-//		System.out.println(row);
-		
-		PageRedirect pr = new PageRedirect(true, "/CMemberNewsCon.do", request, response);
+
+		PageRedirect pr = new PageRedirect(true, "/CMemberNewsCon.do?bIdx="+bIdx+"", request, response);
 	}
 
 	/**

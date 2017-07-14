@@ -27,8 +27,41 @@ public class NoticeModServlet_Action extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
+		//NOTICE 모듈화 
+		/*
+		int sess_idx = 0;
+		int bIdx = 0;
+		HttpSession session = request.getSession();
+		if(session.getAttribute("idx") != null) {
+		sess_idx = (Integer) session.getAttribute("idx");
+		}	
+		
+		String Title = null, Contents = null;
+		
+		if(request.getParameter("bidx") != null) {
+			bIdx = Integer.parseInt(request.getParameter("bidx").trim());
+		}
+		if(request.getParameter("title") != null) {
+			Title = request.getParameter("title").trim();
+		}
+		if(request.getParameter("contents") != null) {
+			Contents = request.getParameter("contents").trim();
+		}
+				
+		BoardNoticeServiceImpl bs = new BoardNoticeServiceImpl();	
+		BoardVo vo = new BoardVo();
+
+		vo.setTitle(Title);
+		vo.setContents(Contents);	
+		vo.setbIdx(bIdx);		
+			
+		int row = 0; 
+		
+		row = bs.boardNewsMod(vo);
+
+		PageRedirect pr = new PageRedirect(true,"/NoticeList.do",request,response);
+		*/
+		}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

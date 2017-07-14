@@ -33,30 +33,37 @@ public class QnaModServlet_Action extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub	
 		
-		
-		
-		int idx = 0;
-		HttpSession session = request.getSession();
-		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
-		
+		int sess_idx = 0;
 		int bIdx = 0;
-		String title = null, contents = null;
+		HttpSession session = request.getSession();
+		if(session.getAttribute("idx") != null) {
+			sess_idx = (Integer) session.getAttribute("idx");
+		}	
 		
-		if(request.getParameter("bidx") != null) bIdx = Integer.parseInt(request.getParameter("bidx").trim());
-		if(request.getParameter("title") != null) title = request.getParameter("title").trim();
-		if(request.getParameter("contents") != null) contents = request.getParameter("contents").trim();
+		String Title = null, Contents = null;
 		
-		BoardVo vo = new BoardVo();
-		vo.setTitle(title);
-		vo.setContents(contents);
-		vo.setbIdx(bIdx);		
-		
-		int row = 0;
-		
+		if(request.getParameter("bidx") != null) {
+			bIdx = Integer.parseInt(request.getParameter("bidx").trim());
+		}
+		if(request.getParameter("title") != null) {
+			Title = request.getParameter("title").trim();
+		}
+		if(request.getParameter("contents") != null) {
+			Contents = request.getParameter("contents").trim();
+		}
+				
 		BoardQnaServiceImpl bs = new BoardQnaServiceImpl();	
+		BoardVo vo = new BoardVo();
+
+		vo.setTitle(Title);
+		vo.setContents(Contents);	
+		vo.setbIdx(bIdx);		
+			
+		int row = 0; 
+		
 		row = bs.boardQnaMod(vo);
-	
-		PageRedirect pr = new PageRedirect(true,"/QnaListServlet.do",request,response);
+
+		PageRedirect pr = new PageRedirect(true,"/QnaList.do",request,response);
 	}
 
 	/**

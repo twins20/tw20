@@ -37,10 +37,18 @@ public class ProjectPayServlet_Action extends HttpServlet {
 		int pIdx = 0, itIdx = 0, idx = 0, inFunds = 0;
 		int row = 0;
 		
-		if(request.getParameter("pIdx") != null) pIdx = Integer.parseInt(request.getParameter("pIdx").trim(),10);
-		if(request.getParameter("itIdx") != null) itIdx = Integer.parseInt(request.getParameter("itIdx").trim(),10);
-		if(request.getParameter("idx") != null) idx = Integer.parseInt(request.getParameter("idx").trim(),10);
-		if(request.getParameter("inFunds") != null) inFunds = Integer.parseInt(request.getParameter("inFunds").trim(),10);
+		if(request.getParameter("pIdx") != null){
+			pIdx = Integer.parseInt(request.getParameter("pIdx").trim(),10);
+		}
+		if(request.getParameter("itIdx") != null){
+			itIdx = Integer.parseInt(request.getParameter("itIdx").trim(),10);
+		}
+		if(request.getParameter("idx") != null){
+			idx = Integer.parseInt(request.getParameter("idx").trim(),10);
+		}
+		if(request.getParameter("inFunds") != null){
+			inFunds = Integer.parseInt(request.getParameter("inFunds").trim(),10);
+		}
 		
 		FundVo inputFV = new FundVo();
 		inputFV.setpIdx(pIdx);

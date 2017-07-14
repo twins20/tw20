@@ -33,10 +33,10 @@ public class NewsConGoodBadServlet_Action extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		int idx = 0;
+		int sess_idx = 0;
 		HttpSession session = request.getSession();
 		if(session.getAttribute("idx") != null) {
-			idx = (Integer) session.getAttribute("idx");	
+		sess_idx = (Integer) session.getAttribute("idx");	
 		}
 		
 		int bIdx = 0;
@@ -44,26 +44,32 @@ public class NewsConGoodBadServlet_Action extends HttpServlet {
 			bIdx = Integer.parseInt(request.getParameter("bIdx"));
 		}
 
-//		String GoodBad = null;
-//		if(request.getParameter("goodbad") != null) {
-//			GoodBad = request.getParameter("goodbad");
-//		}
+		String GoodBad = null;
+		if(request.getParameter("goodbad") != null) {
+			GoodBad = request.getParameter("goodbad");
+		}
 		
 		BoardVo vo = new BoardVo();
 		
 		BoardNewsServiceImpl bs = new BoardNewsServiceImpl();	
 
 		int row = 0;
-		row = bs.boardNewsGood(bIdx);
 		
-//		if(GoodBad == "추천"){
-//			PageRedirect pr = new PageRedirect(true, "/NewsCon.do?bidx="+bIdx+"" ,request ,response);
-//		}
+		if(GoodBad.equals("up")){
+			row = bs.boardNewsGood(bIdx);
+			if(row == 1){
+				PageRedirect pr = new PageRedirect(true, "/NewsCon.do?bIdx="+bIdx ,request ,response);
+			}
 		
-		PageRedirect pr = new PageRedirect(true, "/NewsCon.do?bIdx="+bIdx+"" ,request ,response);
+		}else if(GoodBad.equals("down")){
+			row = bs.boardNewsBad(bIdx);
+			if(row == 1){
+				PageRedirect pr = new PageRedirect(true, "/NewsCon.do?bIdx="+bIdx ,request ,response);
+		}
 		
 	}
-	
+
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

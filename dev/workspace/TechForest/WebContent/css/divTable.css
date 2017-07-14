@@ -70,9 +70,122 @@
 	width: 126px;			
 }
 
-
-
-/* 미린이꺼 */
-
-
 /*Default divTable----------------------------------------------------------------------------------------------------------------------------------- */
+
+/*투자자*/
+
+.imemDivTable {
+	width: 879px;		
+}
+.imemDivTable .rowTitle {
+	background: #ddd;	
+	font-weight: bold;	
+}
+.imemDivTable .col {
+	float: left;
+	height: 40px;
+	line-height: 40px;
+	vertical-align: middle;
+	border-bottom: 1px solid #ccc;
+	text-align: center;		
+}	
+/*cell3*/
+.imemDivTable .col3_1 {
+	width: 35%;
+ }
+.imemDivTable .col3_2 {
+	width: 30%;
+ }   
+.imemDivTable .col3_3 {
+	width: 30%;
+ }    
+
+/*cell4*/
+.imemDivTable .col4_1 {
+	width: 10%;
+ }
+.imemDivTable .col4_2 {
+	width: 35%;
+ }   
+.imemDivTable .col4_3 {
+	width: 35%;
+ }   
+.imemDivTable .col4_4 {
+	width: 20%;
+ }    
+ 
+ /*cell5*/ 
+.imemDivTable .col5_1 {
+	width: 5%;
+ }
+.imemDivTable .col5_2 {
+	width: 35%;
+ }      
+.imemDivTable .col5_3 {
+	width: 20%;
+ }      
+.imemDivTable .col5_4 {
+	width: 20%;
+ }
+.imemDivTable .col5_5 {
+	width: 20%; 
+}
+
+/*사업자*/
+
+.cmemDivTable {
+	width: 879px;		
+}
+.cmemDivTable .rowTitle {
+	background: #ddd;	
+	font-weight: bold;	
+}
+.cmemDivTable .col {
+	float: left;
+	height: 40px;
+	line-height: 40px;
+	vertical-align: middle;
+	border-bottom: 1px solid #ccc;
+	text-align: center;		
+}	
+/*cell3*/
+.cmemDivTable .col3_1 {
+	width: 35%;
+ }
+.cmemDivTable .col3_2 {
+	width: 30%;
+ }   
+.cmemDivTable .col3_3 {
+	width: 30%;
+ }    
+
+/*cell4*/
+.cmemDivTable .col4_1 {
+	width: 40%;
+ }
+.cmemDivTable .col4_2 {
+	width: 20%;
+ }   
+.cmemDivTable .col4_3 {
+	width: 20%;
+ }   
+.cmemDivTable .col4_4 {
+	width: 20%;
+ }    
+ 
+ /*cell5*/ 
+.cmemDivTable .col5_1 {
+	width: 5%;
+ }
+.cmemDivTable .col5_2 {
+	width: 35%;
+ }      
+.cmemDivTable .col5_3 {
+	width: 20%;
+ }      
+.cmemDivTable .col5_4 {
+	width: 20%;
+ }
+.cmemDivTable .col5_5 {
+	width: 20%; 
+}

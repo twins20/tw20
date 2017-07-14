@@ -37,17 +37,31 @@ public class CMemberProjApplyWriteServlet_Action extends HttpServlet {
 		
 		int idx = 0;
 		HttpSession session = request.getSession();
-		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
+		if(session.getAttribute("idx") != null){
+			idx = (Integer) session.getAttribute("idx");
+		}
 		
 		int itListCnt = 0, ptFunds = 0, pGrade = 0;
 		String pName = null, pCate = null, contents = null;
 		
-		if(request.getParameter("pName") != null) pName = request.getParameter("pName").trim();
-		if(request.getParameter("pCate") != null) pCate = request.getParameter("pCate").trim();
-		if(request.getParameter("contents") != null) contents = request.getParameter("contents").trim();
-		if(request.getParameter("itListCnt") != null) itListCnt = Integer.parseInt(request.getParameter("itListCnt").trim(),10);
-		if(request.getParameter("ptFunds") != null) ptFunds = Integer.parseInt(request.getParameter("ptFunds").trim(),10);
-		if(request.getParameter("pGrade") != null) pGrade = Integer.parseInt(request.getParameter("pGrade").trim(),10);
+		if(request.getParameter("pName") != null){
+			pName = request.getParameter("pName").trim();
+		}
+		if(request.getParameter("pCate") != null){
+			pCate = request.getParameter("pCate").trim();
+		}
+		if(request.getParameter("contents") != null){
+			contents = request.getParameter("contents").trim();
+		}
+		if(request.getParameter("itListCnt") != null){
+			itListCnt = Integer.parseInt(request.getParameter("itListCnt").trim(),10);
+		}
+		if(request.getParameter("ptFunds") != null){
+			ptFunds = Integer.parseInt(request.getParameter("ptFunds").trim(),10);
+		}
+		if(request.getParameter("pGrade") != null){
+			pGrade = Integer.parseInt(request.getParameter("pGrade").trim(),10);
+		}
 		
 		//테스트 변수입력 시작
 

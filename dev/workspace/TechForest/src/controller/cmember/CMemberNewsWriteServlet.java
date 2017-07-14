@@ -35,22 +35,18 @@ public class CMemberNewsWriteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		int idx = 0;
+		int sess_idx = 0;
 		HttpSession session = request.getSession();
-		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
+		if(session.getAttribute("idx") != null){
+			sess_idx = (Integer) session.getAttribute("idx");
+		}
 		
 		ProjectVo vo = new ProjectVo();
 	
 		CMemberServiceImpl cs = new CMemberServiceImpl();
-		vo = cs.cMemNewsWriteProjNow(idx);
+		vo = cs.cMemNewsWriteProjNow(sess_idx);
 		
 		request.setAttribute("vo", vo);
-				
-//		vo = (ProjectVo) request.getAttribute("vo"); 
-//	
-//		System.out.println(vo.getpIdx());
-//		System.out.println(vo.getpName());
-//		System.out.println(vo.getpCate());
 				
 		PageRedirect pr = new PageRedirect(false, "/cmember/CMemberNewsWrite.jsp", request, response);
 	}

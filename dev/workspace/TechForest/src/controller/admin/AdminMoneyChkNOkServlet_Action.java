@@ -23,18 +23,23 @@ public class AdminMoneyChkNOkServlet_Action extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int idx = 0;
-		HttpSession session = request.getSession();
-		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
+		int sess_idx = 0;
+		HttpSession session = request.getSession();		
+		if(session.getAttribute("idx") != null){
+			sess_idx = (Integer) session.getAttribute("idx");			
+		}
+	
+		int mIdx = 0;		
+		int param_idx = 0;
 		
-		AdminServiceImpl as = new AdminServiceImpl();
-				
-		int mIdx = 0; 
-		mIdx = Integer.parseInt(request.getParameter("mIdx"));
+		mIdx = Integer.parseInt(request.getParameter("mIdx").trim(),10);
+		param_idx = Integer.parseInt(request.getParameter("param_idx").trim(),10);
 		
 		//관리자 머니 충전 거부				
 		int row = 0;
-		row = as.adminMoneyModNOk(idx, mIdx);
+		
+		AdminServiceImpl as = new AdminServiceImpl();
+		row = as.adminMoneyModNOk(sess_idx, mIdx);
 		
 //		if(row != 0){
 //			System.out.println("관리자에 의해 승인이 거부 되었습니다.");		

@@ -25,6 +25,12 @@ public class AdminFaqWriteServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		int sess_idx = 0;
+		HttpSession session = request.getSession();		
+		if(session.getAttribute("idx") != null){
+			sess_idx = (Integer) session.getAttribute("idx");			
+		}
+		
 		PageRedirect pr = new PageRedirect(false, "/admin/AdminFaqWrite.jsp", request, response);
 	}
 

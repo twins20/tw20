@@ -1,12 +1,25 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>Insert title here</title>
-</head>
-<body>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>   
+<!-- Attribute start -->
+<%@ page import="service.MemberVo" %>
+<%
+MemberVo vo = (MemberVo) request.getAttribute("vo");
+%>
+<!-- Attribute end -->
+<%@ include file="/header.jsp" %>
+<!-- 바디	 -->
+<div class="bodyWrapper clearFix">
+<!-- 사이드바	 -->
+<%@ include file="/sideBar/memberSideBar.jsp" %>
+	<div class="bodyMain"> 
+<!-- main start -->
 
-</body>
-</html>
+<h1>회원님의 아이디는 <%=vo.getId() %> 입니다.</h1> 
+비밀번호가 생각나지 않으시다면 비밀번호 찾기를 이용해주세요.
+<a class="btn btn-primary" href="<%=request.getContextPath()%>/MemberFindPass.do">비밀번호 찾기</a>
+
+	
+<!-- main end -->
+	</div>
+</div>
+<%@ include file="/footer.jsp" %>

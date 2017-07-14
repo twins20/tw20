@@ -5,10 +5,14 @@
 <%@ page import="service.MoneyVo" %>
 <%
 	ArrayList<MoneyVo> alist = (ArrayList<MoneyVo>) request.getAttribute("alist");
-	int idx = (Integer) request.getAttribute("idx");
 %>
 <!-- Attribute end -->
-<%@ include file="/header.jsp" %> 
+<%@ include file="/header.jsp" %>
+<!-- 바디	 -->
+<div class="bodyWrapper clearFix">
+<!-- 사이드바	 -->
+<%@ include file="/sideBar/imemberSideBar.jsp" %>
+	<div class="bodyMain"> 
 <!-- main start -->
 
 	<h3> 투자금 충전 내역 </h3>
@@ -53,11 +57,6 @@
 	</p>
 	
 	<form id="IMemberChargeAction" class="form-inline" action="<%=request.getContextPath()%>/IMemberMoneyCharge_Action.do" method="post">
-		<div class="form-group">
-			<div class="col-sm-5">
-      			<input class="form-control" type="hidden" name="idx" id="idx" value="<%=idx %>"/>
-   			</div>
-  	 	</div>
   	 	<div class="form-group">
 			<div class="col-sm-5">
       			<input class="form-control" type="hidden" name="contents" id="contents" value="신청"/>
@@ -79,4 +78,6 @@
    	</p>
    	
 <!-- main end -->
+	</div>
+</div>
 <%@ include file="/footer.jsp" %>

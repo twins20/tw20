@@ -36,7 +36,9 @@ public class CMemberProjHisListServlet extends HttpServlet {
 		
 		int idx = 0;
 		HttpSession session = request.getSession();
-		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
+		if(session.getAttribute("idx") != null){
+			idx = (Integer) session.getAttribute("idx");
+		}
 		
 		ArrayList<ProjectVo> alist = new ArrayList<ProjectVo>();
 

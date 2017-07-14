@@ -25,12 +25,25 @@ public class QnaModServlet extends HttpServlet {
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int idx = 0;
+		int sess_idx = 0;
+		int bIdx =0;
 		HttpSession session = request.getSession();
-		if(session.getAttribute("idx") !=null) idx = (Integer) request.getAttribute("idx");
+		if(session.getAttribute("idx") !=null) {
+		sess_idx = (Integer) session.getAttribute("idx");
+		}
+
+		if(request.getParameter("bidx") != null) {
+			bIdx = Integer.parseInt(request.getParameter("bidx").trim());
+		}
 		
+		BoardQnaServiceImpl bs = new BoardQnaServiceImpl();	
+		BoardVo vo = new BoardVo();
 		
-		PageRedirect pr = new PageRedirect(false,"/QnaModServlet",request,response);	
+		vo = bs.boardQnaCon(bIdx);
+		
+		request.setAttribute("sess_idx", sess_idx);
+		request.setAttribute("vo", vo);
+		PageRedirect pr = new PageRedirect(false,"/boardQna/QnaMod.jsp",request,response);	
 	}
 
 	/**

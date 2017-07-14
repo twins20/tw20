@@ -36,9 +36,15 @@ public class CMemberQnaReplyModServlet_Action extends HttpServlet {
 		int bIdx = 0;
 		String title = null, contents = null;
 		
-		if(request.getParameter("bIdx") != null) bIdx = Integer.parseInt(request.getParameter("bIdx").trim(),10);
-		if(request.getParameter("title") != null) title = request.getParameter("title").trim();
-		if(request.getParameter("contents") != null) contents = request.getParameter("contents").trim();
+		if(request.getParameter("bIdx") != null){
+			bIdx = Integer.parseInt(request.getParameter("bIdx").trim(),10);
+		}
+		if(request.getParameter("title") != null){
+			title = request.getParameter("title").trim();
+		}
+		if(request.getParameter("contents") != null){
+			contents = request.getParameter("contents").trim();
+		}
 		
 		BoardVo inputBV = new BoardVo();
 		inputBV.setbIdx(bIdx);
@@ -49,8 +55,6 @@ public class CMemberQnaReplyModServlet_Action extends HttpServlet {
 		
 		CMemberServiceImpl cs = new CMemberServiceImpl();
 		row = cs.cMemQnaMod(inputBV);
-		
-//		System.out.println(row);
 		
 		PageRedirect pr = new PageRedirect(true, "/CMemberQnaList.do", request, response);
 	}

@@ -33,46 +33,33 @@ public class NoticeListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	
+    	int sess_idx = 0;
+		HttpSession session = request.getSession();
+		if(session.getAttribute("idx") != null){
+			sess_idx = (Integer) session.getAttribute("idx");
+		}
 		
-    	int bidx = 0;
+    	int bIdx = 0;
     	String cate = null;
     
-		if(request.getParameter("bidx") != null) bidx = Integer.parseInt(request.getParameter("bidx"));
-		if(request.getParameter("cate") != null) cate = request.getParameter("cate");
+		if(request.getParameter("bIdx") != null) {
+			bIdx = Integer.parseInt(request.getParameter("bIdx"));
+		}
+		if(request.getParameter("cate") != null) {
+			cate = request.getParameter("cate");
+		}
 
     	BoardNoticeServiceImpl bs = new BoardNoticeServiceImpl(); 
-    	ArrayList<BoardVo> list = new ArrayList<BoardVo>();
+    	ArrayList<BoardVo> alist = new ArrayList<BoardVo>();
 
-    	list = bs.boardNoticeList(bidx, 10, 1);
+    	alist = bs.boardNoticeListCate(cate, 10, 1);
     	
-    	request.setAttribute("list", list);		
-		
-		ArrayList<BoardVo> list2 = (ArrayList<BoardVo>) request.getAttribute("list");		
-		for(BoardVo vo : list2){	
-			
-//			System.out.println(vo.getbIdx());
-//			System.out.println(vo.getTitle());
-//			System.out.println(vo.getInsDate());
-//			System.out.println(vo.getHit());
-		
-		}
-		
-		ArrayList<BoardVo> blist = new ArrayList<BoardVo>();
-		
-		blist = bs.boardNoticeListCate(cate, 10, 1);		
-		request.setAttribute("blist", blist);
-		
-		ArrayList<BoardVo> list3 = (ArrayList<BoardVo>) request.getAttribute("blist");
-		for(BoardVo vo : list3){
-			
-//			System.out.println(vo.getbIdx());
-//			System.out.println(vo.getTitle());
-//			System.out.println(vo.getInsDate());
-//			System.out.println(vo.getHit());
-		
-		}
-
-		
+    	request.setAttribute("alist", alist);	
+    	
+    	BoardVo vo = bs.boardNoticeCon(bIdx);
+    	request.setAttribute("vo", vo);
+    	
 		PageRedirect pr = new PageRedirect(false, "/boardNotice/NoticeList.jsp", request, response);
 	}
 

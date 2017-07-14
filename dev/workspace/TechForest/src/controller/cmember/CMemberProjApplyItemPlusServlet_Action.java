@@ -36,12 +36,18 @@ public class CMemberProjApplyItemPlusServlet_Action extends HttpServlet {
 		
 		int idx = 0;
 		HttpSession session = request.getSession();
-		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
+		if(session.getAttribute("idx") != null){
+			idx = (Integer) session.getAttribute("idx");
+		}
 		
 		int pIdx = 0, itListCnt = 0;
 			
-		if(request.getParameter("pIdx") != null) pIdx = Integer.parseInt(request.getParameter("pIdx").trim(),10);
-		if(request.getParameter("itListCnt") != null) itListCnt = Integer.parseInt(request.getParameter("itListCnt").trim(),10);
+		if(request.getParameter("pIdx") != null){
+			pIdx = Integer.parseInt(request.getParameter("pIdx").trim(),10);
+		}
+		if(request.getParameter("itListCnt") != null){
+			itListCnt = Integer.parseInt(request.getParameter("itListCnt").trim(),10);
+		}
 				
 		//테스트 변수입력 시작
 

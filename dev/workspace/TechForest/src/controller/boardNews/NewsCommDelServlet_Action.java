@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import common.PageRedirect;
 import service.BoardNewsServiceImpl;
+import service.BoardVo;
 
 /**
  * Servlet implementation class NewsCommDelServlet_Action
@@ -31,18 +32,29 @@ public class NewsCommDelServlet_Action extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int idx = 0;
+		int sess_idx = 0;
 		HttpSession session =request.getSession();
-		if(session.getAttribute("idx") !=null) idx = (Integer) session.getAttribute("idx");
+		if(session.getAttribute("idx") != null) {
+		sess_idx = (Integer) session.getAttribute("idx");
+		}
+		
+		int commIdx = 0;
+		
+		if(request.getParameter("commIdx") != null) {
+			commIdx = Integer.parseInt(request.getParameter("commIdx"));
+		}
 		
 		int bIdx = 0;
 		
-		if(request.getParameter("bidx") != null) bIdx = Integer.parseInt(request.getParameter("bidx"));
+		if(request.getParameter("bIdx") != null) {
+			bIdx = Integer.parseInt(request.getParameter("bIdx"));
+		}
 		
 		BoardNewsServiceImpl bs = new BoardNewsServiceImpl();				
-		bs.boardNewsCommDel(bIdx); 		
 		
-		PageRedirect pr = new PageRedirect(true,"/NewsListServlet.do",request, response);
+		bs.boardNewsCommDel(commIdx); 	
+						
+		PageRedirect pr = new PageRedirect(true, "/NewsCon.do?bIdx="+bIdx+"", request, response);
 	}
 
 	/**

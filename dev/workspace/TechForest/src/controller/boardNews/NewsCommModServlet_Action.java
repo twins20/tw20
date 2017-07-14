@@ -34,27 +34,38 @@ public class NewsCommModServlet_Action extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-		int idx = 0;
+		int sess_idx = 0;
 		HttpSession session = request.getSession();
-		if(session.getAttribute("idx") !=null ) idx = (Integer) session.getAttribute("idx");
+		if(session.getAttribute("idx") != null ) {
+		sess_idx = (Integer) session.getAttribute("idx");
+		}
+		int bIdx = 0;
+		if(request.getParameter("bIdx") != null ) {
+			bIdx = Integer.parseInt(request.getParameter("bIdx"));
+		}
 		
-		int bIdx = 0, commidx = 0;
+		int commIdx = 0;		
+		if(request.getParameter("commIdx") != null ) {
+			commIdx = Integer.parseInt(request.getParameter("commIdx"));
+		}
+		
 		String comments = null;
-		
-		if(request.getParameter("bidx") != null) bIdx = Integer.parseInt(request.getParameter("bidx"));
-		if(request.getParameter("commidx") != null) commidx = Integer.parseInt(request.getParameter("commidx").trim());
-		if(request.getParameter("comments") != null) comments = request.getParameter("comments").trim();
+		if(request.getParameter("rcomments") != null ) {
+			comments = request.getParameter("rcomments").trim();
+		}
 
 		BoardCommVo vc = new BoardCommVo();		
-		vc.setCommIdx(commidx);
+		vc.setbIdx(bIdx);
+		vc.setCommIdx(commIdx);
 		vc.setComments(comments);
-		
+
 		int row = 0;
 		
 		BoardNewsServiceImpl bs = new BoardNewsServiceImpl();
 		row = bs.boardNewsCommWriteCntMod(vc);
-				
-		PageRedirect pr = new PageRedirect(true,"/NewsListServlet.do", request, response);		
+
+		
+		PageRedirect pr = new PageRedirect(true,"/NewsCon.do?bIdx="+bIdx+"&commIdx="+commIdx+"", request, response);		
 	}
 
 	/**

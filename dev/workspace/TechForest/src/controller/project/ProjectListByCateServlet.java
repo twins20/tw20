@@ -36,25 +36,15 @@ public class ProjectListByCateServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 				
 		String pCate = null;
-		if(request.getParameter("pCate") != null) pCate = request.getParameter("pCate").trim();
+		if(request.getParameter("pCate") != null){
+			pCate = request.getParameter("pCate").trim();
+		}
 		
 		ArrayList<ProjectVo> alist = new ArrayList<ProjectVo>();
 		ProjectServiceImpl ps = new ProjectServiceImpl(); 
 		alist = ps.projListByCate(pCate, 10, 1);
 		
 		request.setAttribute("alist", alist);
-		
-//		alist = (ArrayList<ProjectVo>) request.getAttribute("alist"); 
-//		
-//		for(ProjectVo vo : alist){
-//			System.out.println(vo.getpIdx());
-//			System.out.println(vo.getIdx());
-//			System.out.println(vo.getpName());
-//			System.out.println(vo.getpCate());
-//			System.out.println(vo.getPtFunds());
-//			System.out.println(vo.getPnFunds());
-//			System.out.println(vo.getpGrade());
-//		}
 		
 		PageRedirect pr = new PageRedirect(false, "/project/ProjectListByCate.jsp", request, response);
 	}

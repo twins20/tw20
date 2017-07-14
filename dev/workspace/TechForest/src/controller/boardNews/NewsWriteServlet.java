@@ -6,6 +6,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import common.PageRedirect;
 
 /**
  * Servlet implementation class NewsWriteServlet
@@ -27,7 +30,18 @@ public class NewsWriteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//NEWS 모듈화 
+		/*
+		int sess_idx = 0;
+		
+		HttpSession session = request.getSession();
+		if(session.getAttribute("idx") !=null ) {
+		sess_idx = (Integer) request.getAttribute("idx");
+		}
+		
+		request.setAttribute("idx",sess_idx);
+		PageRedirect pr = new PageRedirect(false, "/boardNews/NewsWrite.jsp", request, response);
+		*/
 	}
 
 	/**

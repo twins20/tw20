@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import common.PageRedirect;
 import service.AdminServiceImpl;
@@ -25,13 +26,19 @@ public class AdminQnaModServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		AdminServiceImpl as = new AdminServiceImpl();	
+		int sess_idx = 0;
+		HttpSession session = request.getSession();		
+		if(session.getAttribute("idx") != null){
+			sess_idx = (Integer) session.getAttribute("idx");			
+		}		
+		
 		int bIdx = 0;
 		bIdx = Integer.parseInt(request.getParameter("bIdx"));	
-//		int bIdx = 1;
-		
+	
 		//관리자 고객센터 페이지 QNA 상세내용
 		ArrayList<BoardVo> alist = new ArrayList<BoardVo>();	
+		
+		AdminServiceImpl as = new AdminServiceImpl();	
 		alist = as.adminBoardQnaCon(bIdx);
 		request.setAttribute("alist", alist);	
 		
@@ -54,7 +61,7 @@ public class AdminQnaModServlet extends HttpServlet {
 //			System.out.println(vo.getModDate());			
 //		}
 		
-		PageRedirect pr = new PageRedirect(false, "/admin//AdminQnaMod.jsp", request, response);
+		PageRedirect pr = new PageRedirect(false, "/admin/AdminQnaMod.jsp", request, response);
 	}
 
 	

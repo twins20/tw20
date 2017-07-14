@@ -23,25 +23,26 @@ public class AdminProjChkNOkServlet_Action extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		AdminServiceImpl as = new AdminServiceImpl();		
-		
-		int idx = 0;
-		HttpSession session = request.getSession();
-		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
-		
+		int sess_idx = 0;
+		HttpSession session = request.getSession();		
+		if(session.getAttribute("idx") != null){
+			sess_idx = (Integer) session.getAttribute("idx");			
+		}		
+
 		int pIdx = 0;
-		pIdx = Integer.parseInt(request.getParameter("pIdx"));		
-		
-		int row = 0;
+		pIdx = Integer.parseInt(request.getParameter("pIdx").trim());		
 		
 		//관리자 프로젝트 등록 반려 
-		as.adminProJChkNOk(idx, pIdx);
+		int row = 0;
 		
-		if(row != 0){				
+		AdminServiceImpl as = new AdminServiceImpl();		
+		as.adminProJChkNOk(sess_idx, pIdx);
+		
+//		if(row != 0){				
 //			System.out.println("반려 성공");					
-		}else{			
+//		}else{			
 //			System.out.println("반려 실패");	
-		}
+//		}
 		
 		PageRedirect pr = new PageRedirect(true, "/AdminProjChkList.do", request, response);		
 	}

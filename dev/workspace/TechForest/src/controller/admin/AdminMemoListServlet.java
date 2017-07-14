@@ -27,16 +27,17 @@ public class AdminMemoListServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		AdminServiceImpl as = new AdminServiceImpl();		
-		
+		int sess_idx = 0;
+		HttpSession session = request.getSession();		
+		if(session.getAttribute("idx") != null){
+			sess_idx = (Integer) session.getAttribute("idx");			
+		}			
+				
 		//관리자 메모리스트 확인 
 		ArrayList<MemoVo> alist = new ArrayList<MemoVo>();	
 		
-		int idx = 0;
-		HttpSession session = request.getSession();		
-		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");		
-		
-		alist = as.adminBoardMemoList(idx, 10, 1);
+		AdminServiceImpl as = new AdminServiceImpl();		
+		alist = as.adminBoardMemoList(sess_idx, 10, 1);
 		request.setAttribute("alist", alist);
 		
 //		ArrayList<MemoVo> alist1 = (ArrayList<MemoVo>) request.getAttribute("alist");

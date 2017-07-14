@@ -26,25 +26,25 @@ public class AdminProjChkOkServlet_Action extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		AdminServiceImpl as = new AdminServiceImpl();		
-		
-		int idx = 0;
-		HttpSession session = request.getSession();
-		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
-		
-		int pIdx = 0;
-		pIdx = Integer.parseInt(request.getParameter("pIdx"));		
-		
-		int row = 0;
-		
-		//관리자 프로젝트 등록 승인		
-		as.adminProJChkOk(idx, pIdx);			
-		
-		if(row != 0){				
-//			System.out.println("승인 성공");				
-		}else{			
-//			System.out.println("승인 실패");	
+		int sess_idx = 0;
+		HttpSession session = request.getSession();		
+		if(session.getAttribute("idx") != null){
+			sess_idx = (Integer) session.getAttribute("idx");			
 		}
+
+		int pIdx = 0;
+		int row = 0;
+		pIdx = Integer.parseInt(request.getParameter("pIdx").trim());		
+				
+//		관리자 프로젝트 등록 승인			
+		AdminServiceImpl as = new AdminServiceImpl();			
+		row = as.adminProJChkOk(sess_idx, pIdx);			
+
+//		if(row != 0){				
+//			System.out.println("승인 성공");				
+//		}else{			
+//			System.out.println("승인 실패");	
+//		}
 		
 		PageRedirect pr = new PageRedirect(true, "/AdminProjChkList.do", request, response);			
 	}

@@ -38,19 +38,21 @@ public class CMemberNewsConServlet extends HttpServlet {
 		
 		int bIdx = 0;
 		
-		if(request.getParameter("bIdx") != null) bIdx = Integer.parseInt(request.getParameter("bIdx").trim(),10);
+		if(request.getParameter("bIdx") != null){
+			bIdx = Integer.parseInt(request.getParameter("bIdx").trim(),10);
+		}
 		
 		Map<String, Object> data = new HashMap<String, Object>();
-		BoardVo vo = new BoardVo();
+		BoardVo bvo = new BoardVo();
 		ProjectVo pvo = new ProjectVo();
 		
 		CMemberServiceImpl cs = new CMemberServiceImpl();
 		data = cs.cMemNewsCon(bIdx);
 		
-		vo = (BoardVo) data.get("vo");
+		bvo = (BoardVo) data.get("bvo");
 		pvo = (ProjectVo) data.get("pvo");
 		
-		request.setAttribute("vo", vo);
+		request.setAttribute("bvo", bvo);
 		request.setAttribute("pvo", pvo);
 		
 //		vo = (BoardVo) request.getAttribute("vo"); 

@@ -34,36 +34,27 @@ public class NewsListServlet extends HttpServlet {
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int bIdx = 0;
+		int sess_idx = 0;
+		
+		HttpSession session = request.getSession();
+		if(session.getAttribute("idx") != null) {
+		sess_idx = (Integer) session.getAttribute("idx");	
+		}
 		String cate = null;
 		
-		if(request.getParameter("bidx") != null) bIdx = Integer.parseInt(request.getParameter("bidx"));
-		if(request.getParameter("cate") != null) cate = request.getParameter("cate");
+		if(request.getParameter("cate") != null) {
+			cate = request.getParameter("cate");
+		}
 				
 		BoardNewsServiceImpl bs = new BoardNewsServiceImpl(); 
-		ArrayList<BoardVo> list = bs.boardNewsListCate(cate,10,1); 
+		ArrayList<BoardVo> alist = new ArrayList<BoardVo>();
 		
-		request.setAttribute("list", list);		
+		alist = bs.boardNewsListCate(cate,10,1); 
 		
-		ArrayList<BoardVo> alist1 = (ArrayList<BoardVo>) request.getAttribute("list");			
-		for(BoardVo vo : alist1){
-			
-//			System.out.println(vo.getrNum());
-//			System.out.println(vo.getbIdx());
-//			System.out.println(vo.getIdx());
-//			System.out.println(vo.getCate());
-//			System.out.println(vo.getTitle());
-//			System.out.println(vo.getHit());
-//			System.out.println(vo.getGood());
-//			System.out.println(vo.getBad());
-//			System.out.println(vo.getCommCnt());
-//			System.out.println(vo.getInsDate());
-//			System.out.println(vo.getModDate());
-//			System.out.println(vo.getExtColumn());
+		request.setAttribute("alist", alist);	
 
-		}	
 		
-		PageRedirect pr = new PageRedirect(false,"/boardQna/QnaList.jsp", request, response);
+		PageRedirect pr = new PageRedirect(false,"/boardNews/NewsList.jsp", request, response);
 	}
 
 	/**

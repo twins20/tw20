@@ -4,11 +4,15 @@
 <%@ page import="service.MemberVo" %>
 <%
 	MemberVo vo = (MemberVo) request.getAttribute("vo");
-	int idx = (Integer) request.getAttribute("idx");
 %>
 <!-- Attribute end -->
-<%@ include file="/header.jsp" %> 
-<!-- main start -->	
+<%@ include file="/header.jsp" %>
+<!-- 바디	 -->
+<div class="bodyWrapper clearFix">
+<!-- 사이드바	 -->
+<%@ include file="/sideBar/imemberSideBar.jsp" %>
+	<div class="bodyMain"> 
+<!-- main start -->
 	
 	<form class="form-horizontal imemberCon">
 		<div class="form-group">
@@ -60,9 +64,6 @@
 		        <h4 class="modal-title" id="myModalLabel">비밀번호를 입력해주세요.</h4>
 		      </div>
 		      <div class="modal-body">
-		      	 <input class="form-control" type="hidden" name="idx" id="idx" value="<%=idx %>"/>
-		      </div>
-		      <div class="modal-body">
 		      	 <input class="form-control" type="password" name="pw" id="pw">
 		      </div>
 		      <div class="modal-footer">
@@ -73,5 +74,7 @@
 		</div>
 	</form>
 
-  	<!-- main end -->
+<!-- main end -->
+	</div>
+</div>
 <%@ include file="/footer.jsp" %>

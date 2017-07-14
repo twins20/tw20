@@ -34,24 +34,28 @@ public class CMemberNewsListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		int idx = 0;
+		int sess_idx = 0;
 		HttpSession session = request.getSession();
-		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
+		if(session.getAttribute("idx") != null){
+			sess_idx = (Integer) session.getAttribute("idx");
+		}
 		
 		int ttCnt = 0, listCnt = 10, pageCnt = 1;
 		
-		if(request.getParameter("pageCnt") != null) pageCnt = Integer.parseInt(request.getParameter("pageCnt").trim(),10);
+		if(request.getParameter("pageCnt") != null){
+			pageCnt = Integer.parseInt(request.getParameter("pageCnt").trim(),10);
+		}
 				
 		ArrayList<BoardVo> alist = new ArrayList<BoardVo>();
 		String pageList = null;
 		
 		CMemberServiceImpl cs = new CMemberServiceImpl();
 			
-		ttCnt = cs.cMemNewsListTtCnt(idx);
+		ttCnt = cs.cMemNewsListTtCnt(sess_idx);
 		pageList = new PagingQ().pagingList(listCnt, pageCnt, ttCnt);
 		String[] tmpPageInfo = pageList.split(" ");
 				
-		alist = cs.cMemNewsList(idx, listCnt, pageCnt);
+		alist = cs.cMemNewsList(sess_idx, listCnt, pageCnt);
 		
 		request.setAttribute("alist", alist);
 		request.setAttribute("startPage", tmpPageInfo[0]);
@@ -65,23 +69,8 @@ public class CMemberNewsListServlet extends HttpServlet {
 //		System.out.println("start page " + tmpPageInfo[0]);
 //		System.out.println("now page " + tmpPageInfo[1]);
 //		System.out.println("end page " + tmpPageInfo[2]);
-//		
-//		for(BoardVo vo : alist){
-//			System.out.println(vo.getrNum());
-//			System.out.println(vo.getbIdx());		
-//			System.out.println(vo.getIdx());
-//			System.out.println(vo.getCate());
-//			System.out.println(vo.getTitle());
-//			System.out.println(vo.getHit());
-//			System.out.println(vo.getGood());
-//			System.out.println(vo.getBad());		
-//			System.out.println(vo.getCommCnt());
-//			System.out.println(vo.getObIdx());		
-//			System.out.println(vo.getInsDate());
-//			System.out.println(vo.getpIdx());
-//		}
 		
-		PageRedirect pr = new PageRedirect(false, "/cmember/CMemberMemoSendList.jsp", request, response);
+		PageRedirect pr = new PageRedirect(false, "/cmember/CMemberNewsList.jsp", request, response);
 	}
 
 	/**

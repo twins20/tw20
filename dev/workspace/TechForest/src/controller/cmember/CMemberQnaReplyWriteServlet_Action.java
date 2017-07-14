@@ -37,21 +37,32 @@ public class CMemberQnaReplyWriteServlet_Action extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		int idx = 0;
+		int sess_idx = 0;
 		HttpSession session = request.getSession();
-		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
+		if(session.getAttribute("idx") != null){
+			sess_idx = (Integer) session.getAttribute("idx");
+		}
 		
 		int obIdx = 0;
 		String cate = null, title = null, contents = null;
 		
-		if(request.getParameter("obIdx") != null) obIdx = Integer.parseInt(request.getParameter("obIdx").trim(),10);
-		if(request.getParameter("cate") != null) cate = request.getParameter("cate").trim();
-		if(request.getParameter("title") != null) title = request.getParameter("title").trim();
-		if(request.getParameter("contents") != null) contents = request.getParameter("contents").trim();
+		if(request.getParameter("obIdx") != null){
+			obIdx = Integer.parseInt(request.getParameter("obIdx").trim(),10);
+		}
+
+		if(request.getParameter("cate") != null){
+			cate = request.getParameter("cate").trim();
+		}
+		if(request.getParameter("title") != null){
+			title = request.getParameter("title").trim();
+		}
+		if(request.getParameter("contents") != null){
+			contents = request.getParameter("contents").trim();
+		}
 		
 		BoardVo inputBV = new BoardVo();
 		inputBV.setObIdx(obIdx);
-		inputBV.setIdx(idx);
+		inputBV.setIdx(sess_idx);
 		inputBV.setCate(cate);
 		inputBV.setTitle(title);
 		inputBV.setContents(contents);
@@ -61,9 +72,7 @@ public class CMemberQnaReplyWriteServlet_Action extends HttpServlet {
 		CMemberServiceImpl cs = new CMemberServiceImpl();
 		row = cs.cMemQnaWrite(inputBV);
 		
-//		System.out.println(row);
-		
-		PageRedirect pr = new PageRedirect(false, "/cmember/CMemberQnaList.jsp", request, response);
+		PageRedirect pr = new PageRedirect(false, "/CMemberQnaList.do", request, response);
 	}
 
 	/**

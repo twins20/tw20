@@ -4,23 +4,23 @@
 	<div class="sideBar">
 		<ul>
 			<li>
-				<a href="<%=request.getContextPath() %>/NoticeList.do">
+				<a href="<%=request.getContextPath() %>/NoticeList.do?cate=NOTICE">
 					공지사항
 				</a>
 			</li>
 			<li>
-				<a href="<%=request.getContextPath() %>/QnaList.do">
+				<a href="<%=request.getContextPath() %>/NoticeList.do?cate=EVENT">
+					이벤트
+				</a>
+			</li>
+			<li>
+				<a href="<%=request.getContextPath() %>/QnaWrite.do">
 					QNA
 				</a>
 			</li>
 			<li>
 				<a href="<%=request.getContextPath() %>/FaqList.do">
 					FAQ
-				</a>
-			</li>
-			<li>
-				<a href="<%=request.getContextPath() %>/NewsList.do">
-					뉴스
 				</a>
 			</li>
 		</ul>

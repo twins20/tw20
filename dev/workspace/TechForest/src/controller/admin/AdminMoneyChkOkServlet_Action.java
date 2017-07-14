@@ -29,21 +29,23 @@ public class AdminMoneyChkOkServlet_Action extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		AdminServiceImpl as = new AdminServiceImpl();
-		
-		int idx = 0;
-		HttpSession session = request.getSession();
-		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
-		
-		int mIdx = 0;
-		mIdx = Integer.parseInt(request.getParameter("mIdx"));
+		int sess_idx = 0;
+		HttpSession session = request.getSession();		
+		if(session.getAttribute("idx") != null){
+			sess_idx = (Integer) session.getAttribute("idx");			
+		}
 
-		
-		//관리자 머니 충전 승인	
-//		int idx = 1;
-//		int mIdx = 1;
+		int mIdx = 0;
+		int param_idx = 0;
+	
+		mIdx = Integer.parseInt(request.getParameter("mIdx").trim());	
+		param_idx = Integer.parseInt(request.getParameter("param_idx").trim(),10);
+	
+		//관리자 머니 충전 승인			
 		int row = 0;
-		row = as.adminMoneyModOkTransaction(idx, mIdx);		
+		
+		AdminServiceImpl as = new AdminServiceImpl();
+		row = as.adminMoneyModOkTransaction(sess_idx, mIdx);		
 		
 //		if(row == 2){				
 //			System.out.println("승인 성공");	 	

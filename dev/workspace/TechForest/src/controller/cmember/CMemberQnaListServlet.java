@@ -35,46 +35,18 @@ public class CMemberQnaListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		int idx = 0;
+		int sess_idx = 0;
 		HttpSession session = request.getSession();
-		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
+		if(session.getAttribute("idx") != null){
+			sess_idx = (Integer) session.getAttribute("idx");
+		}
 				
 		ArrayList<Map<String, Object>> alist = new ArrayList<Map<String, Object>>();
 		
 		CMemberServiceImpl cs = new CMemberServiceImpl();
-		alist = cs.cMemQnaList(idx, 10, 1);
+		alist = cs.cMemQnaList(sess_idx, 10, 1);
 		
 		request.setAttribute("alist", alist);
-		
-//		alist = (ArrayList<Map<String, Object>>) request.getAttribute("alist");
-//		
-//		BoardVo bvo = new BoardVo();
-//		ProjectVo pvo = new ProjectVo();
-//		String status = null;
-//		
-//		for(Map<String, Object> data : alist){
-//			
-//			bvo = (BoardVo) data.get("bvo");
-//			pvo = (ProjectVo) data.get("pvo");
-//			status = (String) data.get("status");
-//			
-//			System.out.println(bvo.getbIdx());
-//			System.out.println(bvo.getIdx());
-//			System.out.println(bvo.getCate());
-//			System.out.println(bvo.getTitle());
-//			System.out.println(bvo.getHit());
-//			System.out.println(bvo.getGood());
-//			System.out.println(bvo.getBad());
-//			System.out.println(bvo.getCommCnt());
-//			System.out.println(bvo.getObIdx());
-//			System.out.println(bvo.getInsDate());
-//			
-//			System.out.println(pvo.getpIdx());
-//			System.out.println(pvo.getpName());
-//						
-//			System.out.println(status);
-//			
-//		}
 		
 		PageRedirect pr = new PageRedirect(false, "/cmember/CMemberQnaList.jsp", request, response);
 	}

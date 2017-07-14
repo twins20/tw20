@@ -2,6 +2,7 @@ package controller.boardNews;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -36,80 +37,44 @@ public class NewsConServlet extends HttpServlet {
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		int sess_idx = 0;	
+		HttpSession session = request.getSession();
+		if(session.getAttribute("idx") != null) {
+		sess_idx = (Integer) session.getAttribute("idx");	
+		}
+		
 		int bIdx = 0;
+		if(request.getParameter("bIdx") != null) {
+		bIdx = Integer.parseInt(request.getParameter("bIdx"));
+		}
+		
+		int commIdx = 0;
+		
+		if(request.getParameter("commIdx") != null) {
+			commIdx = Integer.parseInt(request.getParameter("commIdx"));
+		}
+		
+		BoardNewsServiceImpl bs = new BoardNewsServiceImpl();	
 	
-		if(request.getParameter("bidx") != null) bIdx = Integer.parseInt(request.getParameter("bidx"));
- 
-		ArrayList<BoardVo> alist = new ArrayList<BoardVo>(); 
-		BoardNewsServiceImpl bs = new BoardNewsServiceImpl();
+		BoardVo vo = bs.boardNewsCon(bIdx);		
+		request.setAttribute("vo", vo);				
+		request.setAttribute("commIdx", commIdx);
 		
-		alist = bs.boardNewsCon(bIdx);		
-		
-		request.setAttribute("alist", alist);		
-				
-		ArrayList<BoardVo> alist1 = (ArrayList<BoardVo>) request.getAttribute("alist");		
-		
-		for(BoardVo vo : alist1){
-			
-//			System.out.println(vo.getbIdx());
-//			System.out.println(vo.getIdx());
-//			System.out.println(vo.getCate());
-//			System.out.println(vo.getTitle());
-//			System.out.println(vo.getContents());
-//			System.out.println(vo.getHit());
-//			System.out.println(vo.getGood());
-//			System.out.println(vo.getBad());
-//			System.out.println(vo.getCommCnt());
-//			System.out.println(vo.getInsDate());
-//			System.out.println(vo.getModDate());
-			
-			}
+		ArrayList<Map<String, Object>> clist = new ArrayList<Map<String, Object>>();		
+		clist = bs.boardNewsCommList(bIdx, 10, 1);
+		request.setAttribute("clist", clist);
 		
 
-		ArrayList<BoardCommVo> blist = new ArrayList<BoardCommVo>();
-		blist = bs.boardNewsCommList(bIdx, 10, 1);
-
-//		request.setAttribute("blist", blist);
-//		
-//		ArrayList<BoardCommVo> blist2 = (ArrayList<BoardCommVo>) request.getAttribute("blist");
-//
-//		for(BoardCommVo vc : blist2){
-//			
-////			System.out.println(vc.getrNum());
-//			System.out.println(vc.getCommIdx());
-//			System.out.println(vc.getbIdx());
-//			System.out.println(vc.getIdx());
-//			System.out.println(vc.getComments());
-//			System.out.println(vc.getGood());
-//			System.out.println(vc.getBad());
-//			System.out.println(vc.getoCommIdx());
-//			System.out.println(vc.getrCommIdx());
-//			
-//		}
-		
 		bs.boardNewsHit(bIdx);
-			
-//		int bidx = 1;
-		ArrayList<ProjectVo> clist = new ArrayList<ProjectVo>();
 		
-		clist = bs.boardNewsProjList(bIdx, 10, 1);
-//		request.setAttribute("clist", clist);
-//		
-//		ArrayList<ProjectVo> clist2 = (ArrayList<ProjectVo>) request.getAttribute("clist");
-//		for(ProjectVo vo : clist2){
-//									
-//			System.out.println(vo.getpIdx());
-//			System.out.println(vo.getIdx());
-//			System.out.println(vo.getpName());
-//			System.out.println(vo.getpCate());
-//			System.out.println(vo.getItList1());
-//			System.out.println(vo.getPtFunds());
-//			System.out.println(vo.getPnFunds());
-//			
-//		}
-		
+
+		ArrayList<Map<String, Object>> sclist = new ArrayList<Map<String, Object>>();		
+		sclist = bs.BoardNewsSubCommList(commIdx, bIdx, 10, 1);		
+		request.setAttribute("sclist", sclist);	
+		request.setAttribute("bIdx", bIdx);
 	
-		PageRedirect pr = new PageRedirect(false, "/NewsConServlet.do" ,request ,response);
+	
+		PageRedirect pr = new PageRedirect(false, "/boardNews/NewsCon.jsp?" ,request ,response);
 	}
 
 	/**

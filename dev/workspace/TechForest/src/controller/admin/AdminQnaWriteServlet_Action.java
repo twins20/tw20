@@ -24,27 +24,38 @@ public class AdminQnaWriteServlet_Action extends HttpServlet {
     }
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		request.setCharacterEncoding("UTF-8");
 		
-		int idx = 0;
-		int bIdx = 0;
-		HttpSession session = request.getSession();
-		
+		int sess_idx = 0;
+		HttpSession session = request.getSession();		
 		if(session.getAttribute("idx") != null){
-			idx = (Integer) session.getAttribute("idx");
-		}
-		
+			sess_idx = (Integer) session.getAttribute("idx");			
+		}	
+				
+		int bIdx = 0, pIdx = 0;		
 		String title = null, contents = null,  cate = null;	
 				
-		if(Integer.parseInt(request.getParameter("bIdx")) != 0) bIdx = Integer.parseInt(request.getParameter("bIdx"));
-		if(request.getParameter("title") != null) title = request.getParameter("title").trim();
-		if(request.getParameter("contents") != null) contents = request.getParameter("contents").trim();
-		if(request.getParameter("cate") != null) cate = request.getParameter("cate").trim();
-
+		if(Integer.parseInt(request.getParameter("bIdx")) != 0){
+			bIdx = Integer.parseInt(request.getParameter("bIdx").trim(),10);
+		}
+		if(Integer.parseInt(request.getParameter("pIdx")) != 0){
+			pIdx = Integer.parseInt(request.getParameter("pIdx").trim(),10);
+		}
+		if(request.getParameter("title") != null){
+			title = request.getParameter("title").trim();
+		}
+		if(request.getParameter("contents") != null){
+			contents = request.getParameter("contents").trim();
+		}
+		if(request.getParameter("cate") != null){
+			cate = request.getParameter("cate").trim();
+		}
 		
 		BoardVo inputBV = new BoardVo();
 		
 		inputBV.setbIdx(bIdx);
-		inputBV.setIdx(idx);
+		inputBV.setpIdx(pIdx);
+		inputBV.setIdx(sess_idx);
 		inputBV.setCate(cate);
 		inputBV.setTitle(title);
 		inputBV.setContents(contents);
@@ -52,8 +63,7 @@ public class AdminQnaWriteServlet_Action extends HttpServlet {
 		int row = 0;
 		
 		AdminServiceImpl as = new AdminServiceImpl();
-		row = as.adminBoardQnaWrite(inputBV);
-		
+		row = as.adminBoardQnaWrite(inputBV);		
 //		System.out.println(row);
 		
 		PageRedirect pr = new PageRedirect(true, "/AdminQnaList.do", request, response);

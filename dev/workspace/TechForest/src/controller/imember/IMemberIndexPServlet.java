@@ -36,10 +36,12 @@ public class IMemberIndexPServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		int idx = 1;
+		
+		int idx = 0;
 		HttpSession session = request.getSession();
-		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
+		if(session.getAttribute("idx") != null){
+			idx = (Integer) session.getAttribute("idx");
+		}
 		
 		ArrayList<Map<String,Object>> plist = new ArrayList<Map<String,Object>>();
 		ArrayList<BoardVo> qlist = new ArrayList<BoardVo>();
@@ -50,6 +52,7 @@ public class IMemberIndexPServlet extends HttpServlet {
 		
 		request.setAttribute("plist", plist);			
 		request.setAttribute("qlist", qlist);
+		request.setAttribute("idx", idx);
 		
 		PageRedirect pr = new PageRedirect(false, "/imember/IMemberIndexP.jsp", request, response);	
 	}

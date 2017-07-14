@@ -27,7 +27,28 @@ public class NewsModServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//NEWS 모듈화 
+		/*
+		int sess_idx = 0;
+		int bIdx =0;
+		HttpSession session = request.getSession();
+		if(session.getAttribute("idx") !=null) {
+		sess_idx = (Integer) session.getAttribute("idx");
+		}
+
+		if(request.getParameter("bidx") != null) {
+			bIdx = Integer.parseInt(request.getParameter("bidx").trim());
+		}
+		
+		BoardNewsServiceImpl bs = new BoardNewsServiceImpl();	
+		BoardVo vo = new BoardVo();
+		
+		vo = bs.boardNewsCon(bIdx);
+		
+		request.setAttribute("idx", sess_idx);
+		request.setAttribute("vo", vo);
+		PageRedirect pr = new PageRedirect(false,"/boardNews/NewsMod.jsp",request,response);	
+		*/
 	}
 
 	/**

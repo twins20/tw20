@@ -33,10 +33,10 @@ public class NewsCommSubModServlet_Action extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		int idx = 0;
+		int sess_idx = 0;
 		HttpSession session = request.getSession();
 		if(session.getAttribute("idx") != null ) {
-			idx = (Integer) session.getAttribute("idx");
+		sess_idx = (Integer) session.getAttribute("idx");
 		}
 		
 		int bIdx = 0;		

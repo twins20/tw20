@@ -33,17 +33,21 @@ public class IMemberMoneyChargeServlet_Action extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-//		int idx = 0;
-//		HttpSession session = request.getSession();
-//		if(session.getAttribute("idx") != null) idx = (int) request.getAttribute("idx");
-
 		int idx = 0;
-		if(request.getParameter("idx") != null) idx = Integer.parseInt(request.getParameter("idx"));
+		HttpSession session = request.getSession();
+		if(session.getAttribute("idx") != null){
+			idx = (Integer) session.getAttribute("idx");
+		}
 		
 		String contents = "";
 		int chgMoney = 0;
-		if (request.getParameter("contents") != null) contents = request.getParameter("contents").trim();
-		if(request.getParameter("chgmoney") != null) chgMoney = Integer.parseInt(request.getParameter("chgmoney").trim());
+		
+		if (request.getParameter("contents") != null){
+			contents = request.getParameter("contents").trim();
+		}
+		if(request.getParameter("chgmoney") != null){
+			chgMoney = Integer.parseInt(request.getParameter("chgmoney").trim());
+		}
 		
 		MoneyVo InputMV = new MoneyVo();
 		MoneyVo vo = new MoneyVo();

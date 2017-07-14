@@ -35,10 +35,14 @@ public class CMemberInfoModServlet extends HttpServlet {
 		
 		int idx = 0;
 		HttpSession session = request.getSession();
-		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
+		if(session.getAttribute("idx") != null){
+			idx = (Integer) session.getAttribute("idx");
+		}
 
 		String pw = null;
-		if(request.getParameter("pw") != null) pw = request.getParameter("pw").trim();
+		if(request.getParameter("pw") != null){
+			pw = request.getParameter("pw").trim();
+		}
 		
 		MemberVo inputMV = new MemberVo();
 		inputMV.setIdx(idx);
@@ -50,8 +54,6 @@ public class CMemberInfoModServlet extends HttpServlet {
 		CMemberServiceImpl cs = new CMemberServiceImpl();
 		row = cs.cMemInfoModChk(inputMV);
 		
-//		System.out.println("idx pw crosschk return / " + row);
-		
 		if(row == 0){ 
 			
 			PageRedirect pr = new PageRedirect(true, "/CMemberInfoCon.do", request, response);	
@@ -61,21 +63,6 @@ public class CMemberInfoModServlet extends HttpServlet {
 			vo = cs.cMemInfoCon(idx);
 	
 			request.setAttribute("vo", vo);
-					
-//			vo = (MemberVo) request.getAttribute("vo");
-//			
-//			System.out.println(vo.getIdx());
-//			System.out.println(vo.getId());
-//			System.out.println(vo.getPw());
-//			System.out.println(vo.getName());
-//			System.out.println(vo.getNick());
-//			System.out.println(vo.getPhone());
-//			System.out.println(vo.getAddr());
-//			System.out.println(vo.getStatus());
-//			System.out.println(vo.getType());
-//			System.out.println(vo.getCompany());
-//			System.out.println(vo.getcNumber());
-//			System.out.println(vo.getcAddr());
 			
 			PageRedirect pr = new PageRedirect(false, "/cmember/CMemberInfoMod.jsp", request, response);
 		}

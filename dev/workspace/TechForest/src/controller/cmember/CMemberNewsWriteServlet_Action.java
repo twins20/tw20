@@ -32,19 +32,27 @@ public class CMemberNewsWriteServlet_Action extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		int idx = 0;
+		int sess_idx = 0;
 		HttpSession session = request.getSession();
-		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
+		if(session.getAttribute("idx") != null){
+			sess_idx = (Integer) session.getAttribute("idx");
+		}
 		
 		int pIdx = 0;
 		String title = null, contents = null;
-				
-		if(request.getParameter("title") != null) title = request.getParameter("title").trim();
-		if(request.getParameter("contents") != null) contents = request.getParameter("contents").trim();
-		if(request.getParameter("pidx") != null) pIdx = Integer.parseInt(request.getParameter("pidx").trim());
+		
+		if(request.getParameter("pIdx") != null){
+			pIdx = Integer.parseInt(request.getParameter("pIdx").trim());
+		}
+		if(request.getParameter("title") != null){
+			title = request.getParameter("title").trim();
+		}
+		if(request.getParameter("contents") != null){
+			contents = request.getParameter("contents").trim();
+		}
 
 		BoardVo inputBV = new BoardVo();
-		inputBV.setIdx(idx);
+		inputBV.setIdx(sess_idx);
 		inputBV.setTitle(title);
 		inputBV.setContents(contents);
 		inputBV.setpIdx(pIdx);
@@ -53,8 +61,6 @@ public class CMemberNewsWriteServlet_Action extends HttpServlet {
 		
 		CMemberServiceImpl cs = new CMemberServiceImpl();
 		row = cs.cMemNewsWrite(inputBV);
-		
-//		System.out.println(row);
 		
 		PageRedirect pr = new PageRedirect(true, "/CMemberNewsList.do", request, response);
 	}

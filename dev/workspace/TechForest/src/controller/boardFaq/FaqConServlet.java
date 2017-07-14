@@ -35,28 +35,24 @@ public class FaqConServlet extends HttpServlet {
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int bidx = 0;
+		int sess_idx = 0;
+		HttpSession session = request.getSession();
+		if(session.getAttribute("idx") !=null) {
+		sess_idx = (Integer) request.getAttribute("idx");
+		}
+		
+		int bIdx = 0;
 				
-		if(request.getParameter("bidx") != null) bidx = Integer.parseInt(request.getParameter("bidx"));
+		if(request.getParameter("bIdx") != null) {
+		bIdx = Integer.parseInt(request.getParameter("bIdx"));
+		}
 			
 		BoardFaqServiceImpl bs = new BoardFaqServiceImpl();
-		ArrayList<BoardVo> list = new ArrayList<BoardVo>();
-		
-		list = bs.boardFaqCon(bidx);		
-		request.setAttribute("list", list);
-		
-//		ArrayList<BoardVo> list2 = (ArrayList<BoardVo>) request.getAttribute("list");
-		for(BoardVo vo : list) {
-			
-//			System.out.println(vo.getCate());
-//			System.out.println(vo.getTitle());
-//			System.out.println(vo.getContents());
-//			System.out.println(vo.getHit());
-//			System.out.println(vo.getInsDate());
-		
-		}
-	 
-		bs.boardFaqHit(bidx);
+		BoardVo vo = bs.boardFaqCon(bIdx);		
+
+			 
+		bs.boardFaqHit(bIdx);
+		request.setAttribute("vo", vo);
 		
 		PageRedirect pr = new PageRedirect(false, "/boardFaq/FaqCon.jsp", request, response);
 	}

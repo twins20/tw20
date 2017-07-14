@@ -3,7 +3,12 @@
 <!-- Attribute start -->
 
 <!-- Attribute end -->
-<%@ include file="/header.jsp" %> 
+<%@ include file="/header.jsp" %>
+<!-- 바디	 -->
+<div class="bodyWrapper clearFix">
+<!-- 사이드바	 -->
+<%@ include file="/sideBar/boardSideBar.jsp" %>
+	<div class="bodyMain"> 
 <!-- main start -->
 
 
@@ -15,6 +20,7 @@
 
 
 	
-
 <!-- main end -->
+	</div>
+</div>
 <%@ include file="/footer.jsp" %>

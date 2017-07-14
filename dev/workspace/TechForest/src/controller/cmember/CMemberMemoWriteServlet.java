@@ -34,23 +34,18 @@ public class CMemberMemoWriteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		int idx = 0;
+		int sess_idx = 0;
 		HttpSession session = request.getSession();
-		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
+		if(session.getAttribute("idx") != null){
+			sess_idx = (Integer) session.getAttribute("idx");
+		}
 		
 		ArrayList<MemberVo> alist = new ArrayList<MemberVo>();
 
 		CMemberServiceImpl cs = new CMemberServiceImpl();
-		alist = cs.cMemMemoWriteIMemList(idx, 10, 1);
+		alist = cs.cMemMemoWriteIMemList(sess_idx, 10, 1);
 		
 		request.setAttribute("alist", alist);
-		
-//		alist = (ArrayList<MemberVo>) request.getAttribute("alist"); 
-//		
-//		for(MemberVo vo : alist){
-//			System.out.println(vo.getIdx());	
-//			System.out.println(vo.getNick());
-//		}
 		
 		PageRedirect pr = new PageRedirect(false, "/cmember/CMemberMemoWrite.jsp", request, response);
 	}

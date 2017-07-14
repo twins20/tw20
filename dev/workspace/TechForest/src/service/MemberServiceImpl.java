@@ -57,7 +57,7 @@ public class MemberServiceImpl {
 		
 		try {
 			
-			this.sql = "SELECT ROWNUM, IDX, ID, STATUS, TYPE "
+			this.sql = "SELECT ROWNUM, IDX, ID, NICK, STATUS, TYPE "
 				+	"FROM TF_MEMBER "
 				+	"WHERE ID = ? "
 				+ 		"AND PW = ?";
@@ -67,11 +67,12 @@ public class MemberServiceImpl {
 			pstmt.setString(2, inputMV.getPw());	
 			rs = pstmt.executeQuery();
 			
-			while(rs.next()) {
+			if(rs.next()) {
 				
 				data.put("rownum", rs.getInt("rownum"));
 				data.put("idx", rs.getInt("idx"));
 				data.put("id", rs.getString("id"));
+				data.put("nick", rs.getString("nick"));
 				data.put("status", rs.getInt("status"));
 				data.put("type", rs.getString("type"));
 				
@@ -143,7 +144,7 @@ public class MemberServiceImpl {
 			pstmt.setInt(3, inputMV.getPhone());
 			rs = pstmt.executeQuery();
 			
-			while(rs.next()) {
+			if(rs.next()) {
 				vo.setPw(rs.getString("pw"));
 			}
 
@@ -182,6 +183,7 @@ public class MemberServiceImpl {
 			while(rs.next()) {
 				
 				MemoVo vo = new MemoVo();
+				vo.setrNum(rs.getInt("rnum"));
 				vo.setMemoIdx(rs.getInt("memoidx"));
 				vo.setSendIdx(rs.getInt("sendidx"));
 				vo.setRecvIdx(rs.getInt("recvidx"));
@@ -219,7 +221,7 @@ public class MemberServiceImpl {
 			pstmt.setInt(1, memoIdx);
 			rs = pstmt.executeQuery();
 			
-			while(rs.next()) {
+			if(rs.next()) {
 						
 				vo.setMemoIdx(rs.getInt("memoidx"));
 				vo.setSendIdx(rs.getInt("sendidx"));

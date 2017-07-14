@@ -32,15 +32,17 @@ public class IMemberInfoModServlet extends HttpServlet {
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 					
-//		int idx = 0;
-//		HttpSession session = request.getSession();
-//		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
-		
 		int idx = 0;
-		if(request.getParameter("idx") != null) idx = Integer.parseInt(request.getParameter("idx").trim());
+		HttpSession session = request.getSession();
+		if(session.getAttribute("idx") != null){
+			idx = (Integer) session.getAttribute("idx");
+		}
 		
 		String pw = null;
-		if(request.getParameter("pw") != null) pw = request.getParameter("pw").trim();
+		
+		if(request.getParameter("pw") != null){
+			pw = request.getParameter("pw").trim();
+		}
 
 		MemberVo InputMV = new MemberVo();
 		InputMV.setIdx(idx);

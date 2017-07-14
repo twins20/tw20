@@ -1,12 +1,65 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>Insert title here</title>
-</head>
-<body>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>   
+<!-- Attribute start -->
+<%@ page import="service.*" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Map" %>
+<!-- Attribute end -->
+<%@ include file="/header.jsp" %>
+<!-- 바디	 -->
+<div class="bodyWrapper clearFix">
+<!-- 사이드바	 -->
+<%@ include file="/sideBar/adminSideBar.jsp" %>
+	<div class="bodyMain"> 
+<!-- main start -->
+<style>
 
-</body>
-</html>
+.pageP{
+	font-size: 20px;
+	margin-top: 20px;
+	margin-left: 5px;
+	margin-bottom: 15px;
+	padding-left: 10px;
+	font-weight: bold;
+	border-left : 5px solid black;	
+}
+<%
+	int sess_idx = 0;
+	if(request.getAttribute("sess_idx") != null){
+		sess_idx = (Integer) request.getAttribute("sess_idx");			
+	}
+
+	Object recvIdx = null;
+	if(request.getAttribute("param_idx") != null){
+		recvIdx = (Object) request.getAttribute("param_idx");
+	}else{
+		recvIdx = "";
+	}
+%>
+
+
+</style>
+<p class="pageP">쪽지 보내기</p>
+	<form method="post" action="<%=request.getContextPath()%>/AdminMemoSend_Action.do">
+		<div class="form-group">
+		    <label for="sendIdx">보내는 사람</label>
+		    <input class="form-control" type="text" name="sendIdx"  id="sendIdx" value="<%= sess_idx%>" required >
+	  	</div>		
+	  	<div class="form-group">
+			<label for="recvIdx">받는 사람</label>
+		    <input class="form-control" type="text" name="recvIdx"  id="recvIdx" value="<%= recvIdx%>" placeholder="<%= recvIdx%>" required >
+		</div>
+		<div class="form-group">
+		  <label for="content">Content</label>	    
+		  <textarea class="form-control" name="contents" id="content" placeholder="내용을 입력하세요" rows="15" required></textarea> 	    
+		</div>	  
+  		<button type="submit" class="btn btn-primary btn-block">글쓰기</button>
+	</form>
+		
+<!-- main end -->
+	</div>
+</div>
+
+
+</div>
+<%@ include file="/footer.jsp" %>

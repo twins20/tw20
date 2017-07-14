@@ -34,28 +34,23 @@ public class NoticeConServlet extends HttpServlet {
 	 */
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+    	int sess_idx = 0;
+		HttpSession session = request.getSession();
+		if(session.getAttribute("idx") !=null) {
+		sess_idx = (Integer) request.getAttribute("idx");
+		}
+    	
     	int bIdx = 0;
     	
-		if(request.getParameter("bidx") != null) bIdx = Integer.parseInt(request.getParameter("bidx"));
+		if(request.getParameter("bIdx") != null) {
+			bIdx = Integer.parseInt(request.getParameter("bIdx"));
+		}
     	
-		BoardNoticeServiceImpl bs = new BoardNoticeServiceImpl(); 
-    	ArrayList<BoardVo> alist = new ArrayList<BoardVo>();
-    	
-		alist = bs.boardNoticeCon(bIdx);	
-		request.setAttribute("alist", alist);
-		
-		ArrayList<BoardVo> alist2 = (ArrayList<BoardVo>) request.getAttribute("alist");		
-		for(BoardVo vo : alist2) {
-					
-//			System.out.println(vo.getCate());
-//			System.out.println(vo.getTitle());
-//			System.out.println(vo.getContents());
-//			System.out.println(vo.getHit());
-//			System.out.println(vo.getInsDate());
-//			
-		}	
-		
-		bs.boardNoticeHit(bIdx);			
+		BoardNoticeServiceImpl bs = new BoardNoticeServiceImpl(); 	
+		BoardVo vo = bs.boardNoticeCon(bIdx);	
+
+		bs.boardNoticeHit(bIdx);
+		request.setAttribute("vo", vo);
 		
 		PageRedirect pr = new PageRedirect(false,"/boardNotice/NoticeCon.jsp",request,response);
 	}

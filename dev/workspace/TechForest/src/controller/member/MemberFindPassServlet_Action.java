@@ -35,9 +35,15 @@ public class MemberFindPassServlet_Action extends HttpServlet {
 		int phone = 0;
 		String id = null, name = null;
 		
-		if(request.getParameter("id") != null) id = request.getParameter("id").trim();
-		if(request.getParameter("name") != null) name = request.getParameter("name").trim();
-		if(request.getParameter("phone") != null) phone = Integer.parseInt(request.getParameter("phone").trim(),10);
+		if(request.getParameter("id") != null){
+			id = request.getParameter("id").trim();
+		}
+		if(request.getParameter("name") != null){
+			name = request.getParameter("name").trim();
+		}
+		if(request.getParameter("phone") != null){
+			phone = Integer.parseInt(request.getParameter("phone").trim(),10);
+		}
 		
 		MemberVo inputMV = new MemberVo();
 		inputMV.setId(id);
@@ -50,10 +56,6 @@ public class MemberFindPassServlet_Action extends HttpServlet {
 		vo = ms.memMemberFindPass(inputMV);
 		
 		request.setAttribute("vo", vo);
-		
-//		vo = (MemberVo) request.getAttribute("vo");
-//		
-//		System.out.println(vo.getPw());
 		
 		PageRedirect pr = new PageRedirect(false, "/member/MemberFindPass_View.jsp", request, response);
 	}

@@ -6,6 +6,8 @@ public class BoardVo {
 	private int bIdx;
 	private int idx;
 	private int pIdx;
+	private String nick;
+	private String id;
 	private String cate;
 	private String title;
 	private String contents;
@@ -19,7 +21,27 @@ public class BoardVo {
 	private int viewStat;
 	private String insDate;
 	private String modDate;
+	private int maxDepth;
 	
+	
+	public int getMaxDepth() {
+		return maxDepth;
+	}
+	public void setMaxDepth(int maxDepth) {
+		this.maxDepth = maxDepth;
+	}
+	public String getNick() {
+		return nick;
+	}
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	public int getrNum() {
 		return rNum;
 	}
@@ -122,5 +144,6 @@ public class BoardVo {
 	public void setModDate(String modDate) {
 		this.modDate = modDate;
 	}
+	
 	
 }

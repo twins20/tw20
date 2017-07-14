@@ -10,17 +10,21 @@
 }
 
 /*body*/
-a:visited {
-	color: #fff;
-}
-a:hover {
-	text-decoration: none;
-}
-
 @import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
 body {
 	font-family: 'Jeju Gothic', sans-serif;
 	color: #555;
+}
+a {
+	color: #333;
+}
+a:visited {
+	color: #blue;
+	
+}
+a:hover {
+	color: #333;
+	text-decoration: none;
 }
 header {
 	position: relative;
@@ -158,3 +162,27 @@ footer {
 .siteMap .subMap2first {
 	margin-bottom: 50px;
 }
+.pagingUl{
+	list-style: none;
+	padding: 0;
+	float: right;
+}
+.pagingUl li{
+	float: left;
+	padding: 10px;
+	margin-right: 5px;
+	line-height: 10px;
+	border: 1px solid #ddd;
+	border-radius: 2px;
+	color: #888;
+	cursor: pointer;
+}
+.pagingUl .selected{
+	border: 0;
+	border: 1px solid #333;
+	background: #333;
+	color: #fff;
+	font-weight: bold;
+}
+
+

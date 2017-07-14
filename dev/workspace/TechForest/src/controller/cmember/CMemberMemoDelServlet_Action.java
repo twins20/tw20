@@ -35,14 +35,14 @@ public class CMemberMemoDelServlet_Action extends HttpServlet {
 		
 		int memoIdx = 0;
 					
-		if(request.getParameter("memoIdx") != null) memoIdx = Integer.parseInt(request.getParameter("memoIdx").trim(),10);
+		if(request.getParameter("memoIdx") != null){
+			memoIdx = Integer.parseInt(request.getParameter("memoIdx").trim(),10);
+		}
 
 		int row = 0;
 
 		CMemberServiceImpl cs = new CMemberServiceImpl();
 		row = cs.cMemMemoDel(memoIdx);
-		
-//		System.out.println(row);
 		
 		PageRedirect pr = new PageRedirect(true, "/CMemberMemoSendList.do", request, response);
 	}

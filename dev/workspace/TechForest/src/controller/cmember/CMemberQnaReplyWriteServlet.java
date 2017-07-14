@@ -36,47 +36,30 @@ public class CMemberQnaReplyWriteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		int idx = 0;
+		int sess_idx = 0;
 		HttpSession session = request.getSession();
-		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
+		if(session.getAttribute("idx") != null){
+			sess_idx = (Integer) session.getAttribute("idx");
+		}
 		
 		int bIdx = 0;
 		
-		if(request.getParameter("bIdx") != null) bIdx = Integer.parseInt(request.getParameter("bIdx").trim(),10);
+		if(request.getParameter("bIdx") != null){
+			bIdx = Integer.parseInt(request.getParameter("bIdx").trim(),10);
+		}
 		
 		Map<String, Object> data = new HashMap<String, Object>();
-		BoardVo vo = new BoardVo();
+		BoardVo bvo = new BoardVo();
 		ProjectVo pvo = new ProjectVo();
 		
 		CMemberServiceImpl cs = new CMemberServiceImpl();
 		data = cs.cMemQnaCon(bIdx);
 		
-		vo = (BoardVo) data.get("vo");
+		bvo = (BoardVo) data.get("bvo");
 		pvo = (ProjectVo) data.get("pvo");
 		
-		request.setAttribute("vo", vo);
+		request.setAttribute("bvo", bvo);
 		request.setAttribute("pvo", pvo);
-		
-//		vo = (BoardVo) request.getAttribute("vo"); 
-//	
-//		System.out.println(vo.getbIdx());
-//		System.out.println(vo.getIdx());
-//		System.out.println(vo.getCate());
-//		System.out.println(vo.getTitle());
-//		System.out.println(vo.getHit());
-//		System.out.println(vo.getGood());
-//		System.out.println(vo.getBad());
-//		System.out.println(vo.getObIdx());
-//		System.out.println(vo.getInsDate());
-//		System.out.println(vo.getpIdx());
-//
-//		pvo = (ProjectVo) request.getAttribute("pvo"); 
-//		
-//		System.out.println(pvo.getpIdx());
-//		System.out.println(pvo.getpName());
-//		System.out.println(pvo.getPnFunds());
-//		System.out.println(pvo.getpGrade());
-//		System.out.println(pvo.getStatus());
 		
 		PageRedirect pr = new PageRedirect(false, "/cmember/CMemberQnaReplyWrite.jsp", request, response);
 	}

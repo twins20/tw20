@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-	</div>
-</div>
 
 <footer class="clearFix">
 <!-- 푸터 -->
@@ -15,28 +13,44 @@
 			<h4>MainPage</h4>
 			<ul>
 				<li>
-					파워랭킹
+					<a href="<%=request.getContextPath()%>/ProjListByPower.do">
+						파워랭킹
+					</a>
 				</li>
 				<li>
-					테크랭킹
+					<a href="<%=request.getContextPath()%>/ProjListByTech.do">
+						기술랭킹
+					</a>
 				</li>
 				<li>
-					IT/TECH
+					<a href="<%=request.getContextPath()%>/ProjListByCate.do?pCate=TECH">
+						IT/TECH
+					</a>
 				</li>
 				<li>
-					HAND MADE
+					<a href="<%=request.getContextPath()%>/ProjListByCate.do?pCate=HANDMADE">
+						HAND MADE
+					</a>
 				</li>
 				<li>
-					BEAUTY
+					<a href="<%=request.getContextPath()%>/ProjListByCate.do?pCate=BEAUTY">
+						BEAUTY
+					</a>
 				</li>
 				<li>
-					FOOD
+					<a href="<%=request.getContextPath()%>/ProjListByCate.do?pCate=FOOD">
+						FOOD
+					</a>
 				</li>
 				<li>
-					FASHION
+					<a href="<%=request.getContextPath()%>/ProjListByCate.do?pCate=FASHION">
+						FASHION
+					</a>
 				</li>
 				<li>
-					etc.
+					<a href="<%=request.getContextPath()%>/ProjListByCate.do?pCate=ETC">
+						etc.
+					</a>
 				</li>
 			</ul>
 		</div>
@@ -53,16 +67,24 @@
 				<h4>Contact Us</h4>
 				<ul>
 					<li>
-						공지사항
+						<a href="<%=request.getContextPath() %>/NoticeList.do?cate=NOTICE">
+							공지사항
+						</a>
 					</li>
 					<li>
-						이벤트	
+						<a href="<%=request.getContextPath() %>/NoticeList.do?cate=EVENT">
+							이벤트
+						</a>
 					</li>
 					<li>
-						FAQ
+						<a href="<%=request.getContextPath() %>/QnaWrite.do">
+							QNA
+						</a>
 					</li>
 					<li>
-						QNA
+						<a href="<%=request.getContextPath() %>/FaqList.do">
+							FAQ
+						</a>
 					</li>
 				</ul>
 			</div>
@@ -85,7 +107,9 @@
 			<h4>뉴스</h4>
 			<ul>
 				<li>
-					카테고리 뉴스
+					<a href="<%=request.getContextPath() %>/NewsList.do?cate=IT/TECH">
+						카테고리 뉴스
+					</a>
 				</li>
 			</ul>
 		</div>
@@ -93,25 +117,14 @@
 			<h4>Members</h4>
 			<ul>
 				<li>
-					회원가입
+					<a href="<%=request.getContextPath() %>/MemberJoin.do">
+						회원가입
+					</a>
 				</li>
 				<li>
-					My Page
-				</li>
-				<li>
-				<a href="<%=request.getContextPath()%>/IMemberIndexP.do">투자자 마이페이지</a>
-				</li>
-				<li>
-				<a href="<%=request.getContextPath()%>/IMemberInfoCon.do">투자자 회원정보</a>
-				</li>
-				<li>
-				<a href="<%=request.getContextPath()%>/IMemberMoneyHis.do">충전 및 금액조회</a>
-				</li>
-				<li>
-				<a href="<%=request.getContextPath()%>/IMemberFundList.do">투자자 투자리스트</a>
-				</li>
-				<li>
-				<a href="<%=request.getContextPath()%>/IMemberWishList.do">투자자 위시리스트</a>
+					<a href="<%=request.getContextPath() %>/IMemberIndexP.do">
+						My Page
+					</a>
 				</li>
 			</ul>
 		</div>

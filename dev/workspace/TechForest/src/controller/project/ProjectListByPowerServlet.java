@@ -40,18 +40,6 @@ public class ProjectListByPowerServlet extends HttpServlet {
 		
 		request.setAttribute("alist", alist);
 		
-//		alist = (ArrayList<ProjectVo>) request.getAttribute("alist"); 
-//		
-//		for(ProjectVo vo : alist){
-//			System.out.println(vo.getpIdx());
-//			System.out.println(vo.getIdx());
-//			System.out.println(vo.getpName());
-//			System.out.println(vo.getpCate());
-//			System.out.println(vo.getPtFunds());
-//			System.out.println(vo.getPnFunds());
-//			System.out.println(vo.getpGrade());
-//		}
-		
 		PageRedirect pr = new PageRedirect(false, "/project/ProjectListByPower.jsp", request, response);
 	}
 

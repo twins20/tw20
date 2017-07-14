@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import common.PageRedirect;
+import service.BoardNewsServiceImpl;
 import service.BoardQnaServiceImpl;
 import service.BoardVo;
 
@@ -32,34 +33,34 @@ public class QnaWriteServlet_Action extends HttpServlet {
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	   	
-		int idx = 0;
+		int sess_idx = 0;
 		HttpSession session = request.getSession();
-		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
+		if(session.getAttribute("idx") != null){
+		sess_idx = (Integer) session.getAttribute("idx");
+		}
 		
-		int pIdx = 0;
 		String cate = null, title = null, contents = null;
-		
-		if(request.getParameter("pidx") != null) pIdx = Integer.parseInt(request.getParameter("pidx").trim());
-		if(request.getParameter("cate") != null) cate = request.getParameter("cate").trim();  
-		if(request.getParameter("title") != null) title = request.getParameter("title").trim(); 
-		if(request.getParameter("contents") != null) contents = request.getParameter("contents").trim();  
-	    
+			
+		if(request.getParameter("cate") != null) {
+			cate = request.getParameter("cate").trim();  
+		}
+		if(request.getParameter("title") != null) {
+			title = request.getParameter("title").trim(); 
+		}
+		if(request.getParameter("contents") != null) {
+			contents = request.getParameter("contents").trim();  
+		}
+	    int idx = 0;
+		BoardQnaServiceImpl bs = new BoardQnaServiceImpl();
 	    BoardVo vo = new BoardVo();
-	    
-	    vo.setIdx(idx);
+	    vo.setIdx(sess_idx);
 	    vo.setCate(cate);
 	    vo.setTitle(title);
 	    vo.setContents(contents);
-	    vo.setpIdx(pIdx);
 	    
-	    int row = 0;
+	    int row = bs.boardQnaWrite(vo); 
 	    
-	    BoardQnaServiceImpl bs = new BoardQnaServiceImpl();
-	    row = bs.boardQnaWrite(vo); 
-
-//	    System.out.println(row);
-	    
-	    PageRedirect pr = new PageRedirect(true, "/NewsConServlet.do", request, response);
+		PageRedirect pr = new PageRedirect(true, "/IMemberIndexP.do", request, response);
 	}
 
 	/**

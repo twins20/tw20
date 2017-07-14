@@ -5,17 +5,17 @@
 		<ul>
 			<li>
 				<a href="<%=request.getContextPath() %>/MemberLogIn.do">
-				로그인
+					로그인
 				</a>
 			</li>
 			<li>
 				<a href="<%=request.getContextPath() %>/MemberJoin.do">
-				회원가입
+					회원가입
 				</a>
 			</li>
 			<li>
 				<a href="<%=request.getContextPath() %>/MemberFindMail.do">
-				아이디/비밀번호 찾기
+					아이디/비밀번호 찾기
 				</a>
 			</li>
 		</ul>

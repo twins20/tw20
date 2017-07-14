@@ -4,10 +4,14 @@
 <%@ page import="service.MemberVo" %>
 <%
 	MemberVo vo = (MemberVo) request.getAttribute("vo");
-	int idx = (Integer) request.getAttribute("idx");
 %>
 <!-- Attribute end -->
-<%@ include file="/header.jsp" %> 
+<%@ include file="/header.jsp" %>
+<!-- 바디	 -->
+<div class="bodyWrapper clearFix">
+<!-- 사이드바	 -->
+<%@ include file="/sideBar/imemberSideBar.jsp" %>
+	<div class="bodyMain"> 
 <!-- main start -->
 <script>
 $(document).ready(function(){
@@ -41,9 +45,6 @@ $(document).ready(function(){
 
 	<form id="imemberModifyAction" class="form-horizontal imemberModifyAction" 	action="<%=request.getContextPath()%>/IMemberInfoMod_Action.do" method="post" >
   		<div class="form-group">
-			<div class="col-sm-9">
-      			<input class="form-control" type="hidden" name="idx" id="idx" value="<%=idx %>"/>
-   			</div>
   	 	</div>
   	 	<div class="form-group">
     		<label for="name" class="col-sm-3 control-label">성명</label>
@@ -81,12 +82,15 @@ $(document).ready(function(){
       				<input  class="form-control" type="text" name="addr" id="addr" value="<%=vo.getAddr()%>">
    		 	</div>
   		</div>
-  		<center><input class="btn btn-primary" id="imemberModifyButton" type="button" value="수정" onclick="modifyAction()"/></center>
+  		<center>
+  			<input class="btn btn-primary" id="imemberModifyButton" type="button" value="수정" >
+  		</center>
 	</form>
 
 
 
 	
-
 <!-- main end -->
+	</div>
+</div>
 <%@ include file="/footer.jsp" %>

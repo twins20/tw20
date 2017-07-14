@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -20,8 +21,30 @@
 <!-- 헤더 -->
 
 <div class="headerWrapper">
-<h1>TechForest</h1>
+	<a href="index.jsp" >
+		<h1>TechForest</h1>
+	</a>
 <ul class="clearFix">
+<%
+	Object idx = session.getAttribute("idx");
+%>
+<%	
+	if(idx == null){
+%>
+	<li>
+		<a href="<%=request.getContextPath()%>/MemberLogIn.do" method="post">
+			<p class="glyphicon glyphicon-user" aria-hidden="true"></p>
+			로그인
+		</a>
+	</li>
+<% }else{ %>
+	<li>
+		<a href="<%=request.getContextPath()%>/MemberLogOut_Action.do" method="post">
+			<p class="glyphicon glyphicon-remove" aria-hidden="true"></p>
+			로그아웃
+		</a>
+	</li>
+<% } %>
 	<li>
 		<a href="http://www.daum.net" target="_blank">
 			<p class="glyphicon glyphicon-th" aria-hidden="true"></p>
@@ -29,12 +52,28 @@
 		</a>
 	</li>
 	<li>
-		<p class="glyphicon glyphicon-phone-alt" aria-hidden="true"></p>
-		고객센터
+		<a href="<%=request.getContextPath()%>/NoticeList.do" method="post">
+			<p class="glyphicon glyphicon-phone-alt" aria-hidden="true"></p>
+			고객센터
+		</a>
 	</li>
 	<li>
-		<p class="glyphicon glyphicon-wrench" aria-hidden="true"></p>
-		마이페이지
+		<a href="<%=request.getContextPath()%>/IMemberIndexP.do">
+			<p class="glyphicon glyphicon-wrench" aria-hidden="true"></p>
+			투자자 마이페이지
+		</a>
+	</li>
+	<li>
+		<a href="<%=request.getContextPath()%>/CMemberIndexP.do"">
+			<p class="glyphicon glyphicon-wrench" aria-hidden="true"></p>
+			사업자 마이페이지
+		</a>
+	</li>
+	<li>
+		<a href="<%=request.getContextPath()%>/AdminIndex.do">
+			<p class="glyphicon glyphicon-wrench" aria-hidden="true"></p>
+			관리자 마이페이지
+		</a>
 	</li>
 </ul>
 </div>
@@ -45,36 +84,3 @@
 </div>
 
 </header>
-
-<div class="bodyWrapper clearFix">
-<!-- 바디	 -->
-	<div class="sideBar">
-	<!-- 사이드바	 -->
-		<ul>
-			<li>
-				파워랭크
-			</li>
-			<li>
-				기술랭크
-			</li>
-			<li>
-				IT/TECH
-			</li>
-			<li>
-				HAND MADE
-			</li>
-			<li>
-				BEAUTY
-			</li>
-			<li>
-				FOOD
-			</li>
-			<li>
-				FASHION
-			</li>
-			<li>
-				etc.
-			</li>
-		</ul>
-	</div>
-	<div class="bodyMain">

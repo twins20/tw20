@@ -23,19 +23,21 @@ public class AdminCmemChkOkServlet_Action extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int idx = 0;
-		HttpSession session = request.getSession();
-		if(session.getAttribute("idx") != null) idx = (Integer) session.getAttribute("idx");
-		
-		AdminServiceImpl as = new AdminServiceImpl();	
-		
+		int sess_idx = 0;
+		HttpSession session = request.getSession();		
+		if(session.getAttribute("idx") != null){
+			sess_idx = (Integer) session.getAttribute("idx");			
+		}
+				
 		//관리자 사업자 등록 승인			
-		int tmpCidx = 0; 
-		tmpCidx = Integer.parseInt(request.getParameter("idx"));		
+		int param_idx = 0;
+		param_idx = Integer.parseInt(request.getParameter("param_idx").trim(),10);		
 		
 		int row = 0;
-		row = as.adminCmemChkOkMem(tmpCidx);
-		row += as.adminCmemChkOkCmem(idx, tmpCidx);
+		
+		AdminServiceImpl as = new AdminServiceImpl();	
+		row = as.adminCmemChkOkMem(param_idx);
+		row += as.adminCmemChkOkCmem(sess_idx, param_idx);
 		
 //		System.out.println(row);
 //		if(row == 2){

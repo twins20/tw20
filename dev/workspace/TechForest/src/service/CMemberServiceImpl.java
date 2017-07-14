@@ -90,6 +90,7 @@ public class CMemberServiceImpl {
 				
 				ProjectCommVo vo = new ProjectCommVo(); 
 				vo.setpCommIdx(rs.getInt("pcommidx"));
+				vo.setIdx(rs.getInt("idx"));
 				vo.setComments(rs.getString("comments"));
 				vo.setGood(rs.getInt("good"));
 				vo.setBad(rs.getInt("bad"));
@@ -97,6 +98,8 @@ public class CMemberServiceImpl {
 				vo.setRpCommIdx(rs.getInt("rpcommidx"));
 				vo.setpCommDepth(rs.getInt("pcommdepth"));
 				vo.setViewStat(rs.getInt("viewstat"));
+				vo.setInsDate(rs.getString("insdate"));
+				vo.setModDate(rs.getString("moddate"));
 				
 				alist.add(vo);
 			}
@@ -139,6 +142,7 @@ public class CMemberServiceImpl {
 			while(rs.next()) { 
 				
 				BoardVo vo = new BoardVo(); 
+				vo.setrNum(rs.getInt("rnum"));
 				vo.setbIdx(rs.getInt("bidx"));
 				vo.setIdx(rs.getInt("idx"));
 				vo.setCate(rs.getString("cate"));
@@ -187,7 +191,7 @@ public class CMemberServiceImpl {
 			pstmt.setInt(1, idx);
 			rs = pstmt.executeQuery();
 			
-			while(rs.next()) { 
+			if(rs.next()) { 
 				
 				vo.setIdx(rs.getInt("idx"));
 				vo.setId(rs.getString("id"));
@@ -238,7 +242,7 @@ public class CMemberServiceImpl {
 			pstmt.setString(2, inputMV.getPw());
 			rs = pstmt.executeQuery();
 			
-			while(rs.next()) { 
+			if(rs.next()) { 
 				
 				row = rs.getInt(1);
 							
@@ -452,6 +456,7 @@ public class CMemberServiceImpl {
 			while(rs.next()){
 				
 				MemoVo vo = new MemoVo();
+				vo.setrNum(rs.getInt("rnum"));
 				vo.setMemoIdx(rs.getInt("memoidx"));
 				vo.setSendIdx(rs.getInt("sendidx"));
 				vo.setRecvIdx(rs.getInt("recvidx"));
@@ -470,6 +475,48 @@ public class CMemberServiceImpl {
 		
 	}
 	
+	public MemoVo cMemMemoCon(int memoIdx){
+		
+		Connection con = dbconnect.getConnection(); 
+		PreparedStatement pstmt = null; 
+		ResultSet rs = null;
+		
+		MemoVo vo = new MemoVo();
+		
+		try { 
+
+			this.sql = cMemberSql.getcMemMemoCon();
+			
+//			this.sql = "SELECT * "
+//					+	"FROM TF_MEMO_LIST "
+//					+	"WHERE MEMOIDX = ?";
+			
+			pstmt = con.prepareStatement(this.sql);
+			pstmt.setInt(1, memoIdx);
+			rs = pstmt.executeQuery();
+
+			if(rs.next()){
+				
+				vo.setMemoIdx(rs.getInt("memoidx"));
+				vo.setSendIdx(rs.getInt("sendidx"));
+				vo.setRecvIdx(rs.getInt("recvidx"));
+				vo.setContents(rs.getString("contents"));
+				vo.setStatus(rs.getInt("status"));
+				vo.setInsDate(rs.getString("insdate"));
+				vo.setModDate(rs.getString("moddate"));
+				
+			}
+			
+		}catch(Exception e) { 
+			System.out.println(e.getMessage());
+		}finally { 
+			DBClose.close(con,pstmt,rs); 
+		}
+	
+		return vo;
+		
+	}
+	
 	public int cMemMemoDel(int memoIdx){
 		
 		Connection con = dbconnect.getConnection(); 
@@ -482,7 +529,7 @@ public class CMemberServiceImpl {
 			
 //			this.sql = "UPDATE TF_MEMO_LIST "
 //				+	"SET STATUS = STATUS + 1 "
-//				+	"WHERE (STATUS = 0 OR STATUS = 2) "
+//				+	"WHERE (STATUS = 0 OR STATUS = 1) "
 //				+		"AND MEMOIDX = ?";
 		
 			pstmt = con.prepareStatement(this.sql);
@@ -602,18 +649,19 @@ public class CMemberServiceImpl {
 
 			while(rs.next()){
 				
-				BoardVo vo = new BoardVo();
-				vo.setbIdx(rs.getInt("bidx"));
-				vo.setIdx(rs.getInt("idx"));
-				vo.setpIdx(rs.getInt("pidx"));
-				vo.setCate(rs.getString("cate"));
-				vo.setTitle(rs.getString("title"));
-				vo.setHit(rs.getInt("hit"));
-				vo.setGood(rs.getInt("good"));
-				vo.setBad(rs.getInt("bad"));
-				vo.setObIdx(rs.getInt("obidx"));
-				vo.setInsDate(rs.getString("insdate"));
-
+				BoardVo bvo = new BoardVo();
+				bvo.setbIdx(rs.getInt("bidx"));
+				bvo.setIdx(rs.getInt("idx"));
+				bvo.setpIdx(rs.getInt("pidx"));
+				bvo.setCate(rs.getString("cate"));
+				bvo.setTitle(rs.getString("title"));
+				bvo.setContents(rs.getString("contents"));
+				bvo.setHit(rs.getInt("hit"));
+				bvo.setGood(rs.getInt("good"));
+				bvo.setBad(rs.getInt("bad"));
+				bvo.setObIdx(rs.getInt("obidx"));
+				bvo.setInsDate(rs.getString("insdate"));
+				
 				ProjectVo pvo = new ProjectVo();
 				pvo.setpIdx(rs.getInt("pidx"));
 				pvo.setpName(rs.getString("pname"));
@@ -621,7 +669,7 @@ public class CMemberServiceImpl {
 				pvo.setpGrade(rs.getInt("pgrade"));
 				pvo.setStatus(rs.getInt("status"));
 
-				data.put("vo", vo);
+				data.put("bvo", bvo);
 				data.put("pvo", pvo);
 			}
 			
@@ -1496,7 +1544,7 @@ public class CMemberServiceImpl {
 		
 	}
 	
-	public ArrayList<Map<String, Object>> cMemQnaList(int idx, int listCnt, int pageCnt){
+	public ArrayList<Map<String, Object>> cMemQnaList(int sess_idx, int listCnt, int pageCnt){
 		
 		Connection con = dbconnect.getConnection(); 
 		PreparedStatement pstmt = null; 
@@ -1508,7 +1556,7 @@ public class CMemberServiceImpl {
 			
 			this.sql = cMemberSql.getcMemQnaList();
 			
-//			this.sql = "SELECT A.PIDX, A.PNAME, B.BIDX, B.IDX, B.CATE, B.TITLE, B.HIT, B.GOOD, B.BAD, B.COMMCNT, B.OBIDX, B.INSDATE, B.PIDX, (SELECT MAX(BDEPTH) FROM TF_BOARD_QNA WHERE BIDX = B.BIDX) STATUS "
+//			this.sql = "SELECT A.PIDX, A.PNAME, B.BIDX, B.IDX, B.CATE, B.TITLE, B.HIT, B.GOOD, B.BAD, B.COMMCNT, B.OBIDX, B.INSDATE, (SELECT MAX(BDEPTH) FROM TF_BOARD_QNA WHERE BIDX = B.BIDX) STATUS "
 //				+	"FROM TF_PROJECT_LIST A, TF_BOARD_QNA B "
 //				+	"WHERE A.PIDX = B.PIDX "
 //				+		"AND A.IDX = ? "
@@ -1517,7 +1565,7 @@ public class CMemberServiceImpl {
 			this.sql = new PagingQ().pagingStr(this.sql, listCnt, pageCnt);
 			
 			pstmt = con.prepareStatement(this.sql);
-			pstmt.setInt(1, idx);
+			pstmt.setInt(1, sess_idx);
 			rs = pstmt.executeQuery();
 
 			while(rs.next()){
@@ -1540,8 +1588,8 @@ public class CMemberServiceImpl {
 				pvo.setpIdx(rs.getInt("pidx"));
 				pvo.setpName(rs.getString("pname"));
 				
-				String status = rs.getString("status");
-				
+				int status = rs.getInt("status");
+
 				data.put("bvo", bvo);
 				data.put("pvo", pvo);
 				data.put("status", status);
@@ -1583,17 +1631,19 @@ public class CMemberServiceImpl {
 
 			while(rs.next()){
 			
-				BoardVo vo = new BoardVo();
-				vo.setbIdx(rs.getInt("bidx"));
-				vo.setIdx(rs.getInt("idx"));
-				vo.setpIdx(rs.getInt("pidx"));
-				vo.setCate(rs.getString("cate"));
-				vo.setTitle(rs.getString("title"));
-				vo.setHit(rs.getInt("hit"));
-				vo.setGood(rs.getInt("good"));
-				vo.setBad(rs.getInt("bad"));
-				vo.setObIdx(rs.getInt("obidx"));
-				vo.setInsDate(rs.getString("insdate"));
+				BoardVo bvo = new BoardVo();
+				bvo.setbIdx(rs.getInt("bidx"));
+				bvo.setIdx(rs.getInt("idx"));
+				bvo.setpIdx(rs.getInt("pidx"));
+				bvo.setCate(rs.getString("cate"));
+				bvo.setTitle(rs.getString("title"));
+				bvo.setContents(rs.getString("contents"));
+				bvo.setHit(rs.getInt("hit"));
+				bvo.setGood(rs.getInt("good"));
+				bvo.setBad(rs.getInt("bad"));
+				bvo.setObIdx(rs.getInt("obidx"));
+				bvo.setbDepth(rs.getInt("bdepth"));
+				bvo.setInsDate(rs.getString("insdate"));
 				
 				ProjectVo pvo = new ProjectVo();
 				pvo.setpIdx(rs.getInt("pidx"));
@@ -1602,7 +1652,7 @@ public class CMemberServiceImpl {
 				pvo.setpGrade(rs.getInt("pgrade"));
 				pvo.setStatus(rs.getInt("status"));
 
-				data.put("vo", vo);
+				data.put("bvo", bvo);
 				data.put("pvo", pvo);
 			}
 			
@@ -1712,6 +1762,7 @@ public class CMemberServiceImpl {
 			pstmt.setString(1, inputBV.getTitle());
 			pstmt.setString(2, inputBV.getContents());
 			pstmt.setInt(3, inputBV.getbIdx());
+			
 			row = pstmt.executeUpdate();
 						
 		}catch(Exception e) { 
