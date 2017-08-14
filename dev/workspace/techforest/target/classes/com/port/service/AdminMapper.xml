@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.port.service.AdminMapper">
+ 
+     <select id="adminIndexPMoneyChkList"  resultType="hashmap">
+    <![CDATA[	
+    	SELECT 
+	    	A.IDX, 
+	    	A.NAME, 
+	    	A.NICK, 
+	    	B.MIDX, 
+	    	B.CHGMONEY, 
+	    	B.INSDATE, 
+	    	B.STATUS 
+		FROM 
+			TF_MEMBER A, TF_MONEY_HIS B 
+		WHERE 
+			A.IDX = B.IDX 
+		AND 
+			B.STATUS = 0 
+		ORDER BY 
+			B.MIDX DESC	
+    ]]>
+    </select>    
+    
+    <select id="adminIndexPProjectChkList" resultType="com.port.service.ProjectVo">
+    <![CDATA[
+		SELECT 
+			PIDX, 
+			PNAME, 
+			INSDATE, 
+			STATUS 
+		FROM 
+			TF_PROJECT_LIST 
+		WHERE 
+			STATUS = 0 
+		ORDER BY 
+			PIDX DESC		
+	 ]]>   
+    </select>
+    
+    <select id="adminIndexPCmemChkList" parameterType="com.port.service.MemberVo" resultType="com.port.service.MemberVo">
+	<![CDATA[
+		SELECT 
+			A.IDX, 
+			A.NAME, 
+			B.COMPANY, 
+			A.MODDATE 
+		FROM 
+			TF_MEMBER A, TF_CMEMBER_EXT B 
+		WHERE 
+			A.IDX = B.IDX 
+		AND 
+			A.STATUS = 0 
+		AND 
+			A.TYPE = 'C' 
+		ORDER BY 
+			B.CIDX DESC	
+	 ]]>  
+    </select>    
+    
+    <select id="adminCmemInfoList" resultType="hashmap" >
+  	<![CDATA[	
+ 		SELECT 
+	 		A.IDX, 
+	 		A.ID, 
+	 		A.NAME, 
+	 		(SELECT SUM(PNFUNDS) FROM TF_PROJECT_LIST), 
+	 		B.STATUS 
+		FROM 
+			TF_MEMBER A, TF_PROJECT_LIST B 
+		WHERE 
+			A.IDX = B.IDX 
+		AND 
+			A.TYPE = 'C'
+	]]>						
+ 	</select>
+ 	
+ 	<select id="adminCmemInfoCon" resultType="hashmap" parameterType="com.port.service.MemberVo" >
+   	<![CDATA[  
+   		SELECT 
+	   	 	A.IDX, 
+	   	 	A.ID, 
+	   	 	A.NICK, 
+	   	 	A.NAME, 
+	   	 	A.PHONE, 
+	   	 	A.ADDR, 
+	   	 	B.CNUMBER, 
+	   	 	B.CADDR 
+		FROM 
+			TF_MEMBER A, TF_CMEMBER_EXT B 
+		WHERE 
+			A.IDX = B.IDX 
+		AND 
+			A.TYPE ='C' 
+		AND 
+			A.IDX = #{idx}
+    ]]>	
+    </select>
+    
+    <select id="adminProJChkCon" resultType="hashmap" parameterType="com.port.service.ProjectVo">
+	<![CDATA[
+		SELECT 
+			PNAME, 
+			PCATE, 
+			PTFUNDS, 
+			PGRADE, 
+			INSDATE, 
+			CONTENTS, 
+			ITLIST
+		FROM 
+			TF_PROJECT_LIST 
+		WHERE 
+			PIDX = #{pIdx}
+	]]>	
+	</select>
+	
+	<select id="adminCmemChkList" resultType="com.port.service.MemberVo">
+	<![CDATA[
+		SELECT 
+			IDX, 
+			NAME, 
+			MODDATE, 
+			STATUS
+		FROM 
+			TF_MEMBER 
+		WHERE 
+			TYPE = 'C' 
+		AND 
+			STATUS = 0 
+		ORDER BY 
+			IDX DESC
+	]]>
+	</select>
+    
+    <select id="adminCmemInfoProj" resultType="com.port.service.ProjectVo">
+    <![CDATA[
+		SELECT 
+			PIDX, 
+			PNFUNDS, 
+			PTFUNDS, 
+			PNAME 
+		FROM 
+			TF_PROJECT_LIST 
+		WHERE 
+			STATUS = 1 
+		AND 
+			IDX = #{idx}
+	]]>	
+ 	</select>
+ 	
+   	<select id="adminInfoProjHis" resultType="com.port.service.ProjectVo">
+  	<![CDATA[		
+		SELECT 
+			PIDX, 
+			PNAME, 
+			PNFUNDS, 
+			PTFUNDS, 
+			INSDATE 
+		FROM 
+			TF_PROJECT_LIST 
+		WHERE 
+			STATUS > 3 
+		AND 
+			IDX = #{idx} 
+		ORDER BY 
+			PIDX DESC
+  	]]>  	
+  	</select>
+  		
+   	<select id="adminCmemInfoProjFundHis" resultType="hashmap">
+  	<![CDATA[	
+		SELECT 
+			A.NICK, 
+			B.AFUNDS, 
+			B.INSDATE, 
+			B.STATUS FROM 
+			TF_MEMBER A, 
+			TF_FUND_HIS B 
+		WHERE 
+			A.IDX = B.IDX 
+		AND 
+			B.PIDX = (SELECT PIDX FROM TF_PROJECT_LIST WHERE IDX = #{idx} AND STATUS = 1) 
+		ORDER BY 
+			B.FIDX DESC
+	]]>
+	</select>  
+	
+	<select id="adminCmemInfoProjQna" resultType="com.port.service.BoardVo">
+	<![CDATA[
+		SELECT 
+			* 
+		FROM 
+			TF_BOARD_QNA 
+		WHERE 
+			VIEWSTAT = 1 
+		AND 
+			BIDX = #{idx}
+		ORDER BY 
+			BIDX DESC
+	]]>
+	</select>
+
+	<select id="adminImemInfoList" resultType="com.port.service.MemberVo">
+	<![CDATA[
+		SELECT 
+			A.IDX, 
+			A.ID, 
+			A.NAME, 
+			A.STATUS, 
+			B.MONEY 
+		FROM 
+			TF_MEMBER A, TF_IMEMBER_EXT B 
+		WHERE 
+			A.IDX = B.IDX 
+		AND 
+			A.TYPE = 'I' 
+		ORDER BY 
+			IIDX DESC
+	]]>
+	</select>
+	
+	<select id="adminImemInfoCon" resultType="com.port.service.MemberVo">
+	<![CDATA[
+		SELECT 
+			IDX, 
+			ID, 
+			NAME, 
+			PHONE, 
+			ADDR 
+		FROM 
+			TF_MEMBER 
+		WHERE 
+			IDX = #{idx}
+	]]>
+	</select> 
+	
+	<select id="adminImemInfoMoneyHis" resultType="com.port.service.MoneyVo">
+	<![CDATA[
+		SELECT 
+			MIDX, 
+			CHGMONEY, 
+			INSDATE, 
+			STATUS 
+		FROM 
+			TF_MONEY_HIS 
+		WHERE 
+			IDX = #{idx}
+		ORDER BY 
+			MIDX DESC
+	]]>
+	</select>
+	
+	<select id="adminImemInfoProjHis" resultType="hashmap">
+	<![CDATA[
+		SELECT 
+			A.PIDX, 
+			A.PNAME, 
+			B.INFUNDS, 
+			B.INSDATE, 
+			A.PNFUNDS, 
+			A.PTFUNDS 
+		FROM 
+			TF_PROJECT_LIST A, TF_FUND_HIS B 
+		WHERE 
+			A.PIDX = B.PIDX 
+		AND 
+			B.IDX = #{idx}
+		ORDER BY 
+			B.FIDX DESC
+		]]>
+	</select>
+	
+	<select id="adminImemInfoQnaHis" resultType="hashmap">
+	<![CDATA[
+		SELECT 
+			A.NICK, 
+			B.TITLE, 
+			B.INSDATE, 
+			B.BDEPTH 
+		FROM 
+			TF_MEMBER A, TF_BOARD_QNA B 
+		WHERE 
+			A.IDX = B.IDX 
+		AND 
+			A.IDX = #{idx}
+		ORDER BY 
+			B.BIDX DESC
+	]]>
+	</select>	
+	
+	<select id="adminBoardFaqList" resultType="com.port.service.BoardVo">
+    <![CDATA[
+		SELECT 
+			* 
+		FROM 
+			TF_BOARD_FAQ 
+		WHERE 
+			VIEWSTAT >= 0
+		ORDER BY 
+			OBIDX DESC, RBIDX ASC
+     ]]>	
+    </select>
+    
+    <select id="adminBoardFaqCon" resultType="com.port.service.BoardVo">
+    <![CDATA[
+		SELECT 
+			* 
+		FROM 
+			TF_BOARD_FAQ 
+		WHERE 
+			BIDX = #{bIdx}
+    ]]>
+    </select>
+    
+    <update id="adminBoardFaqMod" parameterType="com.port.service.BoardVo">
+	<![CDATA[
+		UPDATE 
+			TF_BOARD_FAQ 
+		SET 
+			CATE = #{cate}, 
+			TITLE = #{title}, 
+			CONTENTS = #{contents}, 
+			MODDATE = SYSDATE 
+		WHERE 
+			BIDX = #{bIdx}
+	]]>
+	</update>
+	
+	<select id="adminBoardNoticeList" resultType="com.port.service.BoardVo">
+	<![CDATA[
+		SELECT 
+			* 
+		FROM 
+			TF_BOARD_NOTICE 
+		WHERE 
+			VIEWSTAT >= 0 
+		ORDER BY 
+			OBIDX DESC, RBIDX ASC
+	]]>
+	</select> 
+	
+	<select id="adminBoardNoticeCon" resultType="com.port.service.BoardVo">
+	<![CDATA[
+		SELECT 
+			* 
+		FROM 
+			TF_BOARD_NOTICE 
+		WHERE 
+			BIDX = #{bIdx}
+	]]>
+	</select>
+	
+	<select id="adminBoardQnaList" resultType="com.port.service.BoardVo">
+	<![CDATA[
+		SELECT 
+			* 
+		FROM 
+			TF_BOARD_QNA
+		WHERE 
+			VIEWSTAT >= 0 
+		ORDER BY 
+			OBIDX DESC, RBIDX ASC
+	]]>
+	</select> 
+	
+</mapper>
+

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.port.service.ProjectMapper">
+
+	<select id="projListByCate" parameterType="String" resultType="com.port.service.ProjectVo">
+	<![CDATA[	
+		SELECT 
+			* 
+		FROM 
+			TF_PROJECT_LIST 
+		WHERE 
+			STATUS = 1 
+		AND 
+			PCATE = #{pCate}
+		ORDER BY 
+			PIDX DESC
+	]]>
+	</select>
+	
+	<select id="projListByPower" resultType="com.port.service.ProjectVo">
+	<![CDATA[
+		SELECT 
+			* 
+		FROM 
+			TF_PROJECT_LIST  
+		WHERE 
+			STATUS = 1 
+		ORDER BY 
+			PNFUNDS DESC
+	]]>	
+	</select>
+	
+	<select id="projListByTech" resultType="com.port.service.ProjectVo">
+	<![CDATA[
+		SELECT 
+			*
+		FROM 
+			TF_PROJECT_LIST 
+		WHERE 
+			STATUS = 1 
+		ORDER BY 
+			PGRADE DESC
+	]]>
+	</select>
+	
+	<select id="projCon" parameterType="int" resultType="com.port.service.ProjectVo">
+	<![CDATA[
+		SELECT 
+			* 
+		FROM 
+			TF_PROJECT_LIST  
+		WHERE 
+			PIDX = #{pIdx}
+	]]>
+	</select>
+	
+	<select id="projConItemList" parameterType="int" resultType="com.port.service.ItemVo">
+	<![CDATA[
+		SELECT 
+			ROWNUM, 
+			A.*
+		FROM
+			(SELECT 
+				* 
+			FROM 
+				TF_ITEM_LIST 
+			WHERE 
+				PIDX = #{pIdx} 
+			AND 
+				(STATUS= 0 OR STATUS = 1)) A
+	]]>
+	</select>
+	
+	<select id="projPayItem" parameterType="int" resultType="com.port.service.ProjectVo">
+	<![CDATA[
+		SELECT 
+			* 
+		FROM 
+			TF_ITEM_LIST 
+		WHERE 
+			ITIDX = #{itIdx} 
+	]]>
+	</select>
+	
+	<select id="projPayMyMoney" parameterType="int" resultType="hashmap">
+	<![CDATA[
+		SELECT 
+			A.*, 
+			B.MONEY 
+		FROM 
+			TF_MEMBER A, TF_IMEMBER_EXT B 
+		WHERE 
+			A.IDX = B.IDX 
+		AND 
+			A.IDX = #{sess_idx}
+	]]>
+	</select>
+	
+	<select id="projConCmem" parameterType="int" resultType="com.port.service.MemberVo">
+	<![CDATA[	
+		SELECT 
+			* 
+		FROM 
+			TF_CMEMBER_EXT 
+		WHERE 
+			IDX = (SELECT IDX FROM TF_PROJECT_LIST WHERE PIDX = #{pIdx})
+	]]>	
+	</select>
+	
+	<select id="projConCommList" parameterType="int" resultType="com.port.service.ProjectCommVo">
+	<![CDATA[
+		SELECT 
+			* 
+		FROM 
+			TF_PROJECT_COMM 
+		WHERE 
+			VIEWSTAT = 1 
+		AND 
+			PIDX = #{pIdx}
+		ORDER BY 
+			OPCOMMIDX DESC, 
+			RPCOMMIDX ASC
+	]]>
+	</select>
+ 
+</mapper>

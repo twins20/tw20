@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+.bodyMain .cmemberInfoExtWriteAction {
+	width: 450px;
+	postion : absolute;
+	top : 0;
+	bottom: 0;
+	margin : auto;
+}

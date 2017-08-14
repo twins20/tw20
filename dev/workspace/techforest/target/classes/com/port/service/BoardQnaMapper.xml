@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.port.service.BoardQnaMapper">
+
+	<insert id="boardQnaWrite" parameterType="com.port.service.BoardVo">
+	<![CDATA[	
+		INSERT INTO TF_BOARD_QNA 
+			(BIDX, 
+			IDX, 
+			CATE, 
+			TITLE, 
+			CONTENTS, 
+			HIT, 
+			GOOD, 
+			BAD, 
+			OBIDX, 
+			RBIDX, 
+			BDEPTH, 
+			COMMCNT, 
+			VIEWSTAT, 
+			INSDATE, 
+			MODDATE)
+		VALUES 
+			(SEQ_TF_BIDX_QNA.NEXTVAL, 
+			#{idx}, 
+			#{cate, jdbcType=VARCHAR}, 
+			#{title}, 
+			#{contents}, 
+			0, 
+			0, 
+			0, 
+			SEQ_TF_BIDX_QNA.CURRVAL, 
+			1, 
+			1, 
+			0, 
+			1, 
+			SYSDATE, 
+			SYSDATE)
+	]]>			  
+	</insert>
+
+	<select id="boardQnaList" resultType="com.port.service.BoardVo" >
+	<![CDATA[
+		SELECT 
+			* 
+		FROM 
+			TF_BOARD_QNA 
+		WHERE 
+			VIEWSTAT = 1 
+		AND 
+			IDX = #{idx}
+		ORDER BY 
+			BIDX DESC	
+	]]>	
+	</select>
+	
+	<select id="boardQnaCon" resultType="com.port.service.BoardVo" parameterType="int" >
+	<![CDATA[
+		SELECT 
+			* 
+		FROM 
+			TF_BOARD_QNA 
+		WHERE 
+			BIDX = #{bIdx} 	
+	]]>	
+	</select>
+	
+	<update id ="boardQnaMod" parameterType="com.port.service.BoardVo">
+	<![CDATA[
+		UPDATE 
+			TF_BOARD_QNA 
+		SET 
+			TITLE = #{title}, 
+			CONTENTS = #{contents},  
+			MODDATE = SYSDATE 
+		WHERE 
+			BIDX = #{bIdx} 
+	]]>	
+	</update>
+	
+	<update id="boardQnaDel" parameterType="int">
+	<![CDATA[
+		UPDATE 
+			TF_BOARD_QNA 
+		SET 
+			VIEWSTAT = 0 
+		WHERE 
+			BIDX = #{bIdx} 
+	]]>		
+	</update>
+	
+	<update id="boardQnaHit" parameterType="int">
+	<![CDATA[
+		UPDATE 
+			TF_BOARD_QNA 
+		SET 
+			HIT = HIT +1 
+		WHERE 
+			BIDX = #{bIdx}
+	]]>	
+	</update>		  	 
+			  	 
+	<update id="boardQnaGood" parameterType="int">
+	<![CDATA[	
+		UPDATE 
+			TF_BOARD_QNA 
+		SET 
+			GOOD = GOOD + 1 
+		WHERE 
+			BIDX = #{bIdx}
+	]]>	
+	</update>		  	 
+
+	<update id="boardQnaBad" parameterType="int">
+	<![CDATA[
+		UPDATE 
+			TF_BOARD_QNA 
+		SET 
+			BAD = BAD +1 
+		WHERE 
+			BIDX = #{bIdx}
+	]]>	
+	</update>
+
+</mapper>
+ 
+
+

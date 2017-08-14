@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.port.service.CMemberMapper">
+	
+	<select id="cMemberIndexProjNowList" parameterType="int" resultType="com.port.service.ProjectVo">
+	<![CDATA[	
+		SELECT 
+			PIDX, 
+			IDX, 
+			PNAME, 
+			PCATE, 
+			PTFUNDS, 
+			PNFUNDS, 
+			PGRADE, 
+			STATUS 
+		FROM 
+			TF_PROJECT_LIST 
+		WHERE 
+			STATUS = 1			
+		AND 
+			IDX = #{idx}
+	]]>
+	</select>
+	
+	<select id="cMemberIndexCommList" parameterType="int" resultType="hashmap">
+	<![CDATA[	
+		SELECT 
+			B.NAME, 
+			A.COMMENTS, 
+			A.GOOD, 
+			A.BAD, 
+			A.INSDATE
+		FROM 
+			TF_PROJECT_COMM A, TF_MEMBER B
+		WHERE 
+			A.IDX = B.IDX
+		AND 
+			A.VIEWSTAT = 1 
+  		AND 
+  			PIDX = (SELECT PIDX FROM TF_PROJECT_LIST WHERE STATUS = 1 AND IDX = #{sess_idx}) 
+  		ORDER BY 
+  			OPCOMMIDX DESC, RPCOMMIDX ASC
+	]]>
+	</select>	
+	
+	<select id="cMemberInfoExtWriteChk" parameterType="int" resultType="int">
+	<![CDATA[	
+		SELECT 
+			COUNT(*) 
+		FROM 
+			TF_CMEMBER_EXT 
+		WHERE 
+			IDX = #{sess_idx}
+	]]> 		
+	</select>
+	
+	<insert id="cMemberInfoExtWrite" parameterType="hashmap">
+	<![CDATA[
+		INSERT INTO TF_CMEMBER_EXT
+			(CIDX, 
+			IDX, 
+			COMPANY, 
+			CNUMBER, 
+			CADDR)
+		VALUES
+			(SEQ_TF_CIDX.NEXTVAL, 
+			#{sess_idx}, 
+			#{company}, 
+			#{cNumber}, 
+			#{cAddr})
+	]]>
+	</insert>
+	
+	<select id="cMemberInfoCon" parameterType="int" resultType="hashmap">
+	<![CDATA[
+		SELECT 
+			A.*, 
+			B.* 
+		FROM 
+			TF_MEMBER A, TF_CMEMBER_EXT B 
+		WHERE 
+			A.IDX = B.IDX(+)
+		AND 
+			A.IDX = #{sess_idx}
+	]]>			
+	</select>
+	
+	<select id="cMemberInfoModChk" parameterType="com.port.service.MemberVo" resultType="int">
+	<![CDATA[	
+		SELECT 
+			COUNT(*)
+		FROM 
+			TF_MEMBER 
+		WHERE 
+			IDX = #{idx}
+		AND 
+			PW = #{pw}
+	]]>	
+	</select>
+	
+	<update id="cMemberInfoMod" parameterType="com.port.service.MemberVo">
+	<![CDATA[	
+		UPDATE 
+			TF_MEMBER 
+		SET 
+			PW = #{pw}, 
+			NICK = #{nick}, 
+			PHONE = #{phone}, 
+			ADDR = #{addr}, 
+			MODDATE = SYSDATE 
+		WHERE 
+			IDX = #{idx}
+	]]>
+	</update>
+	
+	<select id="cMemberProjNowList" parameterType="int" resultType="com.port.service.ProjectVo">
+	<![CDATA[	
+		SELECT 
+			PIDX, 
+			IDX, 
+			PNAME, 
+			PCATE, 
+			PTFUNDS, 
+			PNFUNDS, 
+			PGRADE, 
+			STATUS 
+		FROM 
+			TF_PROJECT_LIST 
+		WHERE
+			STATUS = 1 
+		AND 
+			IDX = #{sess_idx}
+	]]>
+	</select>
+	
+	<select id="cMemberProjHisList" parameterType="int" resultType="com.port.service.ProjectVo">
+	<![CDATA[	
+		SELECT 
+			PIDX, 
+			IDX, 
+			PNAME, 
+			PCATE,
+			PTFUNDS, 
+			PNFUNDS, 
+			PGRADE, 
+			STATUS 
+		FROM 
+			TF_PROJECT_LIST 
+		WHERE 
+			STATUS > 3 
+		AND 
+			IDX = #{sess_idx}
+	]]>
+	</select>
+	
+	
+</mapper>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.port.service.MemberMapper">
+ 
+    <select id="memberLogIn" parameterType="com.port.service.MemberVo" resultType="hashmap">
+   	<![CDATA[  
+   	    SELECT 
+   	    	ROWNUM, 
+   	    	IDX, 
+   	    	ID, 
+   	    	NICK, 
+   	    	STATUS, 
+   	    	TYPE 
+   	    FROM 
+   	    	TF_MEMBER 
+   	    WHERE 
+   	    	ID = #{id} 
+   	    AND 
+   	    	PW = #{pw}
+   	]]>
+    </select>
+ 	
+ 	<insert id="memberJoin" parameterType="com.port.service.MemberVo">
+ 	<![CDATA[	
+ 		INSERT INTO TF_MEMBER
+	 		(IDX,
+	 		ID,
+	 		PW,
+	 		NAME,
+	 		NICK,
+	 		PHONE,
+	 		ADDR,
+	 		STATUS,
+	 		TYPE,
+	 		INSDATE) 
+ 		VALUES
+	 		(SEQ_TF_IDX.NEXTVAL, 
+	 		#{id}, 
+	 		#{pw}, 
+	 		#{name}, 
+	 		#{nick}, 
+	 		#{phone}, 
+	 		#{addr}, 
+	 		#{status},
+	 		#{type}, 
+	 		SYSDATE)
+ 	]]>
+ 	</insert>
+	
+	<select id="memberFindMail" parameterType="com.port.service.MemberVo" resultType="com.port.service.MemberVo">
+	<![CDATA[	
+		SELECT 
+			ROWNUM, 
+			ID 
+		FROM 
+			TF_MEMBER 
+		WHERE 
+			NAME = #{name} 
+		AND 
+			PHONE = #{phone}
+	]]>
+	</select>
+	
+	<select id="memberFindPass" parameterType="com.port.service.MemberVo" resultType="com.port.service.MemberVo">
+	<![CDATA[	
+		SELECT 
+			ROWNUM, 
+			PW 
+		FROM 
+			TF_MEMBER 
+		WHERE 
+			ID = #{id} 
+		AND 
+			NAME = #{name} 
+		AND 
+			PHONE = #{phone}
+	]]>
+	</select>
+
+</mapper>

@@ -1,0 +1,210 @@
+@CHARSET "UTF-8";
+
+/*Default divTable----------------------------------------------------------------------------------------------------------------------------------- */
+
+/*common divTable*/	
+.divTable {
+	width: 879px;		
+}
+.divTable .rowTitle {
+	background: #ddd;	
+	font-weight: bold;	
+}
+.divTable .col {
+	float: left;
+	height: 40px;
+	line-height: 40px;
+	vertical-align: middle;
+	border-bottom: 1px solid #ccc;
+	text-align: center;		
+}	
+	          
+/*cell4*/    
+.divTable .col4_1 {
+	width: 5%;
+ }
+.divTable .col4_2 {
+	width: 40%;
+ }   
+.divTable .col4_3 {
+	width: 30%;
+ }   
+.divTable .col4_4 {
+	width: 25%;
+ }    
+     
+/*cell5*/ 
+.divTable .col5_1 {
+	width: 5%;
+ }
+.divTable .col5_2 {
+	width: 35%;
+ }      
+.divTable .col5_3 {
+	width: 20%;
+ }      
+.divTable .col5_4 {
+	width: 20%;
+ }
+.divTable .col5_5 {
+	width: 20%; 
+}
+    
+/*cell6*/
+.divTable .col6_1 {
+	width: 5%;
+}
+.divTable .col6_2 {
+	width: 25%;
+}
+.divTable .col6_3 {
+	width: 20%;
+}
+.divTable .col6_4 {
+	width: 20%;
+}
+.divTable .col6_5 {
+	width: 15%;
+}
+.divTable .col6_6 {		
+	width: 126px;			
+}
+
+/*Default divTable----------------------------------------------------------------------------------------------------------------------------------- */
+
+/*투자자*/
+
+.imemDivTable {
+	width: 879px;		
+}
+.imemDivTable .rowTitle {
+	background: #ddd;	
+	font-weight: bold;	
+}
+.imemDivTable .col {
+	float: left;
+	height: 40px;
+	line-height: 40px;
+	vertical-align: middle;
+	border-bottom: 1px solid #ccc;
+	text-align: center;		
+}	
+/*cell3*/
+.imemDivTable .col3_1 {
+	width: 35%;
+ }
+.imemDivTable .col3_2 {
+	width: 30%;
+ }   
+.imemDivTable .col3_3 {
+	width: 30%;
+ }    
+
+/*cell4*/
+.imemDivTable .col4_1 {
+	width: 30%;
+ }
+.imemDivTable .col4_2 {
+	width: 25%;
+ }   
+.imemDivTable .col4_3 {
+	width: 25%;
+ }   
+.imemDivTable .col4_4 {
+	width: 20%;
+ }    
+ 
+ /*cell5*/ 
+.imemDivTable .col5_1 {
+	width: 5%;
+ }
+.imemDivTable .col5_2 {
+	width: 35%;
+ }      
+.imemDivTable .col5_3 {
+	width: 20%;
+ }      
+.imemDivTable .col5_4 {
+	width: 20%;
+ }
+.imemDivTable .col5_5 {
+	width: 20%; 
+}
+
+/*사업자*/
+
+.cmemDivTable {
+	width: 879px;		
+}
+.cmemDivTable .rowTitle {
+	background: #ddd;	
+	font-weight: bold;	
+}
+.cmemDivTable .col {
+	float: left;
+	height: 40px;
+	line-height: 40px;
+	vertical-align: middle;
+	border-bottom: 1px solid #ccc;
+	text-align: center;		
+}	
+/*cell3*/
+.cmemDivTable .col3_1 {
+	width: 35%;
+ }
+.cmemDivTable .col3_2 {
+	width: 30%;
+ }   
+.cmemDivTable .col3_3 {
+	width: 30%;
+ }    
+
+/*cell4*/
+.cmemDivTable .col4_1 {
+	width: 40%;
+ }
+.cmemDivTable .col4_2 {
+	width: 20%;
+ }   
+.cmemDivTable .col4_3 {
+	width: 20%;
+ }   
+.cmemDivTable .col4_4 {
+	width: 20%;
+ }    
+ 
+ /*cell5*/ 
+.cmemDivTable .col5_1 {
+	width: 30%;
+ }
+.cmemDivTable .col5_2 {
+	width: 20%;
+ }      
+.cmemDivTable .col5_3 {
+	width: 20%;
+ }      
+.cmemDivTable .col5_4 {
+	width: 20%;
+ }
+.cmemDivTable .col5_5 {
+	width: 10%; 
+}
+
+/*cell6*/
+.cmemDivTable .col6_1 {
+	width: 5%;
+}
+.cmemDivTable .col6_2 {
+	width: 25%;
+}
+.cmemDivTable .col6_3 {
+	width: 20%;
+}
+.cmemDivTable .col6_4 {
+	width: 20%;
+}
+.cmemDivTable .col6_5 {
+	width: 15%;
+}
+.cmemDivTable .col6_6 {		
+	width: 126px;	

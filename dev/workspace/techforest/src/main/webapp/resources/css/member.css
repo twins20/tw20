@@ -1,0 +1,13 @@
+@CHARSET "UTF-8";
+
+.bodyMain .memberLogIn {
+	width: 500px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.bodyMain .memberJoin {
+	width: 500px;
+	margin: 0 auto;
+	text-align: center;
+}

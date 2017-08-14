@@ -1,0 +1,123 @@
+@charset "UTF-8";
+
+.adminWrapper{
+	width:100%;
+	padding: 0;
+	margin: 0; 	 	
+}
+
+.adminPWrapper{
+	width:100%;
+	padding: 0;
+	margin: 0; 	 	
+}
+
+.adminQnaWrapper{
+	width:100%;
+	padding: 0;
+	margin: 0; 	 	
+}
+
+.btn-default{
+	margin-bottom: 3px;
+}
+
+.btn-primary{
+	margin-bottom: 3px;
+}
+
+.divTable{
+	margin-top: 10px;
+	margin-bottom: 40px;
+}
+
+.adminP{
+	font-size: 20px;
+	margin-top: 20px;
+	margin-left: 10px;
+	font-weight: bold;
+}
+
+.adminWrapper .adminP{
+	font-size: 20px;
+	margin-top: 10px;
+	margin-left: 10px;
+	font-weight: bold;
+}
+
+.adminWrapper .form-control{
+	width: 400px;
+}
+
+.adminWrapper .form-mod{
+	margin-left: 226px;
+}
+
+.pageP{
+	font-size: 20px;
+	margin-top: 20px;
+	margin-left: 5px;
+	margin-bottom: 15px;
+	padding-left: 10px;
+	font-weight: bold;
+	border-left : 5px solid black;	
+}
+
+.cmemImg{
+	width:700px;	
+	margin: 0 auto;
+	margin-top: 10px;
+	margin-left: 20px;
+	margin-bottom: 30px;
+}
+
+.cmemImg .Img{
+	border: 2px solid #ccc;
+}
+
+.AdCmemInfopList{
+	margin-top: 20px;
+}
+
+.adminPWrapper .Box1{
+	margin: 0;
+	width: 400px;
+	display: inline-block;
+	float: left;
+}
+
+.adminPWrapper .Box2{
+	margin: 0;
+	width: 475px;
+	display: inline-block;
+	float: left;
+}
+
+.adminPWrapper .pCon1{
+	width: 475px;
+	margin-left: 20px;
+	margin-bottom: 8px;
+	padding: 0;
+	float: left;
+	display: inline-block;
+}	
+
+.adminPWrapper .pCon1 h4{
+	margin-top: 0px;
+	font-weight: bold;
+}
+
+.adminPWrapper .pCon2 h4{
+	margin-top: 20px;
+	font-weight: bold;
+}
+
+.adminQnaWrapper .qna2{
+	width: 250px;
+}
+.adminQnaWrapper .qna3{
+	width: 10%;
+}
+.adminQnaWrapper .qna6{
+	width: 189px;
+}

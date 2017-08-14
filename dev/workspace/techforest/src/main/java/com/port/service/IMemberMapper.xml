@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.port.service.IMemberMapper">
+	
+    <select id="iMemberProjectList" parameterType="int" resultType="hashmap"> 
+   	<![CDATA[    
+	   	SELECT 
+		   	X.RNUM, 
+		   	X.PIDX, 
+		   	X.IDX, 
+		   	X.PNAME, 
+		   	X.PCATE, 
+		   	X.PGRADE, 
+		   	X.PNFUNDS, 
+		   	X.PTFUNDS, 
+		   	X.INFUNDS, 
+		   	X.INSDATE    
+	    FROM
+	    	(SELECT 
+	    		ROWNUM 
+	    		RNUM, A.* 
+	    	FROM
+	    		(SELECT 
+		  			A.PIDX, 
+		  			A.IDX, 
+		  			A.PNAME, 
+		  			A.PCATE, 
+		  			A.PGRADE, 
+		  			A.PNFUNDS, 
+		  			A.PTFUNDS, 
+		  			B.INFUNDS, 
+		  			B.INSDATE
+	   	    	FROM 
+	   	    		TF_PROJECT_LIST A, 
+	   	    		TF_FUND_HIS B 
+	   	    	WHERE 
+	   	    		A.PIDX = B.PIDX
+	   	    	AND 
+	   	    		B.STATUS = 1
+	   	   		AND 
+	   	   			B.IDX = #{0}) A
+		    WHERE 
+		    	ROWNUM <= #{2}) X
+		WHERE 
+			X.RNUM >= #{1}
+   	]]>	   		
+    </select>
+    
+    <select id="iMemberProjectListTc" parameterType="hashmap" resultType="int">
+    <![CDATA[
+    	SELECT 
+    		COUNT(*) 
+    	FROM 
+    		TF_PROJECT_LIST A, 
+    		TF_FUND_HIS B 
+	    WHERE 
+	    	A.PIDX = B.PIDX
+	   	AND 
+	   		B.STATUS = 1
+	   	AND 
+	   		B.IDX = #{sess_idx}
+	]]>
+    </select>
+    
+    <select id="iMemberQnaList" parameterType="int" resultType="com.port.service.BoardVo">
+    <![CDATA[	
+    	SELECT 
+	    	X.RNUM, 
+	    	X.BIDX, 
+	    	X.CATE, 
+	    	X.TITLE, 
+	    	X.VIEWSTAT, 
+	    	X.INSDATE
+	    FROM
+	    	(SELECT 
+	    		ROWNUM RNUM, 
+	    		A.* 
+	    	FROM
+	    		(SELECT 
+		    		BIDX, 
+		    		CATE, 
+		    		TITLE, 
+		    		VIEWSTAT, 
+		    		INSDATE 
+            	FROM 
+            		TF_BOARD_QNA 
+            	WHERE 
+            		VIEWSTAT = 1 
+                	AND IDX = #{0} 
+                ORDER BY 
+                	OBIDX DESC, RBIDX ASC) A
+	    	WHERE 
+	    		ROWNUM <= #{2}) X
+	    WHERE 
+	    	X.RNUM >= #{1}
+    ]]>			
+    </select>
+    
+    <select id="iMemberQnaListTc" parameterType="hashmap" resultType="int">
+    <![CDATA[	
+    	SELECT 
+    		COUNT(*)
+        FROM 
+        	TF_BOARD_QNA 
+        WHERE 
+        	VIEWSTAT = 1 
+        AND 
+        	IDX = #{sess_idx}
+    ]]>
+    </select>
+    
+    <select id="iMemberInfoCon" parameterType="int" resultType="com.port.service.MemberVo">
+    <![CDATA[	
+    	SELECT 
+    		* 
+    	FROM 
+    		TF_MEMBER 
+    	WHERE 
+    		IDX = #{sess_idx}
+    ]]>		
+    </select>
+    
+    <select id="iMemberInfoModChk" parameterType="com.port.service.MemberVo" resultType="int">
+    <![CDATA[	
+    	SELECT 
+    		COUNT(*) 
+    	FROM 
+    		TF_MEMBER 
+    	WHERE 
+    		IDX = #{idx} 
+    	AND 
+    		PW = #{pw}
+    ]]>			
+    </select>
+   	
+   	<update id="iMemInfoModAction" parameterType="hashmap">
+   	<![CDATA[	
+   		UPDATE 
+   			TF_MEMBER 
+		SET 
+			PW = #{pw}, 
+			NICK = #{nick}, 
+			PHONE = #{phone}, 
+			ADDR = #{addr}, 
+			MODDATE = SYSDATE 
+		WHERE 
+			IDX = #{sess_idx}
+	]]>		
+   	</update>
+    
+    <select id="iMemberMoneyHisList" parameterType="int" resultType="hashmap">
+    <![CDATA[    
+	   	SELECT 
+	   		X.RNUM, 
+	   		X.CHGMONEY, 
+	   		X.MONEY, 
+	   		X.STATUS, 
+	   		X.MODDATE    
+	    FROM
+	    	(SELECT 
+	    		ROWNUM RNUM, 
+	    		A.* 
+	    	FROM
+	    		(SELECT
+		    		A.*, 
+		    		B.MONEY 
+				FROM 
+					TF_MONEY_HIS A, TF_IMEMBER_EXT B 
+				WHERE 
+					A.IDX = B.IDX 
+				AND 
+					A.IDX = #{0} 
+				ORDER BY MODDATE DESC) A
+	         WHERE 
+	         	ROWNUM <= #{2}) X
+	    WHERE 
+	    	X.RNUM >= #{1}
+   	]]>	   		
+    </select>
+    
+    <select id="iMemberMoneyHisListTc" parameterType="hashmap" resultType="int">
+    <![CDATA[
+	    SELECT 
+	    	COUNT(*)
+		FROM 
+			TF_MONEY_HIS A, TF_IMEMBER_EXT B 
+		WHERE 
+			A.IDX = B.IDX 
+		AND 
+			A.IDX = #{sess_idx}
+    ]]>
+    </select>
+    
+    <insert id="iMemberMoneyCharge" parameterType="hashmap">
+	<![CDATA[	
+		INSERT INTO TF_MONEY_HIS 
+			(MIDX, 
+			IDX, 
+			CONTENTS, 
+			CHGMONEY, 
+			BMONEY, 
+			AMONEY, 
+			STATUS, 
+			TYPE, 
+			INSDATE, 
+			MODDATE) 
+		VALUES 
+			(SEQ_TF_MIDX.NEXTVAL, 
+			#{idx}, 
+			#{contents}, 
+			#{chgMoney}, 
+			(SELECT * FROM (SELECT AMONEY FROM TF_MONEY_HIS WHERE IDX = #{idx} ORDER BY MIDX DESC) WHERE ROWNUM = 1), 
+			(SELECT * FROM (SELECT AMONEY FROM TF_MONEY_HIS WHERE IDX = #{idx} ORDER BY MIDX DESC) WHERE ROWNUM = 1), 
+			0, 
+			0, 
+			SYSDATE,
+			SYSDATE)
+	]]>		
+    </insert>
+	
+	<select id="iMemberWishList" parameterType="int" resultType="com.port.service.ProjectVo">
+	<![CDATA[	
+		SELECT 
+			A.* 
+		FROM 
+			TF_PROJECT_LIST A,TF_WISH_LIST B 
+		WHERE 
+			A.PIDX = B.PIDX 
+		AND 
+			B.VIEWSTAT = 1 
+		AND 
+			A.STATUS = 1 
+		AND 
+			B.IDX = #{sess_idx} 
+		ORDER BY WIDX	
+	]]>
+	</select>
+	
+	<update id="iMemberWishListDel" parameterType="int">
+	<![CDATA[	
+		UPDATE 
+			TF_WISH_LIST 
+		SET 
+			VIEWSTAT = 0 
+		WHERE 
+			PIDX = #{pidx}
+	]]>
+	</update>
+ 
+</mapper>
+

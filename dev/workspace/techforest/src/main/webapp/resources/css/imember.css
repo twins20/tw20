@@ -1,0 +1,18 @@
+@CHARSET "UTF-8";
+
+.bodyMain .imemberCon, .imemberModifyAction {
+	width: 500px;
+	postion : absolute;
+	top : 0;
+	bottom: 0;
+	margin : auto;
+}
+
+.bodyMain .imemberModify {
+	margin: 0 auto;
+	text-align: center;
+}
+
+.bodyMain .form-inline {
+	text-align: center;
+}
