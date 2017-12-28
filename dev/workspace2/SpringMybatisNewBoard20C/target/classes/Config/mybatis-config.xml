@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+
+<!-- @Alias("bvo")사용할때 
+
+<typeAliases>
+  <package name="com.my.smnb20_2"/>
+</typeAliases>
+
+<typeAliases>
+  <typeAlias alias="bvo" type="com.my.smnb20_2.Domain.BoardVo"/>
+  <typeAlias alias="bm" type="com.my.smnb20_2.Dao.BoardDAO_ano_Father_Mapper"/>
+</typeAliases>
+
+<typeAliases>
+  <package name="com.my.smnb20_2.Dao"/>
+</typeAliases>
+
+-->
+
+<typeAliases>
+  <typeAlias alias="bvo" type="com.my.smnb20_2.Domain.BoardVO"/>
+  <typeAlias alias="mvo" type="com.my.smnb20_2.Domain.MemberVO"/>
+  <typeAlias alias="Criteria" type="com.my.smnb20_2.Domain.Criteria"/>
+  <typeAlias alias="SearchCriteria" type="com.my.smnb20_2.Domain.SearchCriteria"/>
+  <typeAlias alias="PageMaker" type="com.my.smnb20_2.Domain.PageMaker"/>
+</typeAliases>
+
+
+</configuration>

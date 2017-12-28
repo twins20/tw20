@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.my.smnb20_2.Dao.BoardDAO_ano_Father_Mapper">
+
+
+<!--  
+<resultMap type="com.my.smnb20_2.Domain.BoardVO" id="BoardVOResultMap">
+	<result property="bidx" column="BIDX"/>
+	<result property="originbidx" column="ORIGINBIDX"/>
+	<result property="updown" column="UPDOWN"/>
+	<result property="leftright" column="LEFTRIGHT"/>
+	<result property="subject" column="SUBJECT"/>
+	<result property="content" column="CONTENT"/>
+	<result property="writer" column="WRITER"/>
+	<result property="writedate" column="WRITEDATE"/>
+	<result property="modifydate" column="MODIFYDATE"/>
+	<result property="idx" column="IDX"/>
+</resultMap>
+
+<select id="getBoardList" resultMap="BoardVOResultMap">
+	select * from newboard20 order by originbidx, updown, leftright asc
+</select>
+-->
+
+<select id="getBoardList" resultType="bvo">
+	select * from newboard20 order by originbidx, updown, leftright asc
+</select>
+
+<select id="getBoardList_T" parameterType="Criteria" resultType="mvo">
+<![CDATA[select M.rnum,M.bidx,M.originbidx,M.updown,M.leftright,M.subject,M.content,
+      	M.writer,M.writedate,M.modifydate,M.idx 
+		from (select rownum as rnum,S.bidx,S.originbidx,S.updown,S.leftright,S.subject,
+             S.content,S.writer,S.writedate,S.modifydate,S.idx
+      		     from (select bidx,originbidx,updown,leftright,subject,content,writer,writedate,
+                   modifydate,idx from newboard20 order by originbidx desc, updown asc, leftright asc) S
+      		 where rownum <=#{pageEnd}) M
+	where M.rnum >= #{pageStart}]]>
+</select>
+
+
+<sql id="search">                          
+                          <if test="searchType != null">
+                          	<if test="searchType.equals('subject')">
+                          		and subject like '%'||#{keyword}||'%'
+                          	</if>
+                          	<if test="searchType.equals('writer')">
+                          		and writer like '%'||#{keyword}||'%'
+                          	</if>
+                          </if>
+</sql>
+
+
+<select id="getBoardList_TS" parameterType="SearchCriteria" resultType="bvo">
+<![CDATA[select M.rnum,M.bidx,M.originbidx,M.updown,M.leftright,M.subject,M.content,
+            	M.writer,M.writedate,M.modifydate,M.idx 
+		from (select rownum as rnum,S.bidx,S.originbidx,S.updown,S.leftright,S.subject,
+                     S.content,S.writer,S.writedate,S.modifydate,S.idx
+      		     from (select bidx,originbidx,updown,leftright,subject,content,writer,writedate,
+                              modifydate,idx from newboard20 
+                          where bidx > 0 
+]]>
+
+<include refid="search"></include>
+                                                                    
+<![CDATA[                         
+                          order by originbidx desc, updown asc, leftright asc) S
+      		     where rownum <=#{pageEnd}) M
+	    where M.rnum >= #{pageStart}
+]]>
+</select>
+
+
+<select id="getBoardList_R_TS" parameterType="SearchCriteria" resultType="bvo">
+<![CDATA[select M.rnum,M.bidx,M.originbidx,M.updown,M.leftright,M.subject,M.content,
+            	M.writer,M.writedate,M.modifydate,M.idx 
+		from (select rownum as rnum,S.bidx,S.originbidx,S.updown,S.leftright,S.subject,
+                     S.content,S.writer,S.writedate,S.modifydate,S.idx
+      		     from (select bidx,originbidx,updown,leftright,subject,content,writer,writedate,
+                              modifydate,idx from newboard20 
+                          where ( bidx > 0 
+]]>
+
+<include refid="search"></include>
+                   
+<![CDATA[                         
+                          ) or (bidx = #{bidx}) order by originbidx desc, updown asc, leftright asc) S
+      		     where rownum <=#{pageEnd}) M
+	    where M.rnum >= #{pageStart}
+]]>
+</select>
+
+
+
+<select id="getContent" parameterType="Integer" resultType="bvo">
+	SELECT bidx,originbidx,updown,leftright,subject,content,writer,writedate,modifydate, idx FROM newboard20 where bidx =#{Bidx}
+</select>
+
+<select id="MaxIdx"  resultType="Integer">
+	SELECT MAX(BIDX) as mx FROM newboard20
+</select>
+
+<select id="countPaging"  resultType="Integer">
+	<![CDATA[select count(bidx) from newboard20 where bidx > 0]]>
+</select>
+
+
+<select id="searchCountPaging" parameterType="SearchCriteria" resultType="Integer">
+	<![CDATA[select count(bidx) from newboard20 
+	             where bidx > 0 
+	]]>	 	
+	<include refid="search"></include>            
+</select>
+
+
+<select id="searchCountPaging_R" parameterType="SearchCriteria" resultType="Integer">
+	<![CDATA[select count(bidx) from newboard20 
+	             where (bidx = #{bidx}) or (bidx > 0 
+	]]>	 	
+	<include refid="search"></include>     
+				        )
+</select>
+
+
+<insert id="InsertDB" parameterType="HashMap">
+	INSERT into newboard20 values (#{bidx},#{bidx},0,0,#{subject},#{content},#{writer},#{writedate},#{writedate},#{idx})
+</insert>
+
+<insert id="ReplyInsertDB" parameterType="HashMap">
+	INSERT into newboard20 values (#{bidx},#{originbidx},#{updown},#{leftright},#{subject},#{content},#{writer},#{writedate},#{modifydate},#{idx})
+</insert>
+
+<delete id="DeleteDB" parameterType="Integer">
+	DELETE newboard20 where bidx = #{Bidx}
+</delete>
+
+<update id="UpdateDB" parameterType="HashMap">
+	UPDATE newboard20 set subject=#{subject}, content=#{content}, writer=#{writer}, modifydate=#{modifydate} where bidx = #{bidx}
+</update>
+
+<update id="ReplyUpdateDB" parameterType="HashMap">
+	UPDATE newboard20 set updown=updown+1 where originbidx=#{originbidx} and updown>#{updown}
+</update>
+
+</mapper>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.my.smnb20_2.Dao.MemberDAO_Father_Mapper">
+
+
+<!--  
+<resultMap type="com.my.smnb20_2.Domain.BoardVO" id="BoardVOResultMap">
+	<result property="bidx" column="BIDX"/>
+	<result property="originbidx" column="ORIGINBIDX"/>
+	<result property="updown" column="UPDOWN"/>
+	<result property="leftright" column="LEFTRIGHT"/>
+	<result property="subject" column="SUBJECT"/>
+	<result property="content" column="CONTENT"/>
+	<result property="writer" column="WRITER"/>
+	<result property="writedate" column="WRITEDATE"/>
+	<result property="modifydate" column="MODIFYDATE"/>
+	<result property="idx" column="IDX"/>
+</resultMap>
+
+<select id="getBoardList" resultMap="BoardVOResultMap">
+	select * from newboard20 order by originbidx, updown, leftright asc
+</select>
+-->
+
+<select id="loginCheck" parameterType="mvo" resultType="mvo">
+	select idx, name from member20 where id=#{id} and password=#{password}
+</select>
+
+<!--  
+<select id="loginCheck" parameterType="HashMap" resultType="mvo">
+	select idx, name from member20 where id=#{id} and password=#{password}
+</select>
+-->
+
+</mapper>
