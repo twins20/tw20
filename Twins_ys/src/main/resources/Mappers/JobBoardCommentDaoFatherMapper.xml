@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.twins.t20.Dao.JobBoardCommentDaoFatherMapper">
+
+	<update id="replyUpdateJobBoardComment" parameterType="HashMap">
+		update job_board_comment set jbcupdown=jbcupdown+1 where jbcidx=#{jbcidx} and jbcupdown>#{jbcupdown}
+	</update>
+	
+	<insert id="replyInsertJobBoardComment"  parameterType="JobBoardCommentVo" >
+		insert into job_board_comment values(#{jbcidx},#{jbcupdown}+1,{jbcleftright}+1,#{jbccontent},#{jbcwriter},#{jbcwritedate},#{jbidx},#{jmidx})
+	</insert>
+	
+	<delete id="deleteJobBoardComment" >
+		delete from job_board_comment where jbcidx=#{jbcidx}
+	</delete>
+	
+	<select id="getJobBoardCommentContent" parameterType="Integer" resultType="JobBoardCommentVo">
+		select * from job_board_comment where jbidx=#{jbidx}
+	</select>
+</mapper>
