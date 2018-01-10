@@ -11,7 +11,7 @@
 <br>
 <h1> Twins에 오신것을 환영합니다!! </h1>
 
-<br><a href="${pageContext.request.contextPath }/twins/jmJoinController">회원가입</a>
+<br><a href="${pageContext.request.contextPath }/twins/jmAgreementController">회원가입</a>
 <br><br>
 <a href="${pageContext.request.contextPath }/twins/jmLoginController">로그인페이지</a>
 <br><br>

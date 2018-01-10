@@ -2,6 +2,8 @@ package com.twins.t20.Service;
 
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import com.twins.t20.Domain.JobMemberVo;
 
 public interface JobMemberDaoFather {
@@ -15,5 +17,6 @@ public interface JobMemberDaoFather {
 	public int changePsword(HashMap<String, Object> map);
 	public int modifyJobMember(HashMap<String, Object> map);
 	public JobMemberVo selectJobMember(int jmidx);
+	public void loginout(HttpSession session);
 	
 }

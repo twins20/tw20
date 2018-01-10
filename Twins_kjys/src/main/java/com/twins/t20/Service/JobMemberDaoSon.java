@@ -2,6 +2,7 @@ package com.twins.t20.Service;
 
 import java.util.HashMap;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.apache.ibatis.session.SqlSession;
@@ -117,6 +118,12 @@ public class JobMemberDaoSon implements JobMemberDaoFather{
 		JobMemberVo jmv = jmdfm.selectJobMember(jmidx);
 		
 		return jmv;
+	}
+
+	@Override
+	public void loginout(HttpSession session) {
+		
+		session.invalidate();
 	}
 
 }

@@ -11,7 +11,7 @@
 <h1>회원 탈퇴</h1>
 <p> ${jmv.jmname}님의 회원탈퇴 처리를 하였습니다. 이용해 주셔서 감사합니다.</p>
 <form name = "loginform" action="${pageContext.request.contextPath }/twins/jmJoinController">
-<input type = "submit" value="확인">
+			<input type = "submit" value="확인">
 </form>
 </body>
 </html>

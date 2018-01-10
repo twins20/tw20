@@ -5,10 +5,16 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,7 +33,9 @@ public class JobMemberController {
 	@Autowired
 	private JobMemberDaoFather jmds;
 	
-	
+	 @Autowired
+	 JavaMailSender mailSender;
+	 
 	@RequestMapping(value="/jmMainController")
 	public String JobMemberMain(
 			JobMemberVo jmv,
@@ -85,7 +93,13 @@ public class JobMemberController {
 
 		return "redirect:/twins/jmMainController";
 	}
-	
+	@RequestMapping(value="/jmLoginOutController")
+	public String JobMemberLoginOut(HttpSession session,Model model){
+		
+		jmds.loginout(session);
+		System.out.println("로그아웃"+session);
+		return "redirect:/twins/jmLoginController";
+	}
 	
 	@RequestMapping(value="/jmJoinController")
 	public String JobMemberJoin(
@@ -129,17 +143,6 @@ public class JobMemberController {
 			return "redirect:/twins/jmLoginController";
 		}		
 	}
-	
-		
-	@RequestMapping(value="/jmConfimController")
-	public String JobMemberConfirm(
-//			@RequestParam("jmid")String jmid,
-//			Model model
-		   ){
-		
-		return "/Member/TwinsMemberConfirm";
-	}
-	
 	
 	@RequestMapping(value="/jmConfirmIDController")
 	public String JobMemberConfirmID(
@@ -388,7 +391,7 @@ public class JobMemberController {
 		} else {		
 			String msg = "Twins 회원이 아닙니다. 회원가입을 해주십시요.";
 			rttr.addAttribute("msg",  msg);
-			return "redirect:/twins/jmLoginController";	
+			return "redirect:/twins/jmMailController";	
 		}
 	}
 	
@@ -397,5 +400,39 @@ public class JobMemberController {
 	public String JobMemberBlankPage(){
 		
 		return "/Member/TwinsJobMemberBlankPage";
+	}
+	
+	@RequestMapping(value="/jmAgreementController")
+	public String JobMemberAgreement(){
+		
+		return "/Member/TwinsJobMemberJoinAgreement";
+	}
+	@RequestMapping(value="/jmMailController")
+	public String JobMemberMailSending(
+			JobMemberVo jmv,
+			Model model,
+			HttpServletResponse response){
+		
+		String email = jmv.getJmemail();
+		String content = jmv.getJmpsword();
+		
+		System.out.println("이메일"+email);
+		System.out.println("비번"+content);
+		 try {
+			MimeMessage message = mailSender.createMimeMessage();
+			MimeMessageHelper messageHelper  = new MimeMessageHelper(message, true, "UTF-8");
+			
+			messageHelper.setFrom("twinstw20@gmail.com");
+			messageHelper.setTo(email);
+			messageHelper.setText(content);
+			
+			mailSender.send(message);
+			
+		 } catch (MessagingException e) {
+		
+			e.printStackTrace();
+		} 
+		return "redirect:/twins/jmLoginController";
+		
 	}
 }

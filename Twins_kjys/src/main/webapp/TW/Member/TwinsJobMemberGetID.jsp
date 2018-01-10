@@ -5,35 +5,51 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
+<script type="text/javascript">
+function  GetID(){
+	var form = document.getform;
+	
+	if(form.jmname.value==""){
+		alert("이름을 입력하세요")
+	}
+	else if (form.jmemail.value==""){
+		alert("이메일을 입력하세요")
+	}
+	else{
+		form.submit();
+	}
+}
+
+</script>
 <body>
 <br>
 <h1>아이디 찾기</h1>
 <form name = "getform" action="${pageContext.request.contextPath }/twins/jmGetIDController">
 <table>
-<tr>
-<td>
-<input type = "text" name="jmname"> 이름
-</td>
-</tr>
-<tr>
-<td>
-<input type ="text" name="jmemail"> 이메일
-</td>
-</tr>
-<tr>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-</tr>
+	<tr>
+		<td>
+			<input type = "text" name="jmname"> 이름
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<input type ="text" name="jmemail"> 이메일
+		</td>
+	</tr>
+	<tr>
+		<td>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		</td>
+	</tr>
 </table>
-<input type ="submit" name ="submit" value="찾기">
+			<input type ="button" onclick="GetID();" value="찾기">
 </form>
 
 </body>

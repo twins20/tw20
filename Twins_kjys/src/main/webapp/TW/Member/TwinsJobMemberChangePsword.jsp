@@ -5,6 +5,23 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript">
+function  ChangePs(){
+	var form = document.form;
+	
+	if(form.jmpsword.value==""){
+		alert("비밀번호를 입력해주세요.");
+	}
+	else if(form.jmpsword.value != form.jmpswordchk.value){
+		alert("비밀번호를 동일하게 입력해주세요.");
+	}
+	else{
+		alert("비밀번호 성공하셧습니다.");
+		form.submit();
+	}
+}
+
+</script>
 </head>
 <body>
 <br>
@@ -18,20 +35,26 @@
 	<tr>
 		<td>
 			이 &nbsp; &nbsp; &nbsp; &nbsp; 름 
-			<input type="text" name="jmname" value="${jmv.jmname }">
+			<input type="text" name="jmname" value="${jmv.jmname }"disabled>
 		</td>
 	</tr>
 
 	<tr>
 		<td>
 			아 &nbsp; 이 &nbsp; 디 
-			<input type ="text" name="jmid" value="${jmv.jmid }">
+			<input type ="text" name="jmid" value="${jmv.jmid }"disabled >
 		</td></tr>
 
 	<tr>
 		<td>
 			새비밀번호 
-			<input type ="password" name="jmpsword" value="${jmv.jmpsword }">
+			<input type ="password" name="jmpsword" >
+		</td></tr>
+		
+	<tr>
+		<td>
+			새비밀번호 확인
+			<input type ="password" name="jmpswordchk">
 		</td></tr>
 	<tr><td>
 		</td></tr>
@@ -40,7 +63,7 @@
 	<tr><td>
 		</td></tr>
 	<tr><td>
-			<input type = "submit" value="확인"> ${msg}</td></tr>
+			<input type = "button" onclick="ChangePs();" value="확인"> ${msg}</td></tr>
 </table>
 </form>
 

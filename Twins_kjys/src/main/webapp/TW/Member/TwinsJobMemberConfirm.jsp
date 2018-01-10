@@ -4,14 +4,12 @@
 
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript">
-
-var result = ${rd};
-
-parent.message(result);
-
+	var result = '${rd}';
+	
+	parent.message(result);
 //		else if((id< "0" || id > "9") && (id < "A" || id > "Z") && (id < "a" || id > "z")){
 //			alert("한글 및 특수문자는 아이디로 사용할 수 없습니다.");
 //			return false;
