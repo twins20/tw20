@@ -11,6 +11,7 @@ public class JobBoardCommentController {
 		return null;
 	}	
 	
+	
 	@RequestMapping(value="/twins/jbcWriteController")
 	public String JobBoardCommentWrite(){
 		return null;
