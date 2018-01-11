@@ -85,21 +85,30 @@ function check() {
 page = ${page}<br>   
 jbidx = ${jbv.jbidx}<br>
 totalPage = ${totalPage}
-<p>scri.searchType = ${scri.searchType}</p> 
-<p>scri.keyword = ${scri.keyword}</p> 
+<p>pageMaker.scri.searchType = ${pageMaker.scri.searchType}</p> 
+<p>pageMaker.scri.keyword = ${pageMaker.scri.keyword}</p> 
+<p>jbv.jbcategory = ${jbv.jbcategory}</p> 
+<p>pageMaker.scri.jbidx = ${pageMaker.scri.jbidx}</p> 
+<p>pageMaker.scri.jbcategory = ${pageMaker.scri.jbcategory}</p> 
   
-<p>${ui.jmidx} / ${ui.jmname}님 반갑습니다.</p> 
+<p>${pageMaker.ui.jmidx} / ${pageMaker.ui.jmid} / ${pageMaker.ui.jmname}님 반갑습니다.</p> 
     
 <h1>답글 쓰기 화면입니다.</h1>
 
 <form name="form1">
 
-
+<!-- 
 <input type="hidden" name="jbidx" value="${jbv.jbidx}">
+<input type="hidden" name="jbcategory" value="${jbv.jbcategory}">
+
+<input type="hidden" name="jbwritedate" value="${jbv.jbwritedate}">
+ -->
+ 
 <input type="hidden" name="jboidx" value="${jbv.jboidx}">
 <input type="hidden" name="jbupdown" value="${jbv.jbupdown}">
 <input type="hidden" name="jbleftright" value="${jbv.jbleftright}">
-<input type="hidden" name="jbwritedate" value="${jbv.jbwritedate}">
+
+
 
 <table class=table border=1>
 

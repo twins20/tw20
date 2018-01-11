@@ -45,10 +45,12 @@ totalPage = ${totalPage}<br>
 pageMaker.totalPage = ${pageMaker.totalPage}
 
 <p>pageMaker.scri.searchType = ${pageMaker.scri.searchType}</p> 
-<p>pageMaker.scri.keyword = ${scri.keyword}</p> 
+<p>pageMaker.scri.keyword = ${pageMaker.scri.keyword}</p> 
+<p>pageMaker.scri.jbidx = ${pageMaker.scri.jbidx}</p> 
 <p>pageMaker.scri.jbcategory = ${pageMaker.scri.jbcategory}</p> 
 
-<p>${ui.jmidx} / ${ui.jmname}님 반갑습니다.</p> 
+
+<p>${ui.jmidx} / ${ui.jmid} / ${ui.jmname}님 반갑습니다.</p> 
 
 <h1>  내용보기 화면입니다. </h1>
 

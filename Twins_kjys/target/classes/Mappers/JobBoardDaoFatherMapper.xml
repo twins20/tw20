@@ -171,6 +171,12 @@
 	select * from job_board	where jbidx=#{jbidx}
 </select>
 
+
+<select id="getJobBoardContentJmidxForDelete" parameterType="Integer" resultType="Integer">
+	select jmidx from job_board	where jbidx=#{jbidx}
+</select>
+
+
 <update id="updateJobBoardReadrnum" parameterType="Integer">
 	update job_board set jbreadnum=jbreadnum+1 where jbidx=#{jbidx}
 </update>
@@ -190,9 +196,52 @@
 	#{jbwriter},#{jbwritedate},#{jbmodifydate},#{jbcategory},1,'n',#{jmidx})
 </insert>
 
+<!-- 
 <select id="getMyJobBoardList" parameterType="Integer" resultType="JobBoardVo">
 	select * from job_member m, job_board b
 	where m.jmidx = b.jmidx and b.jmidx=#{jmidx} and b.jbdeleted='n'
+</select>
+ -->
+
+<select id="getMyJobBoardList" parameterType="HashMap" resultType="JobBoardVo">
+<![CDATA[select 
+	M.rnum,M.jbidx,M.jboidx,M.jbupdown,M.jbleftright,M.jbsubject,M.jbcontent,
+	M.jbwriter,M.jbwritedate,M.jbmodifydate,M.jbcategory,M.jbreadnum,
+	M.jbdeleted,M.jmidx from 
+	(select rownum as rnum,S.jbidx,S.jboidx,S.jbupdown,S.jbleftright,S.jbsubject,
+        	S.jbcontent,S.jbwriter,S.jbwritedate,S.jbmodifydate,S.jbcategory,
+		S.jbreadnum,S.jbdeleted,S.jmidx from 
+		(select jbidx,jboidx,jbupdown,jbleftright,jbsubject,jbcontent,
+		jbwriter,jbwritedate,jbmodifydate,jbcategory,jbreadnum,jbdeleted,
+		b.jmidx from job_member m, job_board b 
+			where m.jmidx = b.jmidx and b.jmidx=#{jmidx} and jbdeleted='n' and  
+            (jbidx > 0 
+]]>
+
+			<if test="searchType != null">
+	           	<if test="searchType.equals('jbsubject')">
+	           		and jbsubject like '%'||#{keyword}||'%'
+	           	</if>
+	           	<if test="searchType.equals('jbwriter')">
+	           		and jbwriter like '%'||#{keyword}||'%'
+	           	</if>
+	           	<if test="searchType.equals('jbcontent')">
+	           		and jbcontent like '%'||#{keyword}||'%'
+	           	</if>
+	        </if>
+                                                                    
+<![CDATA[                         
+            )    
+		    order by jboidx desc, jbupdown asc, jbleftright asc) S
+      			where rownum <= #{pageEnd}) M
+	 where M.rnum >= #{pageStart}
+]]>
+</select>
+
+
+<select id="getMyJobBoardListCount" parameterType="Integer" resultType="Integer">
+	select count(*) from job_member m, job_board b
+	where m.jmidx = b.jmidx and b.jmidx=#{jmidx} and jbdeleted='n'
 </select>
 
 <select id="getMyJobBoardCommentContent" parameterType="Integer" resultType="JobBoardCommentVo">

@@ -32,7 +32,7 @@ jbcategory = ${pageMaker.scri.jbcategory}<br>
 
 <h1>목록보기 화면입니다</h1>
 <br>
-${pageMaker.ui.jmidx} / ${pageMaker.ui.jmname}님 반갑습니다. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+${pageMaker.ui.jmidx} / ${pageMaker.ui.jmid} / ${pageMaker.ui.jmname}님 반갑습니다. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <font color=blue>게시판을 선택한 후 검색버튼을 누르세요.</font>  
@@ -41,24 +41,25 @@ ${pageMaker.ui.jmidx} / ${pageMaker.ui.jmname}님 반갑습니다. &nbsp;&nbsp;&
 <form name="form1" action = "${pageContext.request.contextPath}/twins/jbListController">
 
 <input type="hidden" name='jmidx' id="jmidxInput" value='${ui.jmidx}'>
+<input type="hidden" name='jmid' id="jmidInput" value='${ui.jmid}'>
 <input type="hidden" name='jmname' id="jmnameInput" value='${ui.jmname}'> 
 
 <select name='searchType'>
   <option value=''
-  	<c:out value="${scri.searchType == null?'selected':''}"/>>
+  	<c:out value="${pageMaker.scri.searchType == null?'selected':''}"/>>
   	 -- 선택 -- </option>
   <option value='jbsubject'
-  	<c:out value="${scri.searchType eq 'jbsubject'?'selected':''}"/>>
+  	<c:out value="${pageMaker.scri.searchType eq 'jbsubject'?'selected':''}"/>>
   	제목</option>
   <option value='jbwriter'	
-  	<c:out value="${scri.searchType eq 'jbwriter'?'selected':''}"/>>
+  	<c:out value="${pageMaker.scri.searchType eq 'jbwriter'?'selected':''}"/>>
   	작성자</option>
   <option value='jbcontent'	
-  	<c:out value="${scri.searchType eq 'jbcontent'?'selected':''}"/>>
+  	<c:out value="${pageMaker.scri.searchType eq 'jbcontent'?'selected':''}"/>>
   	글내용</option>
 </select>
 
-<input type="text" name='keyword' id="keywordInput" value='${scri.keyword}'>
+<input type="text" name='keyword' id="keywordInput" value='${pageMaker.scri.keyword}'>
 
 <button id='searchBtn'>검색</button> &nbsp;&nbsp;&nbsp;
 

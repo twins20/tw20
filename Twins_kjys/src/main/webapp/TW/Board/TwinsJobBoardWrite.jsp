@@ -73,7 +73,7 @@ function check() {
 </head>
 <body>
 
-${ui.jmidx} / ${ui.jmname}님 반갑습니다.
+${ui.jmid} / ${ui.jmid} / ${ui.jmname}님 반갑습니다.
 
 <c:if test="${jbv.jmidx == null}">
   <c:set var="jmidx" value="${'7'}"/>	

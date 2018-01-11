@@ -22,11 +22,13 @@ public interface JobBoardDaoFatherMapper {
 	public int insertJobBoard(JobBoardVo jbv);	
 	public int updateJobBoard(HashMap<String, Object> map);
 	public JobBoardVo getJobBoardContent(int jbidx);
+	public  int getJobBoardContentJmidxForDelete(int jbidx);
 	public int updateJobBoardReadrnum(int jbidx);
 	public int deleteJobBaoard(int jbidx);
 	public int replyUpdateJobBoard(HashMap<String, Object> map);
 	public int replyInsertJobBoard(JobBoardVo jbv);
-	public JobBoardVo getMyJobBoardList(int jmidx);
+	public ArrayList<JobBoardVo> getMyJobBoardList(HashMap<String, Object> map);
+	public int getMyJobBoardListCount(int jmidx);
 	public ArrayList<JobBoardCommentVo> getMyJobBoardCommentContent(int jmidx);
 }
 

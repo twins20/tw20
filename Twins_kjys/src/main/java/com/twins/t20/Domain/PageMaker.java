@@ -72,6 +72,7 @@ public class PageMaker {
 			.queryParam( "keyword",  encoding( scri.getKeyword() ) )
 			.queryParam("jbcategory", scri.getJbcategory())
 			.queryParam("jmidx", ui.getJmidx())
+			.queryParam("jmid", ui.getJmid())
 			.queryParam("jmname",  encoding(ui.getJmname()))
 			.build();
 		
@@ -104,6 +105,7 @@ public class PageMaker {
 			.queryParam("jbidx", jbidx)
 			.queryParam("jbcategory", scri.getJbcategory())
 			.queryParam("jmidx", ui.getJmidx())
+			.queryParam("jmid", ui.getJmid())
 			.queryParam("jmname", encoding(ui.getJmname()))
 			.build();
 		
@@ -122,6 +124,7 @@ public class PageMaker {
 		.queryParam( "keyword",  encoding( scri.getKeyword() ) )
 		.queryParam("totalPage",  totalPage)
 		.queryParam("jmidx", ui.getJmidx())
+		.queryParam("jmid", ui.getJmid())
 		.queryParam("jmname", encoding(ui.getJmname()))
 		.build();
 	
@@ -140,6 +143,7 @@ public class PageMaker {
 		.queryParam("jbidx", jbidx)
 		.queryParam("jbcategory", scri.getJbcategory())
 		.queryParam("jmidx", ui.getJmidx())
+		.queryParam("jmid", ui.getJmid())
 		.queryParam("jmname", encoding(ui.getJmname()))
 		.build();
 	

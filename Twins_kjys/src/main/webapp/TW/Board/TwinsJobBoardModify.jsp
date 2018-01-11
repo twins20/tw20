@@ -72,7 +72,7 @@ function check() {
 <c:if test="${jbv == null}">
     <script type='text/javascript'>alert('수정할 항목을 선택하십시요.');</script>
 	<script type='text/javascript'>
-	    window.document.location.href='${pageContext.request.contextPath}/twins/jbListController${pageMaker.jmidxMakeSearch(page)}'; <!-- 동일 -->  
+	window.document.location.href='${pageContext.request.contextPath}/twins/jbListController${pageMaker.jmidxMakeSearch(page)}';  // 동일  
 	</script>
 
 </c:if>
@@ -80,10 +80,13 @@ function check() {
 <h1>  수정화면입니다. </h1>
 
 <p>page = ${page}</p> 
-<p>scri.searchType = ${scri.searchType}</p> 
-<p>pageMaker.scri.keyword = ${pageMaker.scri.keyword}</p> 
+<p>pageMaker.scri.searchType = ${pageMaker.scri.searchType}</p> 
+<p>pageMaker.scri.keyword = ${pageMaker.scri.keyword}</p>
+<p>pageMaker.scri.jbidx = ${pageMaker.scri.jbidx}</p> 
+<p>pageMaker.scri.jbcategory = ${pageMaker.scri.jbcategory}</p>
+ 
 
-<p>${ui.jmidx} / ${ui.jmname}님 반갑습니다.</p> 
+<p>${ui.jmidx} / ${ui.jmid} / ${ui.jmname}님 반갑습니다.</p> 
 
 <form name="form1">
 
@@ -132,11 +135,11 @@ function check() {
    <input type="button" value="새로고침" onclick="javascript:window.location.reload(true);">
    <input type="button" value="리셋" onclick="javascript:reset();">
    
- 
+<!-- 
    <input type="hidden" name="jmidx" value="1">
    <input type="hidden" name="jmname" value="GGG">
-
-   
+--> 
+    
    <input type="hidden" name="jbidx" value="${jbv.jbidx}">
   </td>
 </tr>

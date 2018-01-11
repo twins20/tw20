@@ -64,24 +64,41 @@ private static final Logger logger =
 		}
 		
 		if (scri.getJbcategory().equals("m")) {
+						
+			HashMap<String, Object> map = new HashMap<>();
+			ArrayList<JobBoardVo> alist = new ArrayList<JobBoardVo>();
 			
-			scri.setSearchType("jbwriter");
-			scri.setKeyword(ui.getJmname());
-			scri.setJbcategory("");
+//			System.out.println("L.C_m 의 jmidx = " + ui.getJmidx());
+//			System.out.println("L.C_m 의 scri.keyword = " + scri.getKeyword());
+					
+			map = jbds.getMyJobBoardList(scri, ui.getJmidx());
 			
-			System.out.println("\n\nHere!!! jbcategory is m ");
-			System.out.println("Here!!! ui 의 jmname = " + ui.getJmname() + "\n");
+			alist = (ArrayList<JobBoardVo>) map.get("list"); 	
+			int cnt = (int) map.get("cnt");
+			
+			model.addAttribute("list", alist);
+			
+			PageMaker pageMaker = new PageMaker();
+			pageMaker.setScri(scri);	// 중요
+			pageMaker.setUi(ui);		// 중요
+
+			pageMaker.setTotalCount(cnt);
+			
+//			model.addAttribute("scri", scri);
+			model.addAttribute("pageMaker", pageMaker);
+			 
+			return "/Board/TwinsJobBoardList";  						
 		}
 				
 		model.addAttribute("scri", scri);
 		
-		System.out.println("L.C의 jbcategory = " + scri.getJbcategory());
+//		System.out.println("L.C의 jbcategory = " + scri.getJbcategory());
 		
 		HashMap<String, Object> map = new HashMap<>();	;
 		
 		if (scri.getJbcategory().isEmpty()) {
 			
-			System.out.println("\n\nHere!!! jbcategory is empty \n");
+//			System.out.println("\n\nHere!!! jbcategory is empty \n");
 
 			map = jbds.getJobBoardList(scri);
 			list = (ArrayList<JobBoardVo>) map.get("list");
@@ -132,12 +149,11 @@ private static final Logger logger =
 			scri.setJbcategory("");
 		}
 		
-		if (scri.getJbcategory() == "m") {
-			
-			scri.setSearchType("jbwriter");
-			scri.setKeyword(ui.getJmname());
-			scri.setJbcategory("");
-		}
+//		if (scri.getJbcategory() == "m") {
+//			
+//			여기에서는 불필요함			
+//		
+//		}
 		
 		model.addAttribute("scri", scri);
 		
@@ -167,6 +183,7 @@ private static final Logger logger =
 		 
 		return "/Board/TwinsJobBoardList";  		 			
 	}
+	
 	
 //	@RequestMapping(value="/twins/jbList_nfcrdController")
 //	public String JobBoardList_nfcrd(
@@ -252,6 +269,7 @@ private static final Logger logger =
 //		return "/Board/TwinsJobBoardList";  		 	
 //	}
 	
+	
 	@RequestMapping(value="/jbContentController")
 	public String JobBoardContent(	
 			 @ModelAttribute("page") String page,
@@ -304,7 +322,7 @@ private static final Logger logger =
 			scri.setJbcategory("");
 		}
 				
-		model.addAttribute("scri", scri);
+//		model.addAttribute("scri", scri);
 		
 		if (totalPage.equals("")) totalPage = "1";	
 		int totalPagei = Integer.parseInt(totalPage);
@@ -313,6 +331,8 @@ private static final Logger logger =
 		pageMaker.setScri(scri);
 		pageMaker.setUi(ui);		// 중요
 		pageMaker.setTotalPage(totalPagei);
+		pageMaker.getScri().setJbcategory(jbv.getJbcategory());  // **
+		pageMaker.getScri().setJbidx(jbv.getJbidx());  // **
 		model.addAttribute("pageMaker", pageMaker);
 				
 		return "/Board/TwinsJobBoardContent";	
@@ -332,25 +352,36 @@ private static final Logger logger =
 			scri.setJbcategory("");
 		}
 		
-		model.addAttribute("scri", scri);
+//		model.addAttribute("scri", scri);
 
 		if (jbv.getJbidx() == 0) jbv.setJbidx(1);
 		
-		HashMap<String, Object> map = new HashMap<>();	
-		
 		try{
-			map = jbds.getJobBoardContent(jbv.getJbidx());	
+			jbv = jbds.getJobBoardContentWithoutUpdateReadnum(jbv.getJbidx());
 		}catch(Exception e){
 			e.printStackTrace();
 		}	
 		
+		if (jbv.getJmidx() != ui.getJmidx()) {
+			String msg = "글 작성자만 본인의 글을 수정할 수 있습니다."; 
+			return  "forward:/twins/jbListController?msg="+msg;
+		}
+		
+		HashMap<String, Object> map = new HashMap<>();	
+		
+		try{
+			map = jbds.getJobBoardContent(jbv.getJbidx());
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
 		jbv = (JobBoardVo)map.get("jbv");
 		int rd = (int) map.get("rd");  // 추후 처리
-		
+				
 		//jbv.setJbidx(0);   // 테스트용
 		
 		model.addAttribute("jbv", jbv);					
-		model.addAttribute("scri", scri);
+		//model.addAttribute("scri", scri);
 		model.addAttribute("page", page);
 		model.addAttribute("m", m);
 		model.addAttribute("ui", ui);
@@ -358,6 +389,8 @@ private static final Logger logger =
 		PageMaker pageMaker = new PageMaker();	
 		pageMaker.setScri(scri);
 		pageMaker.setUi(ui);		// 중요
+		pageMaker.getScri().setJbcategory(jbv.getJbcategory());  // **
+		pageMaker.getScri().setJbidx(jbv.getJbidx());  // **
 
 		model.addAttribute("pageMaker", pageMaker);
 				 
@@ -389,14 +422,18 @@ private static final Logger logger =
 		
 		int jmidx = ui.getJmidx();
 		String jmname = ui.getJmname();
-		if(jmname == null) jmname="";  // 임시로 // null pointer exception을 방지하기 위해
-		jmidx = 1;
-		ui.setJmidx(1);
-		jbv.setJmidx(1);
-		
+		String jmid = ui.getJmid();
+		if(jmname == null) {
+			
+			jmname="";  // 임시로 // null pointer exception을 방지하기 위해
+			jmid = "";
+			jmidx = 1;
+			ui.setJmidx(1);
+			jbv.setJmidx(1);
+		}
+
 		int page = scri.getPage();
-		
-		
+			
 		try {
 			jmname = URLEncoder.encode(jmname, "UTF-8");	// 한글 깨짐 방지
 		} catch (UnsupportedEncodingException en) {
@@ -418,7 +455,7 @@ private static final Logger logger =
 		
 		if (jbv.getJmidx() == 0) {
 			String msg = "jmidx를 입력하세요.";
-			return "forward:/twins/jbListController?msg="+msg+"&jmidx="+jmidx+"&jmname="+jmname;
+			return "forward:/twins/jbListController?msg="+msg+"&jmidx="+jmidx+"&jmid="+jmid+"&jmname="+jmname;
 		}  
 		
 		if (jbv.getJbidx() == 0) {
@@ -452,13 +489,13 @@ private static final Logger logger =
 		
 		//rd = 0;		//테스트 용
 		
-		if (rd == 0 && m.getIsUpdate() == "Yes") {		
+		if (rd == 0 && m.getIsUpdate().equals("Yes")) {		
 			String msg = "수정에 실패하였습니다. 다시입력해 주십시요.";	    	
 			return "forward:/twins/jbModifyController?msg="+msg;	// 이렇게 해야됨(forward : post방식)
 		
 		//return "redirect://twins/jbListController?msg="+msg; // 비교 : 이렇게 하면 한글 깨짐(redired:get방식)
 		
-		} else if (rd == 1 && m.getIsUpdate() == "Yes"){			
+		} else if (rd == 1 && m.getIsUpdate().equals("Yes")){			
 			String msg = "수정하여 저장하였습니다.";
 		try {
 			msg = URLEncoder.encode(msg, "UTF-8");	// 한글 깨짐 방지
@@ -473,7 +510,7 @@ private static final Logger logger =
 		System.out.println("\n\nhere!!!!! page = "+ page + "\n\n");
 		
 		return "redirect:/twins/jbContentController?jbidx="+jbidx+"&rds="+rds		// 업데이트는 redirect방식 사용
-		+"&isUpdate="+isUpdate+"&msg="+msg+"&page="+page+"&jmidx="+jmidx+"&jmname="+jmname;
+		+"&isUpdate="+isUpdate+"&msg="+msg+"&page="+page+"&jmidx="+jmidx+"&jmid="+jmid+"&jmname="+jmname;
 		//+"&searchType="+searchType+"keyword="+keyword+"&jbcategory="+jbcategory;
 		} 
 		
@@ -502,33 +539,25 @@ private static final Logger logger =
 		
 		int jmidx = ui.getJmidx();
 		String jmname = ui.getJmname();
-		if(jmname == null) jmname="";
+		String jmid = ui.getJmid();
+		if(jmname == null) {
+			jmname="";
+			jmid = "";
+		}
 		
 		try {
 			jmname = URLEncoder.encode(jmname, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}  
-				
-//		if (scri.getJbcategory().isEmpty()) {
-//			
-//			String msg = "글을 쓸 게시판 종류를 먼저 선택하세요.";
-//			
-//			try {
-//				msg = URLEncoder.encode(msg, "UTF-8");
-//			} catch (UnsupportedEncodingException e) {
-//				e.printStackTrace();
-//			}  
-//			return "redirect:/twins/jbListController?msg="+msg+"&jmidx="+jmidx+"&jmname="+jmname;
-//		}
 		
-		// ---- 
-		
-		if (m.getRds() == "") { 
+		// if(m.getRds().isEmpty()) 또는 if(m.getRds().equals(""))로 하면
+		// NullPointerException이 일어남
+		if (m.getRds()==null) {   
 			m.setRds("0");
 		}
 		
-		System.out.println("\n\n/twins/jbWriteController의 ui.jmname ="+ui.getJmname()+"\n\n");
+//		System.out.println("\n\n/twins/jbWriteController의 ui.jmname ="+ui.getJmname()+"\n\n");
 		
 		model.addAttribute("m", m);
 		model.addAttribute("jbv",jbv);
@@ -578,11 +607,15 @@ private static final Logger logger =
 			scri.setJbcategory("");
 		}
 
-		model.addAttribute("scri", scri);
+//		model.addAttribute("scri", scri);
 		
 		int jmidx = ui.getJmidx();
 		String jmname = ui.getJmname();
-		if(jmname == null) jmname="";
+		String jmid = ui.getJmid();
+		if(jmname == null) {
+			jmname="";
+			jmid = "";
+		}
 		
 		try {
 			jmname = URLEncoder.encode(jmname, "UTF-8");
@@ -600,7 +633,25 @@ private static final Logger logger =
 				e.printStackTrace();
 			}  
 			
-			return "redirect:/twins/jbWriteController?msg="+msg+"&jmidx="+jmidx+"&jmname="+jmname;
+			return "redirect:/twins/jbWriteController?msg="+msg+"&jmidx="+jmidx+"&jmid="+jmid+"&jmname="+jmname;
+		}
+		
+		
+		if (scri.getJbcategory().equals("n") && ui.getJmidx() != 1) {
+			
+			String msg = "공지사항은 관리자만 쓸 수 있습니다.";
+			String searchType = scri.getSearchType();
+			String keyword = scri.getKeyword();
+			
+			try {
+				msg = URLEncoder.encode(msg, "UTF-8");
+				keyword = URLEncoder.encode(keyword, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}  
+			
+			return "redirect:/twins/jbListController?msg="+msg+"&jmidx="+jmidx+"&jmid="+jmid
+					+"&jmname="+jmname+"&searchType="+searchType+"&keyword="+keyword;
 		}
 		
 		// ----
@@ -613,11 +664,11 @@ private static final Logger logger =
 			jmidx = 10;
 		}
 		
-//		if (jbv.getJbcategory() == "") {
+//		if (jbv.getJbcategory().equals("")) {
 //			jbv.setJbcategory("f");  // 임시로
 //		}
 		
-		System.out.println("\n\n/twins/jbWriteActionController의 ui.jmname 1 ="+ui.getJmname()+"\n\n");
+//		System.out.println("\n\n/twins/jbWriteActionController의 ui.jmname 1 ="+ui.getJmname()+"\n\n");
 		
 		boolean isRedirect = false; 		
 		m.setIsWright("Yes");
@@ -625,30 +676,30 @@ private static final Logger logger =
 		String msg = "";
 		int RD = 0;
 		
-		System.out.println("\n\n/twins/jbWriteActionController의 ui.jmidx = "+ui.getJmidx());
-		System.out.println("/twins/jbWriteActionControlle의 jbv.jmidx = "+jbv.getJmidx()+"\n\n");
-		System.out.println("/twins/jbWriteActionController의 m.getRds() = "+m.getRds()+"\n\n");		
+//		System.out.println("\n\n/twins/jbWriteActionController의 ui.jmidx = "+ui.getJmidx());
+//		System.out.println("/twins/jbWriteActionControlle의 jbv.jmidx = "+jbv.getJmidx()+"\n\n");
+//		System.out.println("/twins/jbWriteActionController의 m.getRds() = "+m.getRds()+"\n\n");		
 		
 		//jboidx는 우선 hidden 으로 고정된 값을 받음		
 				
 		// 글을 쓰고 나서 이 메소드를 호출했는지 체크
 		// jbsubject를 사용하여 처음부터 시작했는지의 여부를 체크한다.
-		if (jbv.getJbsubject() == "") {   			
+		if (jbv.getJbsubject().equals("")) {   			
 			msg = "처음부터 시작하세요.";
 		
-			System.out.println("\n\n/twins/jbWriteActionController의 ui.jmname 2 ="+ui.getJmname()+"\n\n");
+//			System.out.println("\n\n/twins/jbWriteActionController의 ui.jmname 2 ="+ui.getJmname()+"\n\n");
 			return "forward:/twins/jbWriteController?msg="+msg;		
 		}
 		
-		// 이부분에서는 idx의 입력 여부를 체크해 본다.
+		// 이부분에서는 jmidx의 입력 여부를 체크해 본다.
 		if (jbv.getJmidx() == 0) {  
 			msg = "jmidx를 입력하세요.";
 		
-		return "forward:/twins/jbWriteController?msg="+msg+"&jmidx="+jmidx+"&jmname="+jmname;
+		return "forward:/twins/jbWriteController?msg="+msg+"&jmidx="+jmidx+"&jmid="+jmid+"&jmname="+jmname;
 		} 
 		
-		System.out.println("1 /twins/jbWriteActionController의 jbsubject = "+jbv.getJbsubject());
-		System.out.println("1 /twins/jbWriteActionController의 jbwriter = "+jbv.getJbwriter());
+//		System.out.println("1 /twins/jbWriteActionController의 jbsubject = "+jbv.getJbsubject());
+//		System.out.println("1 /twins/jbWriteActionController의 jbwriter = "+jbv.getJbwriter());
 		
 		String writedate = jbds.CreateyyMMdd();
 		String modifydate = jbds.CreateyyMMdd();
@@ -691,7 +742,7 @@ private static final Logger logger =
 		PageMaker pageMaker = new PageMaker();
 		
 		pageMaker.setScri(scri);
-		pageMaker.getScri().setPage(totalPagei);		
+		pageMaker.getScri().setPage(totalPagei);	
 		
 		// 글쓰기의 결과로 페이지가 하나 늘어날 경우를 대비해서 다시 한번 페이지 카운트를 업데이트 하는 과정
 		// descending으로 정렬하여 최근것을 앞에 보여주므로 맨 마지막 것에 해당하는 totalCount의 계산은 의미없지만 
@@ -719,10 +770,13 @@ private static final Logger logger =
 			String jbwriter = jbv.getJbwriter();
 			String rds = m.getRds();
 			String isWrite = m.getIsWright();
+//			pageMaker.getScri().setJbcategory(jbv.getJbcategory());  // **
+			String jbcategory = jbv.getJbcategory();
 			msg = m.getMsg();
 		
 			return "redirect:/twins/jbListController?jbsubject="+jbsubject+"&jbwriter="			
-					+jbwriter+"&rds="+rds+"&isWrite="+isWrite+"&msg="+msg+"&page="+"1"+"&jmidx="+jmidx+"&jmname="+jmname;
+					+jbwriter+"&rds="+rds+"&isWrite="+isWrite+"&msg="+msg+"&page="+"1"
+			        +"&jmidx="+jmidx+"&jmid="+jmid+"&jmname="+jmname+"&jbcategory="+jbcategory;
 					//descending으로 정렬하여 보여주므로 최근에 작성한 글은 무조건 1페이지에 나타난다.		
 		}else {
 			msg = m.getMsg();
@@ -746,12 +800,16 @@ private static final Logger logger =
 			scri.setJbcategory("");
 		}
 		
-		model.addAttribute("ui", ui);
-		model.addAttribute("scri", scri);
+//		model.addAttribute("ui", ui);
+//		model.addAttribute("scri", scri);
 		
 		int jmidx = ui.getJmidx();
 		String jmname = ui.getJmname();
-		if(jmname == null) jmname="";
+		String jmid = ui.getJmid();
+		if(jmname == null) {
+			jmname = "";
+			jmid = "";
+		}
 		
 		try {
 			jmname = URLEncoder.encode(jmname, "UTF-8");
@@ -762,17 +820,7 @@ private static final Logger logger =
 		//m.setRds("0");	// 테스트용
 		
 		model.addAttribute("m", m);	// /Board/TwinsJobBoardReply에서 m.rds값 체크.
-		
-		if (totalPage.equals("")) totalPage = "1";	
-		int totalPagei = Integer.parseInt(totalPage);
-		
-		PageMaker pageMaker = new PageMaker();	
-		pageMaker.setScri(scri);
-		pageMaker.setUi(ui);		// 중요
-		pageMaker.setTotalPage(totalPagei);
-		
-		model.addAttribute("pageMaker", pageMaker);
-		
+			
 		if (jbv.getJbidx() == 0){
 			jbv.setJbidx(1);
 		}
@@ -788,6 +836,17 @@ private static final Logger logger =
 		jbv = (JobBoardVo) map.get("jbv");
 		int rd = (int) map.get("rd");  // 추후 처리
 		
+		if (totalPage.equals("")) totalPage = "1";	
+		int totalPagei = Integer.parseInt(totalPage);
+		
+		PageMaker pageMaker = new PageMaker();	
+		pageMaker.setScri(scri);
+		pageMaker.setUi(ui);		// 중요
+		pageMaker.setTotalPage(totalPagei);	
+		pageMaker.getScri().setJbcategory(jbv.getJbcategory());  // **
+		pageMaker.getScri().setJbidx(jbv.getJbidx());  // **
+		model.addAttribute("pageMaker", pageMaker);
+		
 		//jbv.setJbidx(0);   // 테스트용
 		
 		model.addAttribute("jbv", jbv);	// 이것 하나로 충분
@@ -797,7 +856,8 @@ private static final Logger logger =
 		// 이 부분은 getContent()함수가 query 실패시 bv.bidx에 0 담아서 보내기 때문임
 		if (jbv.getJbidx() == 0) {
 			// 메시지 생략 ....
-			return "forward:/twins/jbListController?page="+page+"&jmidx="+jmidx+"&jmname="+jmname; 
+			return "forward:/twins/jbListController?page="+page+"&jmidx="
+					                +jmidx+"&jmid="+jmid+"&jmname="+jmname; 
 		} else {		
 			return "/Board/TwinsJobBoardReply";
 		}	 
@@ -825,10 +885,14 @@ private static final Logger logger =
 		
 		int jmidx = ui.getJmidx();
 		String jmname = ui.getJmname();
-		if(jmname == null) jmname="";
+		String jmid = ui.getJmid();
+		if(jmname == null) {
+			jmname = "";
+			jmid = "";
+		}
 		
-		System.out.println("R.A.C의 scri.searchType = " + scri.getSearchType());
-		System.out.println("R.A.C의 scri.page = " + scri.getPage());
+//		System.out.println("R.A.C의 scri.searchType = " + scri.getSearchType());
+//		System.out.println("R.A.C의 scri.page = " + scri.getPage());
 	
 		if (jmidx == 0) {
 			ui.setJmidx(10);
@@ -851,7 +915,7 @@ private static final Logger logger =
 		
 		// 글을 쓰고 나서 이 메소드를 호출했는지 체크
 		// jbsubject를 사용하여 처음부터 시작했는지의 여부를 체크한다.
-		if (jbv.getJbsubject() == "") {   			
+		if (jbv.getJbsubject().equals("")) {   			
 			msg = "처음부터 시작하세요.";		
 			return "forward:/twins/jbWriteController?msg="+msg;		
 		}
@@ -859,7 +923,8 @@ private static final Logger logger =
 		// 이부분은 프로그램 개발시 jmidx의 입력 여부를 체크해 본다.
 		if (jbv.getJmidx() == 0) {  
 			msg = "jmidx를 입력하세요.";
-			return "forward:/twins/jbListController?msg="+msg+"&jmidx="+jmidx+"&jmname="+jmname;
+			return "forward:/twins/jbListController?msg="+msg+"&jmidx="
+									+jmidx+"&jmid="+jmid+"&jmname="+jmname;
 		}
 		
 		String jbwritedate = jbds.CreateyyMMdd();
@@ -890,7 +955,7 @@ private static final Logger logger =
 		
 		//RD = 0;  //테스트용
 		
-		if (RD == 0 && m.getIsReply() == "Yes") {
+		if (RD == 0 && m.getIsReply().equals("Yes")) {
 		
 			msg = "답글을 저장하지 못했습니다. 다시 시도해주세요.";	
 		
@@ -960,8 +1025,8 @@ private static final Logger logger =
 		String isReply = m.getIsReply();
 		
 		return "redirect:/twins/jbListController_rm?jbsubject="+jbsubject+"&jbwriter="
-		  +jbwriter+"&rds="+rds+"&isReply="+isReply+"&msg="+msg+"&jmidx="+jmidx+"&jmname="+jmname
-		  +"&page="+page+"&totalPage="+totalPage
+		  +jbwriter+"&rds="+rds+"&isReply="+isReply+"&msg="+msg+"&jmidx="+jmidx+"&jmid="+jmid
+		  +"&jmname="+jmname+"&page="+page+"&totalPage="+totalPage
 		  +"&searchType="+searchType+"&keyword="+keyword+"&jbidx="+jbidx+"&jbcategory="+jbcategory;  
 		}
 	}
@@ -984,17 +1049,19 @@ private static final Logger logger =
 		
 		int jmidx=ui.getJmidx();
 		String jmname=ui.getJmname();
+		String jmid=ui.getJmid();
 		
 		m.setIsDelete("Yes");	    
 		String msg = "";
 		//	String rds = "1";	//테스트 용
 		m.setRds("0");
 		
-		jbv.setJmidx(2);  //임시로 지정   //테스트용
+//		jbv.setJmidx(2);  //임시로 지정   //테스트용
 		
 		if (jbv.getJmidx() == 0) {
 			msg = "jmidx를 입력하세요.";
-		return "forward:/twins/jbListController?msg="+msg+"&jmidx="+jmidx+"&jmname="+jmname;
+		return "forward:/twins/jbListController?msg="+msg
+				+"&jmidx="+jmidx+"&jmid="+jmid+"&jmname="+jmname;
 		}
 		
 		//jbv.setJbidx(0);	//테스트용
@@ -1004,17 +1071,31 @@ private static final Logger logger =
 		return "forward:/twins/jbListController?msg="+msg;			
 		}	
 		
+		System.out.println("D.A.C. 의 jbv.jmidx = " + jbv.getJmidx());
+		System.out.println("D.A.C. 의 ui.jmidx = " + ui.getJmidx());
+
+		jbv.setJmidx( jbds.getJobBoardContentJmidxForDelete(jbv.getJbidx()) );
+				
+		if (jbv.getJmidx()!=ui.getJmidx()){
+			
+			msg = "작성자 본인만 자신의 글을 삭제할 수 있습니다.";
+			
+			return "forward:/twins/jbContentController?msg="+msg;			
+		}
+		
 		int RD = 0;
 		int cnt = 0;
 		
 		cnt = jbds.deleteJobBaoard(scri); 
+		
+		System.out.println("D.A.C. 의 cnt = " + cnt);
 		
 		if (cnt == 0) RD = 0;
 		else RD = 1;
 		
 		//RD = 0;  // 테스트 용   	    
 		
-		if (RD == 1) m.setRds("1");		    	
+		if (RD == 1) m.setRds("1");	    	
 		else m.setRds("0");
 		
 		if (RD == 1) {						     

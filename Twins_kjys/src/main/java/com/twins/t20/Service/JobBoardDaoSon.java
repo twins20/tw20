@@ -131,6 +131,28 @@ public class JobBoardDaoSon implements JobBoardDaoFather{
 		
 		return map;
 	}
+	
+	
+	@Transactional
+	@Override
+	public JobBoardVo getJobBoardContentWithoutUpdateReadnum(int jbidx) { // 추후 수정
+		
+		JobBoardDaoFatherMapper jbdfm = sqlSession.getMapper(com.twins.t20.Dao.JobBoardDaoFatherMapper.class);		
+		JobBoardVo jbv = jbdfm.getJobBoardContent(jbidx);
+
+		return jbv;
+	}	
+	
+	
+	@Override
+	public  int getJobBoardContentJmidxForDelete(int jbidx) { 
+		
+		JobBoardDaoFatherMapper jbdfm = sqlSession.getMapper(com.twins.t20.Dao.JobBoardDaoFatherMapper.class);		
+		int jmidx = jbdfm.getJobBoardContentJmidxForDelete(jbidx);
+		
+		return jmidx;
+	}
+	
 
 	@Transactional
 	@Override
@@ -140,7 +162,7 @@ public class JobBoardDaoSon implements JobBoardDaoFather{
 		if (RD == 0) return 0;
 		
 		int cnt;
-		if(scri.getJbcategory().isEmpty()) {
+		if(scri.getJbcategory().isEmpty() || scri.getJbcategory().equals("m")) {
 			cnt= jbdfm.getJobBoardTotalRecordCount(scri);
 		}else {
 			cnt= jbdfm.getJobBoard_nfcrd_TotalRecordCount(scri);
@@ -171,11 +193,32 @@ public class JobBoardDaoSon implements JobBoardDaoFather{
 		else return 0;
 	}
 
+	@Transactional
 	@Override
-	public JobBoardVo getMyJobBoardList(int jmidx) {
+	public HashMap<String, Object> getMyJobBoardList(SearchCriteria scri, int jmidx) {
 		
-		return null;
+		ArrayList<JobBoardVo> alist = new ArrayList<JobBoardVo>();
+		JobBoardDaoFatherMapper jbdfm = sqlSession.getMapper(com.twins.t20.Dao.JobBoardDaoFatherMapper.class);
+		
+		HashMap<String, Object> map = new HashMap<>();
+				
+		map.put("searchType", scri.getSearchType());
+		map.put("keyword", scri.getKeyword());
+		map.put("pageStart", scri.getPageStart());
+		map.put("pageEnd", scri.getPageEnd());
+		map.put("jmidx", jmidx);
+		
+		alist = jbdfm.getMyJobBoardList(map);
+		int cnt = jbdfm.getMyJobBoardListCount(jmidx);
+		
+		HashMap<String, Object> map_r = new HashMap<>();
+		
+		map_r.put("list", alist);
+		map_r.put("cnt", cnt);
+		
+		return map_r;
 	}
+	
 
 	@Override
 	public ArrayList<JobBoardCommentVo> getMyJobBoardCommentContent(int jmidx) {
@@ -193,7 +236,7 @@ public class JobBoardDaoSon implements JobBoardDaoFather{
 			scri.setJbcategory("");
 		}
 		
-		if(scri.getJbcategory().isEmpty()) {
+		if(scri.getJbcategory().isEmpty() || scri.getJbcategory().equals("m")) {
 			cnt= jbdfm.getJobBoardTotalRecordCount(scri);
 		}else {
 			cnt= jbdfm.getJobBoard_nfcrd_TotalRecordCount(scri);
@@ -211,7 +254,7 @@ public class JobBoardDaoSon implements JobBoardDaoFather{
 			scri.setJbcategory("");
 		}
 		
-		if(scri.getJbcategory().isEmpty()) {
+		if(scri.getJbcategory().isEmpty() || scri.getJbcategory().equals("m")) {
 			cnt= jbdfm.getJobBoardTotalRecordCount_rm(scri);
 		}else {
 			cnt= jbdfm.getJobBoard_nfcrd_TotalRecordCount_rm(scri);
